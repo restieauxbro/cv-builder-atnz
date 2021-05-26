@@ -1,0 +1,114 @@
+.cv-builder-cnt {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  .cv-builder {
+    max-width: 1000px;
+    min-height: 1100px;
+    background-color: var(--off-white);
+    margin: 50px 30px;
+    border-radius: 1rem;
+    box-shadow: 2px 5px 15px -3px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    input {
+      width: 100%;
+    }
+    .huge-input {
+      font-size: clamp(2rem, 5vw, 3rem);
+      background: inherit;
+      outline: none;
+      border: none;
+      color: var(--darkblue);
+      font-weight: 700;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-gap: 2rem;
+    }
+    .jobs-list {
+      padding: 0 0.5rem;
+      border-left: 1px solid var(--lightblue);
+      .job-cnt {
+        padding: 1px 1rem 1rem 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: var(--radius);
+        transition: box-shadow 0.3s ease;
+        cursor: pointer;
+        &:hover {
+          box-shadow: 1px 2px 10px -2px var(--shadow);
+        }
+      }
+    }
+    .personal-details {
+      background-color: rgb(233, 233, 233);
+      padding: 20px;
+    }
+  }
+  h3 {
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--darkblue);
+  }
+  h4 {
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: var(--lightblue);
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 1em 0 0.2em 0;
+  }
+  p {
+    margin: 0 0 0.5em 0;
+  }
+}
+
+.form-flex {
+  display: flex;
+  flex-wrap: wrap;
+  &.space-between {
+    justify-content: space-between;
+  }
+}
+
+.sidebar-cnt {
+  position: absolute;
+}
+
+.dark-text {
+  color: var(--darkblue);
+}
+
+.pop-up-bg {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(66, 66, 66, 0.418);
+  backdrop-filter: blur(2px);
+}
+.pop-up-cnt {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  
+  .pop-up {
+    min-height: 500px;
+    min-width: 500px;
+    padding: 2rem;
+    background: var(--off-white);
+    border-radius: var(--radius);z-index: 11;
+  }
+}
