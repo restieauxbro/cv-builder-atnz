@@ -37,13 +37,13 @@ const CvUi = () => {
             <TextField
               id="filled-textarea"
               label="A personal intro"
-              placeholder="Tell us who you are, why you do what you do"
+              placeholder="Tell us who you are. Why you do what you do"
               multiline
             />
             <div />
             <div className="work-history">
-              <h3>Work history</h3>
-              <div className="jobs-list">
+              <h3>Experience</h3>
+              <div className="jobs-list"><div className="line"/>
                 {jobs.map(
                   ({
                     jobtitle,
@@ -63,18 +63,24 @@ const CvUi = () => {
                     />
                   )
                 )}
+              </div>
                 <Button
                   variant="contained"
                   color="primary"
                   endIcon={<AddCircle />}
                   onClick={() => {
                     setPopUpOpen(true);
-                    setPopUpContent(<JobForm />);
+                    setPopUpContent(
+                      <JobForm
+                        jobs={jobs}
+                        changeJobs={changeJobs}
+                        setPopUpOpen={setPopUpOpen}
+                      />
+                    );
                   }}
                 >
                   Add another job
                 </Button>
-              </div>
             </div>
           </div>
           <br />
@@ -103,14 +109,48 @@ const Job = ({ jobtitle, company, startDate, endDate, description, id }) => {
   );
 };
 
-const JobForm = () => {
+const JobForm = ({ jobs, changeJobs, setPopUpOpen }) => {
+  const [jobInWaiting, changeJobInWaiting] = useState({});
   return (
     <>
-      <TextField label="Company" />
-      <TextField label="Job title" />
-      <Button variant="contained" color="primary">
-        Save
-      </Button>
+      <div className="two-column-grid">
+        <TextField
+          label="Company"
+          onChange={(e) => {
+            changeJobInWaiting({ ...jobInWaiting, company: e.target.value });
+          }}
+        />
+        <TextField
+          label="Job title"
+          onChange={(e) => {
+            changeJobInWaiting({ ...jobInWaiting, jobtitle: e.target.value });
+          }}
+        />
+      </div>
+
+      <div>
+        <TextField
+          label="What did you do there?"
+          onChange={(e) => {
+            changeJobInWaiting({
+              ...jobInWaiting,
+              description: e.target.value,
+            });
+          }}
+        />
+      </div>
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            changeJobs([...jobs, jobInWaiting]);
+            setPopUpOpen(false);
+          }}
+        >
+          Save
+        </Button>
+      </div>
     </>
   );
 };
