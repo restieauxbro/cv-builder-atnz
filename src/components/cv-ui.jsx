@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { Button, TextField } from "@material-ui/core";
+import { Button, IconButton, TextField } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
-import { AddCircle } from "@material-ui/icons";
+import {
+  AddCircle,
+  CancelPresentationTwoTone,
+  CancelRounded,
+} from "@material-ui/icons";
 import { motion, AnimatePresence } from "framer-motion";
 
 const CvUi = () => {
@@ -27,23 +31,39 @@ const CvUi = () => {
         "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia rem ratione ex, animi nostrum consectetur impedit labore vel beatae ipsa?",
     },
   ]);
+
+  function editJob(jobId) {
+    const chosenJob = jobs.find((jobs) => jobs.id === jobId);
+    const jobsWithDeleted = jobs.filter((jobs) => jobs.id !== jobId);
+    setPopUpContent(
+      <JobForm
+        chosenJob={chosenJob}
+        jobs={jobsWithDeleted}
+        changeJobs={changeJobs}
+        setPopUpOpen={setPopUpOpen}
+      />
+    );
+    setPopUpOpen(true);
+  }
   return (
     <>
       <div className="cv-builder-cnt">
         <div className="cv-builder">
           <div className="form-grid">
-            <input class="huge-input" type="text" placeholder="Your name" />
             <div className="personal-details">Region</div>
+            <input class="huge-input" type="text" placeholder="Your name" />
             <TextField
               id="filled-textarea"
               label="A personal intro"
               placeholder="Tell us who you are. Why you do what you do"
+              defaultValue="Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam fugit enim odio repudiandae earum assumenda aperiam laboriosam eos pariatur, beatae tenetur optio debitis quam incidunt ut blanditiis nihil doloribus."
               multiline
             />
-            <div />
+
             <div className="work-history">
-              <h3>Experience</h3>
-              <div className="jobs-list"><div className="line"/>
+              <h3 style={{ marginTop: 0 }}>Experience</h3>
+              <div className="jobs-list">
+                <div className="line" />
                 {jobs.map(
                   ({
                     jobtitle,
@@ -60,27 +80,28 @@ const CvUi = () => {
                       startDate={startDate}
                       endDate={endDate}
                       description={description}
+                      editJob={editJob}
                     />
                   )
                 )}
               </div>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  endIcon={<AddCircle />}
-                  onClick={() => {
-                    setPopUpOpen(true);
-                    setPopUpContent(
-                      <JobForm
-                        jobs={jobs}
-                        changeJobs={changeJobs}
-                        setPopUpOpen={setPopUpOpen}
-                      />
-                    );
-                  }}
-                >
-                  Add another job
-                </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                endIcon={<AddCircle />}
+                onClick={() => {
+                  setPopUpOpen(true);
+                  setPopUpContent(
+                    <JobForm
+                      jobs={jobs}
+                      changeJobs={changeJobs}
+                      setPopUpOpen={setPopUpOpen}
+                    />
+                  );
+                }}
+              >
+                Add another job
+              </Button>
             </div>
           </div>
           <br />
@@ -97,9 +118,18 @@ const CvUi = () => {
 
 export default CvUi;
 
-const Job = ({ jobtitle, company, startDate, endDate, description, id }) => {
+const Job = ({
+  jobtitle,
+  company,
+  startDate,
+  endDate,
+  description,
+  id,
+  editJob,
+}) => {
+  const jobId = id;
   return (
-    <div key={uuidv4()}>
+    <div id={jobId} key={uuidv4()} onClick={() => editJob(jobId)}>
       <div className="job-cnt">
         <h4>{jobtitle}</h4>
         <p>{company}</p>
@@ -109,22 +139,29 @@ const Job = ({ jobtitle, company, startDate, endDate, description, id }) => {
   );
 };
 
-const JobForm = ({ jobs, changeJobs, setPopUpOpen }) => {
-  const [jobInWaiting, changeJobInWaiting] = useState({});
+const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob }) => {
+  const [jobInWaiting, changeJobInWaiting] = useState({
+    ...chosenJob,
+    id: uuidv4(),
+  });
+
   return (
     <>
+      <Closer onClick={() => setPopUpOpen(false)} />
       <div className="two-column-grid">
         <TextField
           label="Company"
           onChange={(e) => {
             changeJobInWaiting({ ...jobInWaiting, company: e.target.value });
           }}
+          defaultValue={jobInWaiting.company}
         />
         <TextField
           label="Job title"
           onChange={(e) => {
             changeJobInWaiting({ ...jobInWaiting, jobtitle: e.target.value });
           }}
+          defaultValue={jobInWaiting.jobtitle}
         />
       </div>
 
@@ -137,6 +174,7 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen }) => {
               description: e.target.value,
             });
           }}
+          defaultValue={jobInWaiting.description}
         />
       </div>
       <div>
@@ -144,7 +182,10 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen }) => {
           variant="contained"
           color="primary"
           onClick={() => {
+            // if new job
+
             changeJobs([...jobs, jobInWaiting]);
+            // end if new job
             setPopUpOpen(false);
           }}
         >
@@ -160,13 +201,38 @@ const PopUp = ({ setPopUpOpen, popUpContent }) => {
     <>
       <motion.div
         className="pop-up-cnt"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { duration: 0.3 } }}
-        exit={{ opacity: 0 }}
+        variants={parentFadeIn}
+        initial="initial"
+        animate="animate"
+        exit="exit"
       >
         <div className="pop-up-bg" onClick={() => setPopUpOpen(false)} />
-        <div className="pop-up">{popUpContent}</div>
+        <motion.div variants={slideUp} className="pop-up">
+          {popUpContent}
+        </motion.div>
       </motion.div>
     </>
   );
+};
+
+const Closer = () => {
+  return (
+    <div className="cancel-button flex align-center">
+      <div className="subtitle">Cancel</div>
+      <IconButton aria-label="Cancel">
+        <CancelRounded />
+      </IconButton>
+    </div>
+  );
+};
+
+const parentFadeIn = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.15, delayChildren: 0.2 } },
+  exit: { opacity: 0 },
+};
+
+const slideUp = {
+  initial: { y: 40, opacity: 0 },
+  animate: { y: 0, opacity: 1 },
 };
