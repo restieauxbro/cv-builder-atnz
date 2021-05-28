@@ -1,7 +1,9 @@
 import React from "react";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import CvUi from "./components/cv-ui";
 import Sidebar from "./components/sidebar";
+import MomentUtils from "@date-io/moment";
 
 const theme = createMuiTheme({
   palette: {
@@ -21,7 +23,7 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: "Poppins",
     color: "rgb(46,46,46)",
-    fontWeightRegular: 300,
+    fontWeightRegular: 400,
     fontSize: "14px",
     button: {
       fontSize: "1rem",
@@ -34,8 +36,12 @@ const App = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <CvUi />
-        <Sidebar />
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <div className="cv-builder-columns">
+            <Sidebar />
+            <CvUi />
+          </div>
+        </MuiPickersUtilsProvider>
       </ThemeProvider>
     </>
   );
