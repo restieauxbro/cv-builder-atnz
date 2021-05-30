@@ -24,7 +24,7 @@ const theme = createMuiTheme({
     fontFamily: "Poppins",
     color: "rgb(46,46,46)",
     fontWeightRegular: 400,
-    fontSize: "14px",
+    fontSize: 14,
     button: {
       fontSize: "1rem",
       textTransform: "none",

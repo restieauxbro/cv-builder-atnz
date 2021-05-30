@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import { AddCircle, CancelRounded } from "@material-ui/icons";
 import { motion, AnimatePresence } from "framer-motion";
 import CheckIcon from "@material-ui/icons/Check";
+import ListHolder from "./list-holder";
+import Closer from "./closer";
 
 const CvUi = () => {
   const [popUpOpen, setPopUpOpen] = useState(false);
@@ -26,15 +28,14 @@ const CvUi = () => {
         "I am currently working at ISS. Following drawings for welding and fabrication jobs both on site and in the workshop.",
     },
   ]);
-  const [personalDetails, setPersonalDetails] = useState({});
 
   function editJob(jobId) {
     const chosenJob = jobs.find((jobs) => jobs.id === jobId);
-    const jobsWithDeleted = jobs.filter((jobs) => jobs.id !== jobId);
+    // const jobsWithDeleted = jobs.filter((jobs) => jobs.id !== jobId);
     setPopUpContent(
       <JobForm
+        jobs={jobs}
         chosenJob={chosenJob}
-        jobs={jobsWithDeleted}
         changeJobs={changeJobs}
         setPopUpOpen={setPopUpOpen}
       />
@@ -59,6 +60,15 @@ const CvUi = () => {
                   incidunt quod quam, placeat hic itaque voluptas harum
                   consectetur aspernatur expedita debitis. Magnam, fugiat! Sint
                 </p>
+              </div>
+              <div className="education section">
+                <ListHolder
+                  title="Education"
+                  fields={["School", "Achievement", "Tell us about it"]}
+                  setPopUpOpen={setPopUpOpen}
+                  setPopUpContent={setPopUpContent}
+                  popUpOpen={popUpOpen}
+                />
               </div>
             </div>
             <div className="column-2">
@@ -92,6 +102,8 @@ const CvUi = () => {
                         jobs={jobs}
                         changeJobs={changeJobs}
                         setPopUpOpen={setPopUpOpen}
+                        chosenJob={{ title: "" }}
+                        isNew={true}
                       />
                     );
                   }}
@@ -149,8 +161,23 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
     id: uuidv4(),
   });
 
+  const chosenJobID = chosenJob.id;
+
+  function handleSubmit() {
+    // map through jobs and replace the job with matching id
+    const jobsWithEdited = jobs.map((job) => {
+      if (job.id === chosenJobID) {
+        job = jobInWaiting;
+      }
+      return job;
+    });
+    isNew ? changeJobs([...jobs, jobInWaiting]) : changeJobs(jobsWithEdited);
+    setPopUpOpen(false);
+  }
+
   return (
     <>
+      <h3>{isNew ? "New experience" : `Edit ${jobInWaiting.company}`}</h3>
       <div className="two-column-grid">
         <TextField
           label="Company"
@@ -176,7 +203,7 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
       </div>
       <div>
         <TextField
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginTop: "2rem" }}
           multiline
           label="What did you do there?"
           onChange={(e) => {
@@ -194,10 +221,7 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
           variant="outlined"
           color="primary"
           startIcon={<CheckIcon />}
-          onClick={() => {
-            changeJobs([...jobs, jobInWaiting]);
-            setPopUpOpen(false);
-          }}
+          onClick={() => handleSubmit()}
         >
           Save
         </Button>
@@ -205,10 +229,7 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
           variant="contained"
           color="primary"
           endIcon={<AddCircle />}
-          onClick={() => {
-            changeJobs([...jobs, jobInWaiting]);
-            setPopUpOpen(false);
-          }}
+          onClick={() => handleSubmit()}
         >
           Add more
         </Button>
@@ -217,7 +238,7 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
   );
 };
 
-const PopUp = ({ setPopUpOpen, popUpContent }) => {
+const PopUp = ({ setPopUpOpen, popUpContent, exitText }) => {
   return (
     <>
       <motion.div
@@ -231,26 +252,12 @@ const PopUp = ({ setPopUpOpen, popUpContent }) => {
         <div></div>
         <div className="flex justify-center align-center">
           <motion.div variants={slideUp} className="pop-up">
-            <Closer clickFunction={() => setPopUpOpen(false)} text="cancel" />
+            <Closer clickFunction={() => setPopUpOpen(false)} text={exitText} />
             {popUpContent}
           </motion.div>
         </div>
       </motion.div>
     </>
-  );
-};
-
-const Closer = ({ text, clickFunction }) => {
-  return (
-    <div
-      className="cancel-button flex align-center"
-      onClick={() => clickFunction()}
-    >
-      <div className="subtitle">{text}</div>
-      <IconButton aria-label={text}>
-        <CancelRounded />
-      </IconButton>
-    </div>
   );
 };
 

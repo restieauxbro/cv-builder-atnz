@@ -3,6 +3,24 @@
   grid-template-columns: 1fr 3fr;
   max-width: 1800px;
   margin: 0 auto;
+  h3 {
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--darkblue);
+  }
+  h4 {
+    font-weight: 400;
+    font-size: 1rem;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 1em 0 0.8em 0;
+  }
+  p {
+    margin: 0 0 0.5em 0;
+  }
 }
 
 .cv-builder-cnt {
@@ -37,7 +55,7 @@
       grid-gap: 2rem;
     }
     .introduction {
-     // margin-top: 7.4rem;
+      // margin-top: 7.4rem;
     }
     .jobs-list {
       position: relative;
@@ -76,24 +94,6 @@
       background-color: rgb(233, 233, 233);
       padding: 20px;
     }
-  }
-  h3 {
-    font-weight: 400;
-    font-size: 1.5rem;
-    color: var(--darkblue);
-  }
-  h4 {
-    font-weight: 400;
-    font-size: 1rem;
-  }
-  h1,
-  h2,
-  h3,
-  h4 {
-    margin: 1em 0 0.8em 0;
-  }
-  p {
-    margin: 0 0 0.5em 0;
   }
 }
 
@@ -159,6 +159,36 @@
       display: flex;
       justify-content: flex-end;
     }
+  }
+}
+
+.items-form {
+  .editable-list-items {
+    list-style: none;
+    padding: 0;
+    .list-item {
+      position: relative;
+      padding: 1rem;
+      background: var(--off-white);
+      margin: 1rem 0;
+      box-shadow: var(--item-shadow);
+      display: flex;
+      flex-wrap: wrap;
+      border-radius: var(--radius);
+      .prop {
+        margin-right: 2rem;
+      }
+      .cancel-button {
+        opacity: 0.6;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+  .add-new-item-cnt {
+    padding: 1rem;
+    background: var(--tint-primary);
+    border-radius: var(--radius);
   }
 }
 
