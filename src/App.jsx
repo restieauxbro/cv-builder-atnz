@@ -38,6 +38,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <div className="cv-builder-columns">
+            <div></div>
             <Sidebar />
             <CvUi />
           </div>

@@ -1,8 +1,7 @@
 import { Button } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
-import { render } from "@testing-library/react";
 import Closer from "./closer";
 
 const ListHolder = ({
@@ -11,11 +10,15 @@ const ListHolder = ({
   popUpOpen,
   setPopUpOpen,
   setPopUpContent,
+  defaultItems
 }) => {
-  const [listItems, setListItems] = useState([
-    { School: "macleans", Description: "Here's one" },
-    { School: "Pakurange", Description: "Here's another" },
-  ]);
+  const [listItems, setListItems] = useState(defaultItems);
+
+  const [listItemInWaiting, setIt] = useState({});
+
+  function handleSubmit() {
+    setListItems([...listItems, listItemInWaiting]);
+  }
 
   function openForm() {
     setPopUpContent(
@@ -26,6 +29,9 @@ const ListHolder = ({
         setListItems={setListItems}
         setPopUpOpen={setPopUpOpen}
         deleteItem={deleteItem}
+        listItemInWaiting={listItemInWaiting}
+        setIt={setIt}
+        handleSubmit={handleSubmit}
       />
     );
     setPopUpOpen(true);
@@ -37,6 +43,7 @@ const ListHolder = ({
   return (
     <>
       <h3>{title}</h3>
+      {listItemInWaiting.School}
       <ul>
         {listItems.map((obj) => {
           const keyValues = Object.values(obj);
@@ -65,22 +72,16 @@ const ListForm = ({
   setListItems,
   setPopUpOpen,
   deleteItem,
+  listItemInWaiting,
+  setIt,
+  handleSubmit,
 }) => {
-  const [itemInWaiting, setItemInWaiting] = useState({});
-  const [theseItems, setTheseItems] = useState(listItems); // duplicate for local state
-
-  function handleSubmit() {
-    setTheseItems([...theseItems, itemInWaiting]);
-    setListItems([...theseItems, itemInWaiting]);
-    console.log(theseItems);
-  }
-  useEffect(() => {
-    setItemInWaiting({ id: uuidv4() });
-  });
+  const [theseItems, setTheseItems] = useState([...listItems]); // duplicate for local state
+  const [popUpItemInWaiting, setPopUpItemInWaiting] = useState({});
   return (
     <>
       <div className="items-form">
-        <h3>{title}</h3>
+        {listItemInWaiting.School}
         <ul className="editable-list-items">
           {theseItems.map((obj) => {
             const keyValues = Object.values(obj);
@@ -100,15 +101,13 @@ const ListForm = ({
           <div className="subtitle">Add new</div>
           <div className="two-column-grid">
             {fields.map((field) => (
-              <TextField
+              <DynamicTextInput
                 key={uuidv4()}
-                label={field}
-                onChange={(e) =>
-                  setItemInWaiting({
-                    ...itemInWaiting,
-                    [field]: e.target.value,
-                  })
-                }
+                field={field}
+                listItemInWaiting={listItemInWaiting}
+                setIt={setIt}
+                popItemInWaiting={popUpItemInWaiting}
+                setPopUpItemInWaiting={setPopUpItemInWaiting}
               />
             ))}
           </div>
@@ -116,7 +115,7 @@ const ListForm = ({
             <Button
               variant="contained"
               color="primary"
-              onClick={() => handleSubmit()}
+              onClick={() => setTheseItems([...theseItems, popUpItemInWaiting])}
             >
               Add
             </Button>
@@ -133,5 +132,23 @@ const ListForm = ({
         </div>
       </div>
     </>
+  );
+};
+
+const DynamicTextInput = ({
+  field,
+  listItemInWaiting,
+  setIt,
+  popUpItemInWaiting,
+  setPopUpItemInWaiting,
+}) => {
+  return (
+    <TextField
+      label={field}
+      onChange={(e) => {
+        setPopUpItemInWaiting({ ...popUpItemInWaiting, [field]: e.target.value });
+        console.log(popUpItemInWaiting);
+      }}
+    />
   );
 };

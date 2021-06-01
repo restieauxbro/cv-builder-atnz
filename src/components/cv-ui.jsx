@@ -52,7 +52,12 @@ const CvUi = () => {
         <div className="cv-builder">
           <div className="form-grid">
             <div className="column-1">
-              <div className="personal-details">Region</div>
+              <div className="personal-details">
+                <div className="image"></div>
+                restieauxbro@hotmail.com
+                <div>021 084 19222</div>
+                <div>Auckland</div>
+              </div>
               <div className="introduction section">
                 <h3>Intro</h3>
                 <p>
@@ -65,6 +70,23 @@ const CvUi = () => {
                 <ListHolder
                   title="Education"
                   fields={["School", "Achievement", "Tell us about it"]}
+                  defaultItems={[
+                    { School: "macleans", Description: "Here's one" },
+                    { School: "Pakurange", Description: "Here's another" },
+                  ]}
+                  setPopUpOpen={setPopUpOpen}
+                  setPopUpContent={setPopUpContent}
+                  popUpOpen={popUpOpen}
+                />
+              </div>
+              <div className="skills section">
+                <ListHolder
+                  title="Skills"
+                  fields={["Skill", "Achievement", "Tell us about it"]}
+                  defaultItems={[
+                    { Skill: "Health and safety cautious" },
+                    { Skill: "Welding frames" },
+                  ]}
                   setPopUpOpen={setPopUpOpen}
                   setPopUpContent={setPopUpContent}
                   popUpOpen={popUpOpen}
@@ -72,7 +94,11 @@ const CvUi = () => {
               </div>
             </div>
             <div className="column-2">
-              <input class="huge-input" type="text" placeholder="Your name" />
+              <input
+                className="huge-input"
+                type="text"
+                placeholder="Your name"
+              />
 
               <div className="work-history section">
                 <h3 style={{ marginTop: 0 }}>Experience</h3>
