@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import CheckIcon from "@material-ui/icons/Check";
 import ListHolder from "./list-holder";
 import Closer from "./closer";
+import SignupForm from "./forms/formikForm";
 
 const CvUi = () => {
   const [popUpOpen, setPopUpOpen] = useState(false);
@@ -31,7 +32,6 @@ const CvUi = () => {
 
   function editJob(jobId) {
     const chosenJob = jobs.find((jobs) => jobs.id === jobId);
-    // const jobsWithDeleted = jobs.filter((jobs) => jobs.id !== jobId);
     setPopUpContent(
       <JobForm
         jobs={jobs}
@@ -99,7 +99,7 @@ const CvUi = () => {
                 type="text"
                 placeholder="Your name"
               />
-
+              {/* <SignupForm /> */}
               <div className="work-history section">
                 <h3 style={{ marginTop: 0 }}>Experience</h3>
                 <div className="jobs-list">
