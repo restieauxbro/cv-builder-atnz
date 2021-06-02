@@ -200,6 +200,8 @@
     border-radius: var(--radius);
     z-index: 11;
     box-shadow: 0 5px 15px var(--shadow);
+    width: 100%;
+    max-width: 700px;
   }
 }
 .buttons-cnt {
