@@ -7,10 +7,9 @@ import Closer from "./closer";
 const ListHolder = ({
   title,
   fields,
-  popUpOpen,
   setPopUpOpen,
   setPopUpContent,
-  defaultItems
+  defaultItems,
 }) => {
   const [listItems, setListItems] = useState(defaultItems);
 
@@ -146,7 +145,10 @@ const DynamicTextInput = ({
     <TextField
       label={field}
       onChange={(e) => {
-        setPopUpItemInWaiting({ ...popUpItemInWaiting, [field]: e.target.value });
+        setPopUpItemInWaiting({
+          ...popUpItemInWaiting,
+          [field]: e.target.value,
+        });
         console.log(popUpItemInWaiting);
       }}
     />
