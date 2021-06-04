@@ -1,4 +1,4 @@
-import { Button, ButtonBase } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import React from "react";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import Closer from "./closer";
@@ -21,7 +21,12 @@ const Sidebar = () => {
                 opacity: 1,
                 y: 0,
               }}
-              transition={{ duration: 1, delay: 3, type: "spring", stiffness: 100 }}
+              transition={{
+                duration: 1,
+                delay: 3,
+                type: "spring",
+                stiffness: 100,
+              }}
             >
               <div style={{ opacity: 0.6 }}>
                 <Closer clickFunction={() => ""} />
@@ -37,6 +42,7 @@ const Sidebar = () => {
           <div className="placeholder"></div>
           <div className="download buttons-cnt">
             <Button
+              fullWidth
               startIcon={<GetAppIcon />}
               variant="contained"
               color="primary"

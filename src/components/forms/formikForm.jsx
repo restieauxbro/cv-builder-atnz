@@ -4,21 +4,14 @@ import { useFormik } from "formik";
 
 const SignupForm = ({ formFields }) => {
   // Pass the useFormik() hook initial form values and a submit function that will be called when the form is submitted
-  const formFields = [
-    {
-      fieldName: "email",
-      fieldType: "email",
-    },
-  ];
-
   const formik = useFormik({
     initialValues: {
       email: "",
+      name: "",
     },
 
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
-      setItems([...items, values]);
     },
   });
 
@@ -38,7 +31,9 @@ const SignupForm = ({ formFields }) => {
           ))}
         </div>
         <div className="buttons-cnt">
-          <Button type="submit">Add</Button>
+          <Button variant="contained" color="primary" type="submit">
+            Add
+          </Button>
         </div>
       </form>
     </>

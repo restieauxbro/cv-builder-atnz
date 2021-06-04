@@ -3,53 +3,34 @@ import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import Closer from "./closer";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
-const ListHolder = ({
-  title,
-  fields,
-  setPopUpOpen,
-  setPopUpContent,
-  defaultItems,
-}) => {
+const ListHolder = ({ title, setPopUpOpen, setPopUpContent, defaultItems }) => {
   const [listItems, setListItems] = useState(defaultItems);
-
-  const [listItemInWaiting, setIt] = useState({});
-
-  function handleSubmit() {
-    setListItems([...listItems, listItemInWaiting]);
-  }
 
   function openForm() {
     setPopUpContent(
       <ListForm
         title={title}
-        fields={fields}
         listItems={listItems}
         setListItems={setListItems}
         setPopUpOpen={setPopUpOpen}
-        deleteItem={deleteItem}
-        listItemInWaiting={listItemInWaiting}
-        setIt={setIt}
-        handleSubmit={handleSubmit}
       />
     );
     setPopUpOpen(true);
   }
 
-  function deleteItem() {
-    "";
-  }
   return (
     <>
       <h3>{title}</h3>
-      {listItemInWaiting.School}
       <ul>
-        {listItems.map((obj) => {
-          const keyValues = Object.values(obj);
+        {listItems.map((listItem) => {
+          const keyValues = Object.values(listItem.properties);
           return (
-            <li className="list-item">
+            <li key={uuidv4()} className="list-item">
               {keyValues.map((keyValue) => (
-                <div>{keyValue}</div>
+                <div key={uuidv4()}>{keyValue}</div>
               ))}
             </li>
           );
@@ -64,26 +45,48 @@ const ListHolder = ({
 
 export default ListHolder;
 
-const ListForm = ({
-  fields,
-  title,
-  listItems,
-  setListItems,
-  setPopUpOpen,
-  deleteItem,
-  listItemInWaiting,
-  setIt,
-  handleSubmit,
-}) => {
-  const [theseItems, setTheseItems] = useState([...listItems]); // duplicate for local state
-  const [popUpItemInWaiting, setPopUpItemInWaiting] = useState({});
+const ListForm = ({ title, listItems, setListItems, setPopUpOpen }) => {
+  const [editableListItems, setEditableListItems] = useState(listItems);
+
+  function deleteItem(itemId) {
+    const itemsWithDeleted = editableListItems.filter(
+      (item) => item.id !== itemId
+    );
+    setEditableListItems(itemsWithDeleted);
+  }
+  const validationSchema = yup.object({
+    School: yup
+      .string("What school or education centre?")
+      .required("What school or education centre?"),
+    Achievement: yup
+      .string("What was your level of achievement?")
+      .required("What was your level of achievement?"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      School: "",
+      Achievement: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      //alert(JSON.stringify(values, null, 2));
+      setEditableListItems([
+        ...editableListItems,
+        { id: uuidv4(), properties: values },
+      ]);
+      console.log(editableListItems);
+      formik.resetForm();
+    },
+  });
+
   return (
     <>
+      <h3>{title}</h3>
       <div className="items-form">
-        {listItemInWaiting.School}
         <ul className="editable-list-items">
-          {theseItems.map((obj) => {
-            const keyValues = Object.values(obj);
+          {editableListItems.map((editable) => {
+            const keyValues = Object.values(editable.properties);
             return (
               <li key={uuidv4()} className="list-item">
                 {keyValues.map((keyValue) => (
@@ -91,66 +94,63 @@ const ListForm = ({
                     {keyValue}
                   </div>
                 ))}
-                <Closer clickFunction={() => deleteItem()} />
+                <Closer clickFunction={() => deleteItem(editable.id)} />
               </li>
             );
           })}
         </ul>
         <div className="add-new-item-cnt">
           <div className="subtitle">Add new</div>
-          <div className="two-column-grid">
-            {fields.map((field) => (
-              <DynamicTextInput
-                key={uuidv4()}
-                field={field}
-                listItemInWaiting={listItemInWaiting}
-                setIt={setIt}
-                popItemInWaiting={popUpItemInWaiting}
-                setPopUpItemInWaiting={setPopUpItemInWaiting}
+
+          <form onSubmit={formik.handleSubmit}>
+            <div className="two-column-grid">
+              <TextField
+                fullWidth
+                id="School"
+                name="School"
+                label="School"
+                value={formik.values.School}
+                onChange={formik.handleChange}
+                error={formik.touched.School && Boolean(formik.errors.School)}
+                helperText={formik.touched.School && formik.errors.School}
               />
-            ))}
-          </div>
-          <div className="buttons-cnt">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setTheseItems([...theseItems, popUpItemInWaiting])}
-            >
-              Add
-            </Button>
-          </div>
+              <TextField
+                fullWidth
+                id="Achievement"
+                name="Achievement"
+                label="Achievement"
+                type="Achievement"
+                value={formik.values.Achievement}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.Achievement &&
+                  Boolean(formik.errors.Achievement)
+                }
+                helperText={
+                  formik.touched.Achievement && formik.errors.Achievement
+                }
+              />
+            </div>
+            <div className="buttons-cnt">
+              <Button color="primary" variant="contained" type="submit">
+                Add
+              </Button>
+            </div>
+          </form>
         </div>
         <div className="buttons-cnt">
           <Button
             variant="outlined"
             color="primary"
-            onClick={() => setPopUpOpen(false)}
+            onClick={() => {
+              setListItems(editableListItems);
+              setPopUpOpen(false);
+            }}
           >
             Save and exit
           </Button>
         </div>
       </div>
     </>
-  );
-};
-
-const DynamicTextInput = ({
-  field,
-  listItemInWaiting,
-  setIt,
-  popUpItemInWaiting,
-  setPopUpItemInWaiting,
-}) => {
-  return (
-    <TextField
-      label={field}
-      onChange={(e) => {
-        setPopUpItemInWaiting({
-          ...popUpItemInWaiting,
-          [field]: e.target.value,
-        });
-        console.log(popUpItemInWaiting);
-      }}
-    />
   );
 };

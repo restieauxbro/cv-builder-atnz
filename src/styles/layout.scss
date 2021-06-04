@@ -140,8 +140,8 @@
       background-color: var(--purple);
       padding: 2rem;
       border-radius: var(--radius);
-      box-shadow: 2px 5px 15px rgba(0, 47, 59, 0.3), inset 5px 5px 10px #ffffff40;
-
+      box-shadow: 2px 5px 15px rgba(0, 47, 59, 0.3),
+        inset 5px 5px 15px #ffffff1f;
       h3,
       h4,
       p {
@@ -219,7 +219,7 @@
       padding: 1rem;
       background: var(--off-white);
       margin: 1rem 0;
-      box-shadow: var(--item-shadow);
+     // box-shadow: var(--item-shadow);
       display: flex;
       flex-wrap: wrap;
       border-radius: var(--radius);
@@ -233,11 +233,16 @@
       }
     }
   }
-  .add-new-item-cnt {
-    padding: 1rem;
-    background: var(--tint-primary);
-    border-radius: var(--radius);
+}
+.add-new-item-cnt {
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--lightblue);
+  .subtitle {
+    color: var(--lightblue);
+    padding-bottom: 1rem;
   }
+  //  border: 1px solid gray;
 }
 
 ul {

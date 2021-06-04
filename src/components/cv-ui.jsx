@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Button, IconButton, TextField } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
-import { AddCircle, CancelRounded } from "@material-ui/icons";
+import { AddCircle } from "@material-ui/icons";
 import { motion, AnimatePresence } from "framer-motion";
 import CheckIcon from "@material-ui/icons/Check";
 import ListHolder from "./list-holder";
 import Closer from "./closer";
-import SignupForm from "./forms/formikForm";
+import SchoolsValidationForm from "./forms/schoolsValidationForm";
 
 const CvUi = () => {
   const [popUpOpen, setPopUpOpen] = useState(false);
@@ -68,30 +68,19 @@ const CvUi = () => {
               </div>
               <div className="education section">
                 <ListHolder
-                  title="Education"
-                  fields={["School", "Achievement", "Tell us about it"]}
-                  defaultItems={[
-                    { School: "macleans", Description: "Here's one" },
-                    { School: "Pakurange", Description: "Here's another" },
-                  ]}
+                title="Education"
                   setPopUpOpen={setPopUpOpen}
                   setPopUpContent={setPopUpContent}
                   popUpOpen={popUpOpen}
-                />
-              </div>
-              <div className="skills section">
-                <ListHolder
-                  title="Skills"
-                  fields={["Skill", "Achievement", "Tell us about it"]}
+                  form={<SchoolsValidationForm />}
                   defaultItems={[
-                    { Skill: "Health and safety cautious" },
-                    { Skill: "Welding frames" },
+                    {id: 1, properties: { School: "Hello", Achievement: "Achievement 1" }},
+                    {id: 2, properties: { School: "Hello", Achievement: "Achievement 1" }},
+                    
                   ]}
-                  setPopUpOpen={setPopUpOpen}
-                  setPopUpContent={setPopUpContent}
-                  popUpOpen={popUpOpen}
                 />
               </div>
+              <div className="skills section"></div>
             </div>
             <div className="column-2">
               <input
@@ -99,7 +88,7 @@ const CvUi = () => {
                 type="text"
                 placeholder="Your name"
               />
-              {/* <SignupForm /> */}
+
               <div className="work-history section">
                 <h3 style={{ marginTop: 0 }}>Experience</h3>
                 <div className="jobs-list">
