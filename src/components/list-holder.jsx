@@ -119,7 +119,6 @@ const ListForm = ({ title, listItems, setListItems, setPopUpOpen }) => {
                 id="Achievement"
                 name="Achievement"
                 label="Achievement"
-                type="Achievement"
                 value={formik.values.Achievement}
                 onChange={formik.handleChange}
                 error={

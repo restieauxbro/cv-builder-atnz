@@ -3,10 +3,13 @@ import { Button, TextField } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import { AddCircle } from "@material-ui/icons";
 import { motion, AnimatePresence } from "framer-motion";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import CheckIcon from "@material-ui/icons/Check";
 import ListHolder from "./list-holder";
 import Closer from "./closer";
 import SchoolsValidationForm from "./forms/schoolsValidationForm";
+import { min } from "moment";
 
 const CvUi = () => {
   const [popUpOpen, setPopUpOpen] = useState(false);
@@ -68,15 +71,26 @@ const CvUi = () => {
               </div>
               <div className="education section">
                 <ListHolder
-                title="Education"
+                  title="Education"
                   setPopUpOpen={setPopUpOpen}
                   setPopUpContent={setPopUpContent}
                   popUpOpen={popUpOpen}
                   form={<SchoolsValidationForm />}
                   defaultItems={[
-                    {id: 1, properties: { School: "Hello", Achievement: "Achievement 1" }},
-                    {id: 2, properties: { School: "Hello", Achievement: "Achievement 1" }},
-                    
+                    {
+                      id: 1,
+                      properties: {
+                        School: "Hello",
+                        Achievement: "Achievement 1",
+                      },
+                    },
+                    {
+                      id: 2,
+                      properties: {
+                        School: "Hello",
+                        Achievement: "Achievement 1",
+                      },
+                    },
                   ]}
                 />
               </div>
@@ -178,77 +192,127 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
 
   const chosenJobID = chosenJob.id;
 
-  function handleSubmit() {
-    // map through jobs and replace the job with matching id
-    const jobsWithEdited = jobs.map((job) => {
-      if (job.id === chosenJobID) {
-        job = jobInWaiting;
-      }
-      return job;
-    });
-    isNew ? changeJobs([...jobs, jobInWaiting]) : changeJobs(jobsWithEdited);
-    setPopUpOpen(false);
-  }
+  // function handleSubmit() {
+  //   // map through jobs and replace the job with matching id
+  //   const jobsWithEdited = jobs.map((job) => {
+  //     if (job.id === chosenJobID) {
+  //       job = jobInWaiting;
+  //     }
+  //     return job;
+  //   });
+  //   isNew ? changeJobs([...jobs, jobInWaiting]) : changeJobs(jobsWithEdited);
+  //   setPopUpOpen(false);
+  // }
+
+  const validationSchema = yup.object({
+    company: yup
+      .string("Who did you work for or help out?")
+      .required("Who did you work for or help out?"),
+    jobtitle: yup
+      .string("What was the name of your job?")
+      .required("What was the name of your job?"),
+    date: yup
+      .string("How long was this experience")
+      .required("How long was this experience"),
+    description: yup
+      .string("Tell us about what your tasks were.")
+      .min(60, "Can you tell us more?")
+      .required("Tell us about what your tasks were."),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      company: chosenJob.company,
+      jobtitle: chosenJob.jobtitle,
+      date: chosenJob.date,
+      description: chosenJob.description,
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      // map through jobs and replace the job with matching id
+      const jobsWithEdited = jobs.map((job) => {
+        if (job.id === chosenJobID) {
+          job = { id: uuidv4(), ...values };
+        }
+        return job;
+      });
+      isNew
+        ? changeJobs([...jobs, { id: uuidv4(), ...values }])
+        : changeJobs(jobsWithEdited);
+        setPopUpOpen(false);
+    },
+  });
 
   return (
     <>
       <h3>{isNew ? "New experience" : `Edit ${jobInWaiting.company}`}</h3>
-      <div className="two-column-grid">
-        <TextField
-          label="Company"
-          onChange={(e) => {
-            changeJobInWaiting({ ...jobInWaiting, company: e.target.value });
-          }}
-          defaultValue={jobInWaiting.company}
-        />
-        <TextField
-          label="Job title"
-          onChange={(e) => {
-            changeJobInWaiting({ ...jobInWaiting, jobtitle: e.target.value });
-          }}
-          defaultValue={jobInWaiting.jobtitle}
-        />
-        <TextField
-          label="When and for how long?"
-          onChange={(e) => {
-            changeJobInWaiting({ ...jobInWaiting, date: e.target.value });
-          }}
-          defaultValue={jobInWaiting.jobtitle}
-        />
-      </div>
-      <div>
-        <TextField
-          style={{ width: "100%", marginTop: "2rem" }}
-          multiline
-          label="What did you do there?"
-          onChange={(e) => {
-            changeJobInWaiting({
-              ...jobInWaiting,
-              description: e.target.value,
-            });
-          }}
-          defaultValue={jobInWaiting.description}
-        />
-      </div>
-      <div className="buttons-cnt">
-        <Button
-          style={{ marginRight: "1rem" }}
-          variant="outlined"
-          color="primary"
-          startIcon={<CheckIcon />}
-          onClick={() => handleSubmit()}
-        >
-          Save
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          endIcon={<AddCircle />}
-          onClick={() => handleSubmit()}
-        >
-          Add more
-        </Button>
-      </div>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="two-column-grid">
+          <TextField
+            id="company"
+            name="company"
+            label="Company"
+            value={formik.values.company}
+            onChange={formik.handleChange}
+            error={formik.touched.company && Boolean(formik.errors.company)}
+            helperText={formik.touched.company && formik.errors.company}
+          />
+          <TextField
+            id="jobtitle"
+            name="jobtitle"
+            label="Job title"
+            value={formik.values.jobtitle}
+            onChange={formik.handleChange}
+            error={formik.touched.jobtitle && Boolean(formik.errors.jobtitle)}
+            helperText={formik.touched.jobtitle && formik.errors.jobtitle}
+          />
+        </div>
+        <div>
+          <TextField
+            style={{ width: "100%", marginTop: "2rem" }}
+            multiline
+            id="date"
+            name="date"
+            label="When and for how long?"
+            value={formik.values.date}
+            onChange={formik.handleChange}
+            error={formik.touched.date && Boolean(formik.errors.date)}
+            helperText={formik.touched.date && formik.errors.date}
+          />
+          <TextField
+            style={{ width: "100%", marginTop: "2rem" }}
+            multiline
+            id="description"
+            name="description"
+            label="What did you do there?"
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.description && Boolean(formik.errors.description)
+            }
+            helperText={formik.touched.description && formik.errors.description}
+          />
+        </div>
+        <div className="buttons-cnt">
+          <Button
+            style={{ marginRight: "1rem" }}
+            variant="outlined"
+            color="primary"
+            startIcon={<CheckIcon />}
+            type="submit"
+          >
+            Save
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            endIcon={<AddCircle />}
+            type="submit"
+          >
+            Add more
+          </Button>
+        </div>
+      </form>
     </>
   );
 };
