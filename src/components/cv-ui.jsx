@@ -10,6 +10,7 @@ import ListHolder from "./list-holder";
 import Closer from "./closer";
 import SchoolsValidationForm from "./forms/schoolsValidationForm";
 import { min } from "moment";
+import HelpBubble from "./helpBubble";
 
 const CvUi = () => {
   const [popUpOpen, setPopUpOpen] = useState(false);
@@ -19,7 +20,7 @@ const CvUi = () => {
       id: "jobItem-1",
       jobtitle: "Engineer",
       company: "Fortnite engineering",
-      date: "",
+      date: "2 years",
       description:
         "I was buffing and helping NDT testers during the mill shut. This included confided space and working at heights work.",
     },
@@ -27,7 +28,7 @@ const CvUi = () => {
       id: "jobItem-2",
       jobtitle: "Technician",
       company: "Caldwell's",
-      date: "",
+      date: "1 Month in January 2020",
       description:
         "I am currently working at ISS. Following drawings for welding and fabrication jobs both on site and in the workshop.",
     },
@@ -192,18 +193,6 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
 
   const chosenJobID = chosenJob.id;
 
-  // function handleSubmit() {
-  //   // map through jobs and replace the job with matching id
-  //   const jobsWithEdited = jobs.map((job) => {
-  //     if (job.id === chosenJobID) {
-  //       job = jobInWaiting;
-  //     }
-  //     return job;
-  //   });
-  //   isNew ? changeJobs([...jobs, jobInWaiting]) : changeJobs(jobsWithEdited);
-  //   setPopUpOpen(false);
-  // }
-
   const validationSchema = yup.object({
     company: yup
       .string("Who did you work for or help out?")
@@ -239,60 +228,98 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
       isNew
         ? changeJobs([...jobs, { id: uuidv4(), ...values }])
         : changeJobs(jobsWithEdited);
-        setPopUpOpen(false);
+      setPopUpOpen(false);
     },
   });
+
+  const [showHelpBubble, setShowHelpBubble] = useState(false);
+  const [companyHelp, showCompanyHelp] = useState(false);
+  const [dateHelp, showDateHelp] = useState(false);
 
   return (
     <>
       <h3>{isNew ? "New experience" : `Edit ${jobInWaiting.company}`}</h3>
       <form onSubmit={formik.handleSubmit}>
-        <div className="two-column-grid">
-          <TextField
-            id="company"
-            name="company"
-            label="Company"
-            value={formik.values.company}
-            onChange={formik.handleChange}
-            error={formik.touched.company && Boolean(formik.errors.company)}
-            helperText={formik.touched.company && formik.errors.company}
-          />
-          <TextField
-            id="jobtitle"
-            name="jobtitle"
-            label="Job title"
-            value={formik.values.jobtitle}
-            onChange={formik.handleChange}
-            error={formik.touched.jobtitle && Boolean(formik.errors.jobtitle)}
-            helperText={formik.touched.jobtitle && formik.errors.jobtitle}
-          />
-        </div>
-        <div>
-          <TextField
-            style={{ width: "100%", marginTop: "2rem" }}
-            multiline
-            id="date"
-            name="date"
-            label="When and for how long?"
-            value={formik.values.date}
-            onChange={formik.handleChange}
-            error={formik.touched.date && Boolean(formik.errors.date)}
-            helperText={formik.touched.date && formik.errors.date}
-          />
-          <TextField
-            style={{ width: "100%", marginTop: "2rem" }}
-            multiline
-            id="description"
-            name="description"
-            label="What did you do there?"
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.description && Boolean(formik.errors.description)
-            }
-            helperText={formik.touched.description && formik.errors.description}
-          />
-        </div>
+        <AnimatePresence>
+          <div className="two-column-grid">
+            <TextField
+              id="company"
+              name="company"
+              label="Company"
+              value={formik.values.company}
+              onChange={formik.handleChange}
+              error={formik.touched.company && Boolean(formik.errors.company)}
+              helperText={formik.touched.company && formik.errors.company}
+            />
+            <TextField
+              id="jobtitle"
+              name="jobtitle"
+              label="Job title"
+              value={formik.values.jobtitle}
+              onChange={formik.handleChange}
+              error={formik.touched.jobtitle && Boolean(formik.errors.jobtitle)}
+              helperText={formik.touched.jobtitle && formik.errors.jobtitle}
+            />
+          </div>
+          <div>
+            <div className="help-bubble-focus">
+              <TextField
+                style={{ width: "100%", marginTop: "2rem" }}
+                multiline
+                id="date"
+                name="date"
+                label="When and for how long?"
+                value={formik.values.date}
+                onChange={formik.handleChange}
+                error={formik.touched.date && Boolean(formik.errors.date)}
+                helperText={formik.touched.date && formik.errors.date}
+                onFocus={() => showDateHelp(true)}
+                onBlur={() => showDateHelp(false)}
+              />
+              {dateHelp && (
+                <HelpBubble setShow={setShowHelpBubble}>
+                  <h3>When? How long?</h3>
+                  <p>
+                    "January - March 2021" <br />
+                    <br />
+                  </p>
+                </HelpBubble>
+              )}
+            </div>
+            <div className="help-bubble-focus">
+              <TextField
+                style={{ width: "100%", marginTop: "2rem" }}
+                multiline
+                id="description"
+                name="description"
+                label="What did you do there?"
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.description &&
+                  Boolean(formik.errors.description)
+                }
+                helperText={
+                  formik.touched.description && formik.errors.description
+                }
+                onFocus={() => setShowHelpBubble(true)}
+                onBlur={() => setShowHelpBubble(false)}
+              />
+              <AnimatePresence>
+                {showHelpBubble && (
+                  <HelpBubble setShow={setShowHelpBubble}>
+                    <h3>What did you do? 💪</h3>
+                    <p>
+                      Tell us what your tasks were, or what you managed to
+                      accomplish, or anything really! The point is just to show
+                      you learned something.
+                    </p>
+                  </HelpBubble>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </AnimatePresence>
         <div className="buttons-cnt">
           <Button
             style={{ marginRight: "1rem" }}

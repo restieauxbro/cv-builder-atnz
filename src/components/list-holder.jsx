@@ -16,7 +16,7 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent, defaultItems }) => {
         listItems={listItems}
         setListItems={setListItems}
         setPopUpOpen={setPopUpOpen}
-      />
+              />
     );
     setPopUpOpen(true);
   }
