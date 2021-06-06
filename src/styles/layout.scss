@@ -222,7 +222,6 @@
   }
 }
 .buttons-cnt {
-  margin-top: 2rem;
   display: flex;
   justify-content: flex-end;
 }
@@ -277,6 +276,14 @@ ul {
     }
   }
 }
+.help-button {
+  cursor: pointer;
+  &:hover {
+    .subtitle {
+      color: var(--purple);
+    }
+  }
+}
 
 .two-column-grid {
   display: grid;
@@ -297,5 +304,8 @@ ul {
   }
   &.justify-center {
     justify-content: center;
+  }
+  &.space-between {
+    justify-content: space-between;
   }
 }

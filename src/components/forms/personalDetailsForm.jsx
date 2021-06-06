@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
-import { v4 as uuidv4 } from "uuid";
 import { AddCircle } from "@material-ui/icons";
 import { AnimatePresence } from "framer-motion";
 import { useFormik } from "formik";
@@ -23,6 +22,7 @@ const PersonalDetailsForm = ({
       .required("What was the name of your job?"),
     email: yup
       .string("How long was this experience")
+      .email("That doesn't look like an email")
       .required("How long was this experience"),
     address: yup
       .string("Tell us about what your tasks were.")
@@ -77,7 +77,7 @@ const PersonalDetailsForm = ({
               multiline
               id="address"
               name="address"
-              label="When and for how long?"
+              label="Region and suburb"
               value={formik.values.address}
               onChange={formik.handleChange}
               error={formik.touched.address && Boolean(formik.errors.address)}
@@ -136,22 +136,14 @@ const PersonalDetailsForm = ({
         </div>
 
         <div className="buttons-cnt">
+          
           <Button
-            style={{ marginRight: "1rem" }}
-            variant="outlined"
+            variant="contained"
             color="primary"
             startIcon={<CheckIcon />}
             type="submit"
           >
             Save
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            endIcon={<AddCircle />}
-            type="submit"
-          >
-            Add more
           </Button>
         </div>
       </form>

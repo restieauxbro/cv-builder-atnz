@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, TextField } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import { AddCircle } from "@material-ui/icons";
@@ -11,6 +11,7 @@ import Closer from "./closer";
 import SchoolsValidationForm from "./forms/schoolsValidationForm";
 import HelpBubble from "./helpBubble";
 import PersonalDetailsForm from "./forms/personalDetailsForm";
+import TurnOnHelp from "./TurnOnHelp";
 
 const CvUi = () => {
   const [popUpOpen, setPopUpOpen] = useState(false);
@@ -117,9 +118,7 @@ const CvUi = () => {
               </div>
               <div className="introduction section">
                 <h3>Intro</h3>
-                <p>
-                  {personalDetails.intro}
-                </p>
+                <p>{personalDetails.intro}</p>
               </div>
               <div className="education section">
                 <ListHolder
@@ -366,25 +365,30 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
             </AnimatePresence>
           </div>
         </div>
-
-        <div className="buttons-cnt">
-          <Button
-            style={{ marginRight: "1rem" }}
-            variant="outlined"
-            color="primary"
-            startIcon={<CheckIcon />}
-            type="submit"
-          >
-            Save
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            endIcon={<AddCircle />}
-            type="submit"
-          >
-            Add more
-          </Button>
+        <div
+          className="flex space-between align-center"
+          style={{ marginTop: "2rem" }}
+        >
+          <TurnOnHelp />
+          <div className="buttons-cnt">
+            <Button
+              style={{ marginRight: "1rem" }}
+              variant="outlined"
+              color="primary"
+              startIcon={<CheckIcon />}
+              type="submit"
+            >
+              Save
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              endIcon={<AddCircle />}
+              type="submit"
+            >
+              Add more
+            </Button>
+          </div>
         </div>
       </form>
     </>

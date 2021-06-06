@@ -4,6 +4,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import CvUi from "./components/cv-ui";
 import Sidebar from "./components/sidebar";
 import MomentUtils from "@date-io/moment";
+import HelpSwitchProvider from "./components/providers/HelpProvider";
 
 const theme = createMuiTheme({
   palette: {
@@ -38,9 +39,11 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <div className="cv-builder-columns">
-            <div></div>
+            <div className="placeholder"></div>
             <Sidebar />
-            <CvUi />
+            <HelpSwitchProvider>
+              <CvUi />
+            </HelpSwitchProvider>
           </div>
         </MuiPickersUtilsProvider>
       </ThemeProvider>
