@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ContactSupportRoundedIcon from "@material-ui/icons/ContactSupportRounded";
+import { ContactSupportRoundedIcon, ChatBubbleIcon } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core";
 import {
   useHelpPermission,
@@ -28,7 +28,12 @@ const TurnOnHelp = () => {
       ) : (
         <>
           {turnedOn ? (
-            <div>Helpers on</div>
+            <div className="help-button flex align-center">
+              <IconButton aria-label="Helpers on">
+                <ChatBubbleIcon />
+              </IconButton>
+              <div className="subtitle">Helpers on</div>
+            </div>
           ) : (
             <div className="placeholder"></div>
           )}

@@ -5,6 +5,7 @@ import CvUi from "./components/cv-ui";
 import Sidebar from "./components/sidebar";
 import MomentUtils from "@date-io/moment";
 import HelpSwitchProvider from "./components/providers/HelpProvider";
+import CVDataProvider from "./components/providers/CVDataProvider";
 
 const theme = createMuiTheme({
   palette: {
@@ -38,13 +39,16 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
-          <div className="cv-builder-columns">
-            <div className="placeholder"></div>
-            <Sidebar />
-            <HelpSwitchProvider>
-              <CvUi />
-            </HelpSwitchProvider>
-          </div>
+          <CVDataProvider>
+            <div className="cv-builder-columns">
+              <div className="placeholder"></div>
+              <Sidebar />
+
+              <HelpSwitchProvider>
+                <CvUi />
+              </HelpSwitchProvider>
+            </div>
+          </CVDataProvider>
         </MuiPickersUtilsProvider>
       </ThemeProvider>
     </>

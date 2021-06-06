@@ -176,7 +176,7 @@ const CvUi = () => {
                     );
                   }}
                 >
-                  Add another job
+                  Add experience
                 </Button>
               </div>
             </div>
