@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Closer from "./closer";
 
-const HelpBubble = ({ children, setShow }) => {
+const HelpBubble = ({ children, suggestions }) => {
   return (
     <motion.div
       variants={parentVariants}
@@ -12,6 +12,15 @@ const HelpBubble = ({ children, setShow }) => {
       className="help-bubble"
     >
       {children}
+      {suggestions && (
+        <div className="flex" style={{marginTop: "1rem"}}>
+          {suggestions.map((suggestion) => (
+            <div key={suggestion} className="suggestion">
+              {suggestion}
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* <Closer clickFunction={() => setShow(false)} opacity={0.6} /> */}
     </motion.div>

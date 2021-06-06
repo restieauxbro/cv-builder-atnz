@@ -6,8 +6,7 @@ import Closer from "./closer";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-const ListHolder = ({ title, setPopUpOpen, setPopUpContent, defaultItems }) => {
-  const [listItems, setListItems] = useState(defaultItems);
+const ListHolder = ({ title, listItems, setListItems, setPopUpOpen, setPopUpContent, defaultItems }) => {
 
   function openForm() {
     setPopUpContent(
@@ -16,7 +15,7 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent, defaultItems }) => {
         listItems={listItems}
         setListItems={setListItems}
         setPopUpOpen={setPopUpOpen}
-              />
+      />
     );
     setPopUpOpen(true);
   }

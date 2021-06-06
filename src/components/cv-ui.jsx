@@ -9,30 +9,70 @@ import CheckIcon from "@material-ui/icons/Check";
 import ListHolder from "./list-holder";
 import Closer from "./closer";
 import SchoolsValidationForm from "./forms/schoolsValidationForm";
-import { min } from "moment";
 import HelpBubble from "./helpBubble";
+import PersonalDetailsForm from "./forms/personalDetailsForm";
 
 const CvUi = () => {
   const [popUpOpen, setPopUpOpen] = useState(false);
   const [popUpContent, setPopUpContent] = useState({});
-  const [jobs, changeJobs] = useState([
-    {
-      id: "jobItem-1",
-      jobtitle: "Engineer",
-      company: "Fortnite engineering",
-      date: "2 years",
-      description:
-        "I was buffing and helping NDT testers during the mill shut. This included confided space and working at heights work.",
+
+  const [CVData, setCVData] = useState({
+    personalDetails: {
+      name: "",
+      intro:
+        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, incidunt quod quam, placeat hic itaque voluptas harum consectetur aspernatur expedita debitis. Magnam, fugiat! Sint",
+      email: "restieauxbro@hotmail.com",
+      address: "Auckland",
     },
-    {
-      id: "jobItem-2",
-      jobtitle: "Technician",
-      company: "Caldwell's",
-      date: "1 Month in January 2020",
-      description:
-        "I am currently working at ISS. Following drawings for welding and fabrication jobs both on site and in the workshop.",
-    },
-  ]);
+    jobs: [
+      {
+        id: "jobItem-1",
+        jobtitle: "Engineer",
+        company: "Fortnite engineering",
+        date: "2 years",
+        description:
+          "I was buffing and helping NDT testers during the mill shut. This included confided space and working at heights work.",
+      },
+      {
+        id: "jobItem-2",
+        jobtitle: "Technician",
+        company: "Caldwell's",
+        date: "1 Month in January 2020",
+        description:
+          "I am currently working at ISS. Following drawings for welding and fabrication jobs both on site and in the workshop.",
+      },
+    ],
+    education: [
+      {
+        id: 1,
+        properties: {
+          School: "Hello",
+          Achievement: "Achievement 1",
+        },
+      },
+      {
+        id: 2,
+        properties: {
+          School: "Hello",
+          Achievement: "Achievement 1",
+        },
+      },
+    ],
+  });
+
+  const jobs = CVData.jobs;
+  const education = CVData.education;
+  const personalDetails = CVData.personalDetails;
+
+  function changeJobs(sumthn) {
+    setCVData({ ...CVData, jobs: sumthn });
+  }
+  function setEducation(sumthn) {
+    setCVData({ ...CVData, education: sumthn });
+  }
+  function setPersonalDetails(sumthn) {
+    setCVData({ ...CVData, personalDetails: sumthn });
+  }
 
   function editJob(jobId) {
     const chosenJob = jobs.find((jobs) => jobs.id === jobId);
@@ -50,49 +90,47 @@ const CvUi = () => {
     const jobsWithDeleted = jobs.filter((jobs) => jobs.id !== jobId);
     changeJobs(jobsWithDeleted);
   }
+
   return (
     <>
       <div className="cv-builder-cnt">
         <div className="cv-builder">
           <div className="form-grid">
             <div className="column-1">
-              <div className="personal-details">
+              <div
+                className="personal-details"
+                onClick={() => {
+                  setPopUpContent(
+                    <PersonalDetailsForm
+                      personalDetails={personalDetails}
+                      setPersonalDetails={setPersonalDetails}
+                      setPopUpOpen={setPopUpOpen}
+                    />
+                  );
+                  setPopUpOpen(true);
+                }}
+              >
                 <div className="image"></div>
-                restieauxbro@hotmail.com
+                {personalDetails.email}
                 <div>021 084 19222</div>
-                <div>Auckland</div>
+                {personalDetails.address}
               </div>
               <div className="introduction section">
                 <h3>Intro</h3>
                 <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id,
-                  incidunt quod quam, placeat hic itaque voluptas harum
-                  consectetur aspernatur expedita debitis. Magnam, fugiat! Sint
+                  {personalDetails.intro}
                 </p>
               </div>
               <div className="education section">
                 <ListHolder
                   title="Education"
+                  listItems={education}
+                  setListItems={setEducation}
                   setPopUpOpen={setPopUpOpen}
                   setPopUpContent={setPopUpContent}
                   popUpOpen={popUpOpen}
                   form={<SchoolsValidationForm />}
-                  defaultItems={[
-                    {
-                      id: 1,
-                      properties: {
-                        School: "Hello",
-                        Achievement: "Achievement 1",
-                      },
-                    },
-                    {
-                      id: 2,
-                      properties: {
-                        School: "Hello",
-                        Achievement: "Achievement 1",
-                      },
-                    },
-                  ]}
+                  defaultItems={education}
                 />
               </div>
               <div className="skills section"></div>
@@ -102,6 +140,7 @@ const CvUi = () => {
                 className="huge-input"
                 type="text"
                 placeholder="Your name"
+                defaultValue={personalDetails.name}
               />
 
               <div className="work-history section">
@@ -233,93 +272,101 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
   });
 
   const [showHelpBubble, setShowHelpBubble] = useState(false);
-  const [companyHelp, showCompanyHelp] = useState(false);
   const [dateHelp, showDateHelp] = useState(false);
 
   return (
     <>
       <h3>{isNew ? "New experience" : `Edit ${jobInWaiting.company}`}</h3>
       <form onSubmit={formik.handleSubmit}>
-        <AnimatePresence>
-          <div className="two-column-grid">
+        <div className="two-column-grid">
+          <TextField
+            id="company"
+            name="company"
+            label="Company"
+            value={formik.values.company}
+            onChange={formik.handleChange}
+            error={formik.touched.company && Boolean(formik.errors.company)}
+            helperText={formik.touched.company && formik.errors.company}
+          />
+          <TextField
+            id="jobtitle"
+            name="jobtitle"
+            label="Job title"
+            value={formik.values.jobtitle}
+            onChange={formik.handleChange}
+            error={formik.touched.jobtitle && Boolean(formik.errors.jobtitle)}
+            helperText={formik.touched.jobtitle && formik.errors.jobtitle}
+          />
+        </div>
+        <div>
+          <div className="help-bubble-focus">
             <TextField
-              id="company"
-              name="company"
-              label="Company"
-              value={formik.values.company}
+              style={{ width: "100%", marginTop: "2rem" }}
+              multiline
+              id="date"
+              name="date"
+              label="When and for how long?"
+              value={formik.values.date}
               onChange={formik.handleChange}
-              error={formik.touched.company && Boolean(formik.errors.company)}
-              helperText={formik.touched.company && formik.errors.company}
+              error={formik.touched.date && Boolean(formik.errors.date)}
+              helperText={formik.touched.date && formik.errors.date}
+              onFocus={() => showDateHelp(true)}
+              onBlur={() => showDateHelp(false)}
             />
-            <TextField
-              id="jobtitle"
-              name="jobtitle"
-              label="Job title"
-              value={formik.values.jobtitle}
-              onChange={formik.handleChange}
-              error={formik.touched.jobtitle && Boolean(formik.errors.jobtitle)}
-              helperText={formik.touched.jobtitle && formik.errors.jobtitle}
-            />
-          </div>
-          <div>
-            <div className="help-bubble-focus">
-              <TextField
-                style={{ width: "100%", marginTop: "2rem" }}
-                multiline
-                id="date"
-                name="date"
-                label="When and for how long?"
-                value={formik.values.date}
-                onChange={formik.handleChange}
-                error={formik.touched.date && Boolean(formik.errors.date)}
-                helperText={formik.touched.date && formik.errors.date}
-                onFocus={() => showDateHelp(true)}
-                onBlur={() => showDateHelp(false)}
-              />
+            <AnimatePresence>
               {dateHelp && (
-                <HelpBubble setShow={setShowHelpBubble}>
+                <HelpBubble
+                  setShow={setShowHelpBubble}
+                  suggestions={[
+                    "January - March 2021",
+                    "Every Sunday at church",
+                  ]}
+                >
                   <h3>When? How long?</h3>
                   <p>
-                    "January - March 2021" <br />
-                    <br />
+                    Show the employer that you can stick to something. Say
+                    something like:
                   </p>
                 </HelpBubble>
               )}
-            </div>
-            <div className="help-bubble-focus">
-              <TextField
-                style={{ width: "100%", marginTop: "2rem" }}
-                multiline
-                id="description"
-                name="description"
-                label="What did you do there?"
-                value={formik.values.description}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.description &&
-                  Boolean(formik.errors.description)
-                }
-                helperText={
-                  formik.touched.description && formik.errors.description
-                }
-                onFocus={() => setShowHelpBubble(true)}
-                onBlur={() => setShowHelpBubble(false)}
-              />
-              <AnimatePresence>
-                {showHelpBubble && (
-                  <HelpBubble setShow={setShowHelpBubble}>
-                    <h3>What did you do? 💪</h3>
-                    <p>
-                      Tell us what your tasks were, or what you managed to
-                      accomplish, or anything really! The point is just to show
-                      you learned something.
-                    </p>
-                  </HelpBubble>
-                )}
-              </AnimatePresence>
-            </div>
+            </AnimatePresence>
           </div>
-        </AnimatePresence>
+          <div className="help-bubble-focus">
+            <TextField
+              style={{ width: "100%", marginTop: "2rem" }}
+              multiline
+              id="description"
+              name="description"
+              label="What did you do there?"
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.description && Boolean(formik.errors.description)
+              }
+              helperText={
+                formik.touched.description && formik.errors.description
+              }
+              onFocus={() => setShowHelpBubble(true)}
+              onBlur={() => setShowHelpBubble(false)}
+            />
+            <AnimatePresence>
+              {showHelpBubble && (
+                <HelpBubble
+                  setShow={setShowHelpBubble}
+                  suggestions={["Welded frames", "Organised time..."]}
+                >
+                  <h3>What did you do? 💪</h3>
+                  <p>
+                    Tell us what your tasks were, or what you managed to
+                    accomplish, or anything really! The point is just to show
+                    you learned something.
+                  </p>
+                </HelpBubble>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
         <div className="buttons-cnt">
           <Button
             style={{ marginRight: "1rem" }}
