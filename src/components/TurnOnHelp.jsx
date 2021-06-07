@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { ContactSupportRoundedIcon, ChatBubbleIcon } from "@material-ui/icons";
+import ContactSupportRoundedIcon from "@material-ui/icons/ContactSupportRounded";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import { IconButton } from "@material-ui/core";
 import {
   useHelpPermission,

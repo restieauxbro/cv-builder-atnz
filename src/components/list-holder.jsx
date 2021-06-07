@@ -5,15 +5,16 @@ import { v4 as uuidv4 } from "uuid";
 import Closer from "./closer";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useCVData, useCVDataUpdate } from "./providers/CVDataProvider";
 
-const ListHolder = ({ title, listItems, setListItems, setPopUpOpen, setPopUpContent, defaultItems }) => {
+const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
+  const listItems = useCVData().education;
 
   function openForm() {
     setPopUpContent(
       <ListForm
         title={title}
         listItems={listItems}
-        setListItems={setListItems}
         setPopUpOpen={setPopUpOpen}
       />
     );
@@ -44,7 +45,13 @@ const ListHolder = ({ title, listItems, setListItems, setPopUpOpen, setPopUpCont
 
 export default ListHolder;
 
-const ListForm = ({ title, listItems, setListItems, setPopUpOpen }) => {
+const ListForm = ({ title, listItems, setPopUpOpen }) => {
+  const CVData = useCVData();
+  const CVDataUpdate = useCVDataUpdate();
+  function setListItems(sumthn) {
+    CVDataUpdate({ ...CVData, education: sumthn });
+  }
+
   const [editableListItems, setEditableListItems] = useState(listItems);
 
   function deleteItem(itemId) {

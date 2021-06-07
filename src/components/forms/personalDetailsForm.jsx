@@ -1,32 +1,39 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
-import { AddCircle } from "@material-ui/icons";
 import { AnimatePresence } from "framer-motion";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import CheckIcon from "@material-ui/icons/Check";
 import HelpBubble from "../helpBubble";
+import { useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
+import TurnOnHelp from "../TurnOnHelp";
 
-const PersonalDetailsForm = ({
-  personalDetails,
-  setPersonalDetails,
-  setPopUpOpen,
-}) => {
+const PersonalDetailsForm = ({ setPopUpOpen }) => {
+  const CVData = useCVData();
+
+  const personalDetails = useCVData().personalDetails;
+
+  const CVDataUpdate = useCVDataUpdate();
+
+  function setPersonalDetails(sumthn) {
+    CVDataUpdate({ ...CVData, personalDetails: sumthn });
+  }
+
   const validationSchema = yup.object({
     name: yup
-      .string("Who did you work for or help out?")
-      .required("Who did you work for or help out?"),
+      .string("What's your name?")
+      .required("What's your name?"),
     intro: yup
-      .string("What was the name of your job?")
+      .string("Who are you?")
       .min(60, "Can you tell us more?")
-      .required("What was the name of your job?"),
+      .required("Who are you?"),
     email: yup
-      .string("How long was this experience")
+      .string("What's your email?")
       .email("That doesn't look like an email")
-      .required("How long was this experience"),
+      .required("What's your email?"),
     address: yup
-      .string("Tell us about what your tasks were.")
-      .required("Tell us about what your tasks were."),
+      .string("Where abouts do you live?")
+      .required("Where abouts do you live?"),
   });
 
   const formik = useFormik({
@@ -134,17 +141,21 @@ const PersonalDetailsForm = ({
             </AnimatePresence>
           </div>
         </div>
-
-        <div className="buttons-cnt">
-          
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<CheckIcon />}
-            type="submit"
-          >
-            Save
-          </Button>
+        <div
+          className="flex space-between align-center"
+          style={{ marginTop: "2rem", minHeight: 50 }}
+        >
+          <TurnOnHelp />
+          <div className="buttons-cnt">
+            <Button
+              variant="contained"
+              color="primary"
+              startIcon={<CheckIcon />}
+              type="submit"
+            >
+              Save
+            </Button>
+          </div>
         </div>
       </form>
     </>

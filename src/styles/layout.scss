@@ -54,9 +54,7 @@
       grid-template-columns: 1fr 2.3fr;
       grid-gap: 2rem;
     }
-    .introduction {
-      // margin-top: 7.4rem;
-    }
+
     .jobs-list {
       position: relative;
       padding: 0 0.5rem;
@@ -108,8 +106,15 @@
     .cv-builder {
       padding: 5rem;
       .form-grid {
-        grid-gap: 4rem;
+        grid-gap: clamp(4rem, 7vw, 8rem);
       }
+    }
+  }
+}
+@media (min-width: 1900px) {
+  .cv-builder-cnt {
+    .cv-builder {
+      padding: 7rem;
     }
   }
 }
@@ -173,7 +178,7 @@
     border-top: 2rem solid transparent;
   }
   .suggestion {
-    padding: 0.25rem 0.5rem;
+    padding: 0.15rem 0.5rem;
     border-radius: 1rem;
     border: 1px solid var(--dark-white);
     color: var(--dark-white);
@@ -278,6 +283,7 @@ ul {
 }
 .help-button {
   cursor: pointer;
+  margin-left: -1rem;
   &:hover {
     .subtitle {
       color: var(--purple);

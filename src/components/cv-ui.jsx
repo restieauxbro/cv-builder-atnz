@@ -12,78 +12,25 @@ import SchoolsValidationForm from "./forms/schoolsValidationForm";
 import HelpBubble from "./helpBubble";
 import PersonalDetailsForm from "./forms/personalDetailsForm";
 import TurnOnHelp from "./TurnOnHelp";
+import { useCVData, useCVDataUpdate } from "./providers/CVDataProvider";
 
 const CvUi = () => {
+  const CVData = useCVData();
+
+  const jobs = useCVData().jobs;
+  const personalDetails = useCVData().personalDetails;
+  const CVDataUpdate = useCVDataUpdate();
+  function changeJobs(sumthn) {
+    CVDataUpdate({ ...CVData, jobs: sumthn });
+  }
+
   const [popUpOpen, setPopUpOpen] = useState(false);
   const [popUpContent, setPopUpContent] = useState({});
-
-  const [CVData, setCVData] = useState({
-    personalDetails: {
-      name: "",
-      intro:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, incidunt quod quam, placeat hic itaque voluptas harum consectetur aspernatur expedita debitis. Magnam, fugiat! Sint",
-      email: "restieauxbro@hotmail.com",
-      address: "Auckland",
-    },
-    jobs: [
-      {
-        id: "jobItem-1",
-        jobtitle: "Engineer",
-        company: "Fortnite engineering",
-        date: "2 years",
-        description:
-          "I was buffing and helping NDT testers during the mill shut. This included confided space and working at heights work.",
-      },
-      {
-        id: "jobItem-2",
-        jobtitle: "Technician",
-        company: "Caldwell's",
-        date: "1 Month in January 2020",
-        description:
-          "I am currently working at ISS. Following drawings for welding and fabrication jobs both on site and in the workshop.",
-      },
-    ],
-    education: [
-      {
-        id: 1,
-        properties: {
-          School: "Hello",
-          Achievement: "Achievement 1",
-        },
-      },
-      {
-        id: 2,
-        properties: {
-          School: "Hello",
-          Achievement: "Achievement 1",
-        },
-      },
-    ],
-  });
-
-  const jobs = CVData.jobs;
-  const education = CVData.education;
-  const personalDetails = CVData.personalDetails;
-
-  function changeJobs(sumthn) {
-    setCVData({ ...CVData, jobs: sumthn });
-  }
-  function setEducation(sumthn) {
-    setCVData({ ...CVData, education: sumthn });
-  }
-  function setPersonalDetails(sumthn) {
-    setCVData({ ...CVData, personalDetails: sumthn });
-  }
 
   function editJob(jobId) {
     const chosenJob = jobs.find((jobs) => jobs.id === jobId);
     setPopUpContent(
-      <JobForm
-        jobs={jobs}
-        chosenJob={chosenJob}
-        changeJobs={changeJobs}
-        setPopUpOpen={setPopUpOpen}
-      />
+      <JobForm chosenJob={chosenJob} setPopUpOpen={setPopUpOpen} />
     );
     setPopUpOpen(true);
   }
@@ -102,11 +49,7 @@ const CvUi = () => {
                 className="personal-details"
                 onClick={() => {
                   setPopUpContent(
-                    <PersonalDetailsForm
-                      personalDetails={personalDetails}
-                      setPersonalDetails={setPersonalDetails}
-                      setPopUpOpen={setPopUpOpen}
-                    />
+                    <PersonalDetailsForm setPopUpOpen={setPopUpOpen} />
                   );
                   setPopUpOpen(true);
                 }}
@@ -123,13 +66,10 @@ const CvUi = () => {
               <div className="education section">
                 <ListHolder
                   title="Education"
-                  listItems={education}
-                  setListItems={setEducation}
                   setPopUpOpen={setPopUpOpen}
                   setPopUpContent={setPopUpContent}
                   popUpOpen={popUpOpen}
                   form={<SchoolsValidationForm />}
-                  defaultItems={education}
                 />
               </div>
               <div className="skills section"></div>
@@ -139,7 +79,7 @@ const CvUi = () => {
                 className="huge-input"
                 type="text"
                 placeholder="Your name"
-                defaultValue={personalDetails.name}
+                defaultValue={CVData.personalDetails.name}
               />
 
               <div className="work-history section">
@@ -367,7 +307,7 @@ const JobForm = ({ jobs, changeJobs, setPopUpOpen, chosenJob, isNew }) => {
         </div>
         <div
           className="flex space-between align-center"
-          style={{ marginTop: "2rem" }}
+          style={{ marginTop: "2rem", minHeight: 50 }}
         >
           <TurnOnHelp />
           <div className="buttons-cnt">
