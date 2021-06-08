@@ -21,6 +21,9 @@
   p {
     margin: 0 0 0.5em 0;
   }
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .cv-builder-cnt {
@@ -48,6 +51,8 @@
       border: none;
       color: var(--darkblue);
       font-weight: 700;
+      line-height: 1em;
+      cursor: pointer;
     }
     .form-grid {
       display: grid;
@@ -89,7 +94,8 @@
       }
     }
     .personal-details {
-      margin-top: 8rem;
+      margin-top: 9.4rem;
+      cursor: pointer;
       // .image {
       //   width: 5rem;
       //   height: 5rem;
@@ -139,9 +145,24 @@
   pointer-events: all;
   padding: 1rem;
   box-sizing: border-box;
+  overflow-y: auto;
   .sidebar {
     position: relative;
     width: 100%;
+    .menu-button {
+      border-bottom: 1px solid var(--lightgrey);
+      .menu-button-cnt {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        text-align: left;
+        padding: 0.5rem 1rem;
+        .icon {
+          margin-right: 1rem;
+          transform: translateY(5px);
+        }
+      }
+    }
   }
 }
 .help-bubble-focus {
@@ -224,6 +245,12 @@
     box-shadow: 0 5px 15px var(--shadow);
     width: 100%;
     max-width: 700px;
+    @media (max-width: 900px) {
+      width: 70%;
+      .two-column-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   }
 }
 .buttons-cnt {

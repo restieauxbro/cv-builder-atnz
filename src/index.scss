@@ -5,6 +5,7 @@ body {
   --white: #fff;
   --off-white: #f0f0f0;
   --dark-white: #e6e6e6;
+  --lightgrey: rgb(208, 208, 208);
   --lightblue: #6ebcd9;
   --darkblue: #074b64;
   --purple: #574170;
@@ -34,4 +35,8 @@ code {
 
 input {
   font-family: var(--font);
+}
+
+.overflow-cnt {
+  overflow: hidden;
 }

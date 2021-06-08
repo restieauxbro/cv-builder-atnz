@@ -59,8 +59,16 @@ const CvUi = () => {
                 <div>021 084 19222</div>
                 {personalDetails.address}
               </div>
-              <div className="introduction section">
-                <h3>Intro</h3>
+              <div
+                className="introduction section"
+                onClick={() => {
+                  setPopUpContent(
+                    <PersonalDetailsForm setPopUpOpen={setPopUpOpen} />
+                  );
+                  setPopUpOpen(true);
+                }}
+              >
+                <h3>About me</h3>
                 <p>{personalDetails.intro}</p>
               </div>
               <div className="education section">
@@ -75,12 +83,19 @@ const CvUi = () => {
               <div className="skills section"></div>
             </div>
             <div className="column-2">
-              <input
+              <div
                 className="huge-input"
-                type="text"
-                placeholder="Your name"
-                defaultValue={CVData.personalDetails.name}
-              />
+                onClick={() => {
+                  setPopUpContent(
+                    <PersonalDetailsForm setPopUpOpen={setPopUpOpen} />
+                  );
+                  setPopUpOpen(true);
+                }}
+              >
+                {CVData.personalDetails.name
+                  ? CVData.personalDetails.name
+                  : "Your name"}
+              </div>
 
               <div className="work-history section">
                 <h3 style={{ marginTop: 0 }}>Experience</h3>

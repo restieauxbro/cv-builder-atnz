@@ -1,8 +1,8 @@
+import React, { useState } from "react";
 import { Button } from "@material-ui/core";
-import React from "react";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import Closer from "./closer";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Sidebar = () => {
   return (
@@ -14,30 +14,9 @@ const Sidebar = () => {
         <div className="sidebar-cnt">
           <div className="placeholder"></div>
           <div className="sidebar">
-            <motion.div
-              className="help-bubble"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: 1,
-                delay: 3,
-                type: "spring",
-                stiffness: 100,
-              }}
-            >
-              <div style={{ opacity: 0.6 }}>
-                <Closer clickFunction={() => ""} />
-              </div>
-
-              <h3>Hello there! 👋</h3>
-              <p>
-                This is where a helper bubble will appear. Whatever you're
-                typing, this bad boy will be here to give suggestions and tips.
-              </p>
-            </motion.div>
+            {menuButtons.map(({ title, icon, content }) => (
+              <MenuButton title={title} icon={icon} content={content} />
+            ))}
           </div>
           <div className="placeholder"></div>
           <div className="download buttons-cnt">
@@ -57,3 +36,59 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+const MenuButton = ({ title, icon, content }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div key={title} className="menu-button">
+      <Button fullWidth onClick={() => setOpen(!open)}>
+        <div className="menu-button-cnt">
+          <div className="icon">{icon}</div>
+          
+          {title}
+        </div>
+      </Button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            variants={parentHeightAnim}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="overflow-cnt"
+          >
+            {content}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const menuButtons = [
+  {
+    title: "Style CV",
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi inventore soluta? Animi saepe inventore alias officia amet odit iste molestiae quibusdam minima aliquid mollitia dolor dolorum porro neque laborum nisi exercitationem eius quasi ea ullam, architecto, fugit quae quam a! Nostrum, voluptatibus. Earum debitis optio error animi temporibus, ex officiis qui illo? Quibusdam illo numquam magni dolor molestias laboriosam quos nihil facere id, labore laudantium saepe nisi et eum minima ut. Assumenda aliquam reiciendis excepturi alias nisi, delectus nostrum veritatis necessitatibus quaerat atque! Nemo perferendis nulla molestiae assumenda reprehenderit. Quibusdam dolor nemo ipsam voluptates error?",
+    icon: "",
+  },
+  {
+    title: "Download CV",
+    icon: <GetAppIcon />,
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi inventore soluta? Animi saepe inventore alias officia amet odit iste molestiae quibusdam minima aliquid mollitia dolor dolorum porro neque laborum nisi exercitationem eius quasi ea ullam, architecto, fugit quae quam a! Nostrum, voluptatibus. Earum debitis optio error animi temporibus, ex officiis qui illo? Quibusdam illo numquam magni dolor molestias laboriosam quos nihil facere id, labore laudantium saepe nisi et eum minima ut. Assumenda aliquam reiciendis excepturi alias nisi, delectus nostrum veritatis necessitatibus quaerat atque! Nemo perferendis nulla molestiae assumenda reprehenderit. Quibusdam dolor nemo ipsam voluptates error?",
+  },
+  {
+    title: "Apply for jobs",
+    icon: "",
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi inventore soluta? Animi saepe inventore alias officia amet odit iste molestiae quibusdam minima aliquid mollitia dolor dolorum porro neque laborum nisi exercitationem eius quasi ea ullam, architecto, fugit quae quam a! Nostrum, voluptatibus. Earum debitis optio error animi temporibus, ex officiis qui illo? Quibusdam illo numquam magni dolor molestias laboriosam quos nihil facere id, labore laudantium saepe nisi et eum minima ut. Assumenda aliquam reiciendis excepturi alias nisi, delectus nostrum veritatis necessitatibus quaerat atque! Nemo perferendis nulla molestiae assumenda reprehenderit. Quibusdam dolor nemo ipsam voluptates error?",
+  },
+  
+];
+
+const parentHeightAnim = {
+  initial: { height: 0 },
+  animate: { height: "auto", transition: { delay: 0.1 } },
+  exit: { height: 0 },
+};
