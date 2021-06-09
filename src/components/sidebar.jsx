@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import CreateIcon from "@material-ui/icons/Create";
+import StyleIcon from "@material-ui/icons/Style";
 import Closer from "./closer";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -19,16 +21,7 @@ const Sidebar = () => {
             ))}
           </div>
           <div className="placeholder"></div>
-          <div className="download buttons-cnt">
-            <Button
-              fullWidth
-              startIcon={<GetAppIcon />}
-              variant="contained"
-              color="primary"
-            >
-              Download
-            </Button>
-          </div>
+          <div className="placeholder"></div>
         </div>
       </div>
     </>
@@ -44,7 +37,7 @@ const MenuButton = ({ title, icon, content }) => {
       <Button fullWidth onClick={() => setOpen(!open)}>
         <div className="menu-button-cnt">
           <div className="icon">{icon}</div>
-          
+
           {title}
         </div>
       </Button>
@@ -70,7 +63,7 @@ const menuButtons = [
     title: "Style CV",
     content:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi inventore soluta? Animi saepe inventore alias officia amet odit iste molestiae quibusdam minima aliquid mollitia dolor dolorum porro neque laborum nisi exercitationem eius quasi ea ullam, architecto, fugit quae quam a! Nostrum, voluptatibus. Earum debitis optio error animi temporibus, ex officiis qui illo? Quibusdam illo numquam magni dolor molestias laboriosam quos nihil facere id, labore laudantium saepe nisi et eum minima ut. Assumenda aliquam reiciendis excepturi alias nisi, delectus nostrum veritatis necessitatibus quaerat atque! Nemo perferendis nulla molestiae assumenda reprehenderit. Quibusdam dolor nemo ipsam voluptates error?",
-    icon: "",
+    icon: <StyleIcon />,
   },
   {
     title: "Download CV",
@@ -80,11 +73,10 @@ const menuButtons = [
   },
   {
     title: "Apply for jobs",
-    icon: "",
+    icon: <CreateIcon />,
     content:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi inventore soluta? Animi saepe inventore alias officia amet odit iste molestiae quibusdam minima aliquid mollitia dolor dolorum porro neque laborum nisi exercitationem eius quasi ea ullam, architecto, fugit quae quam a! Nostrum, voluptatibus. Earum debitis optio error animi temporibus, ex officiis qui illo? Quibusdam illo numquam magni dolor molestias laboriosam quos nihil facere id, labore laudantium saepe nisi et eum minima ut. Assumenda aliquam reiciendis excepturi alias nisi, delectus nostrum veritatis necessitatibus quaerat atque! Nemo perferendis nulla molestiae assumenda reprehenderit. Quibusdam dolor nemo ipsam voluptates error?",
   },
-  
 ];
 
 const parentHeightAnim = {
