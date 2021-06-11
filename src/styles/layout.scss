@@ -1,5 +1,5 @@
 body.competenz {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
 }
 
 .cv-builder-columns {
@@ -27,6 +27,19 @@ body.competenz {
   }
   @media (max-width: 800px) {
     grid-template-columns: 1fr;
+  }
+}
+
+.layout-large-left {
+  .cv-builder-columns {
+    grid-template-columns: 0.7fr 1fr;
+  }
+  .cv-builder-cnt {
+    transform: scale(0.5);
+    position: absolute;
+    top: -40%;
+    left: 25%;
+    max-width: 1100px;
   }
 }
 

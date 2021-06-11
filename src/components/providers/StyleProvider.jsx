@@ -58,18 +58,22 @@ const competenzTheme = createMuiTheme({
 });
 
 const UpdateStyle = createContext();
+const LayoutChanger = createContext();
 
 const StyleProvider = ({ children }) => {
   const [style, updateStyle] = useState(atnzTheme);
+  const [layout, changeLayout] = useState("");
 
   useEffect(() => {
-    document.body.classList.add(style.themeName)
-  }, [])
+    document.body.classList.add(style.themeName);
+  }, []);
 
   return (
     <ThemeProvider theme={style}>
       <UpdateStyle.Provider value={updateStyle}>
-        {children}
+        <LayoutChanger.Provider value={changeLayout}>
+          <div className={layout}>{children}</div>
+        </LayoutChanger.Provider>
       </UpdateStyle.Provider>
     </ThemeProvider>
   );
@@ -79,4 +83,7 @@ export default StyleProvider;
 
 export function StyleTheme() {
   return useContext(UpdateStyle);
+}
+export function ChangeLayout() {
+  return useContext(LayoutChanger);
 }
