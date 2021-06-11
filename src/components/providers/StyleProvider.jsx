@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const atnzTheme = createMuiTheme({
+  themeName: "ATNZ",
   palette: {
     primary: {
       light: "#7ecbe8",
@@ -29,6 +30,7 @@ const atnzTheme = createMuiTheme({
 });
 
 const competenzTheme = createMuiTheme({
+  themeName: "Competenz",
   palette: {
     primary: {
       light: "#7ecbe8",
@@ -59,6 +61,10 @@ const UpdateStyle = createContext();
 
 const StyleProvider = ({ children }) => {
   const [style, updateStyle] = useState(atnzTheme);
+
+  useEffect(() => {
+    document.body.classList.add(style.themeName)
+  }, [])
 
   return (
     <ThemeProvider theme={style}>
