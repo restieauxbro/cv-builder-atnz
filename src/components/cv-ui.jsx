@@ -41,6 +41,7 @@ const CvUi = () => {
               <ExperienceSection setPopUpOpen={setPopUpOpen}
                 setPopUpContent={setPopUpContent} />
             </div>
+            
           </div>
         </div>
       </div>

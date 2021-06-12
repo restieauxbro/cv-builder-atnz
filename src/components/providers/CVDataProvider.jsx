@@ -48,6 +48,8 @@ const CVDataProvider = ({ children }) => {
     ],
   });
 
+  const [popUpOpen, setPopUpOpen] = useState(false);
+  const [popUpContent, setPopUpContent] = useState({});
   return (
     <CVData.Provider value={CVObject}>
       <UpdateCVData.Provider value={setCVObject}>

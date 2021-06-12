@@ -1,4 +1,5 @@
 import React from "react";
+import { AnimateSharedLayout } from "framer-motion";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import CvUi from "./components/cv-ui";
@@ -13,14 +14,16 @@ const App = () => {
       <StyleProvider>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <CVDataProvider>
-            <div className="cv-builder-columns">
-              <div className="placeholder"></div>
-              <Sidebar />
+            <AnimateSharedLayout>
+              <div className="cv-builder-columns">
+                <div className="placeholder"></div>
+                <Sidebar />
 
-              <HelpSwitchProvider>
-                <CvUi />
-              </HelpSwitchProvider>
-            </div>
+                <HelpSwitchProvider>
+                  <CvUi />
+                </HelpSwitchProvider>
+              </div>
+            </AnimateSharedLayout>
           </CVDataProvider>
         </MuiPickersUtilsProvider>
       </StyleProvider>

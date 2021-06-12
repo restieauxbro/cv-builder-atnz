@@ -57,8 +57,9 @@ const competenzTheme = createMuiTheme({
   },
 });
 
-const UpdateStyle = createContext();
-const LayoutChanger = createContext();
+const UpdateStyle = createContext(); //for MUI theme
+const Layout = createContext(); // for reading layout state only. Actual layout effects come from the div with classname {layout}
+const LayoutChanger = createContext(); // for page layout
 
 const StyleProvider = ({ children }) => {
   const [style, updateStyle] = useState(atnzTheme);
@@ -71,9 +72,11 @@ const StyleProvider = ({ children }) => {
   return (
     <ThemeProvider theme={style}>
       <UpdateStyle.Provider value={updateStyle}>
-        <LayoutChanger.Provider value={changeLayout}>
-          <div className={layout}>{children}</div>
-        </LayoutChanger.Provider>
+        <Layout.Provider value={layout}>
+          <LayoutChanger.Provider value={changeLayout}>
+            <div className={layout}>{children}</div>
+          </LayoutChanger.Provider>
+        </Layout.Provider>
       </UpdateStyle.Provider>
     </ThemeProvider>
   );
@@ -83,6 +86,9 @@ export default StyleProvider;
 
 export function StyleTheme() {
   return useContext(UpdateStyle);
+}
+export function CurrentLayout() {
+  return useContext(Layout);
 }
 export function ChangeLayout() {
   return useContext(LayoutChanger);

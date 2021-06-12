@@ -1,27 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import CreateIcon from "@material-ui/icons/Create";
 import StyleIcon from "@material-ui/icons/Style";
 import Closer from "./closer";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
+import { ChangeLayout, CurrentLayout } from "./providers/StyleProvider";
+import { easy } from "../utils/animations";
 
 const Sidebar = () => {
+  const [openID, setOpenID] = useState("");
   return (
     <>
       <div
         className="cv-builder-columns"
         style={{ position: "fixed", width: "100%", pointerEvents: "none" }}
+        layout
       >
-        <div className="sidebar-cnt">
-          <div className="placeholder"></div>
-          <div className="sidebar">
-            {menuButtons.map(({ title, icon, content }) => (
-              <MenuButton title={title} icon={icon} content={content} />
-            ))}
+        <div>
+          <div className="sidebar-cnt">
+            <div className="placeholder"></div>
+            <div className="sidebar">
+              {menuButtons.map(({ title, icon, content }) => (
+                <MenuButton
+                  title={title}
+                  icon={icon}
+                  content={content}
+                  openID={openID}
+                  setOpenID={setOpenID}
+                />
+              ))}
+            </div>
+            <div className="placeholder"></div>
+            <div className="placeholder"></div>
           </div>
-          <div className="placeholder"></div>
-          <div className="placeholder"></div>
         </div>
       </div>
     </>
@@ -30,11 +42,19 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-const MenuButton = ({ title, icon, content }) => {
-  const [open, setOpen] = useState(false);
+const MenuButton = ({ title, icon, content, openID, setOpenID }) => {
+  const layout = CurrentLayout();
+  const changeLayout = ChangeLayout();
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div key={title} className="menu-button">
-      <Button fullWidth onClick={() => setOpen(!open)}>
+    <motion.div key={title} className="menu-button" layout transition={easy}>
+      <Button
+        fullWidth
+        onClick={() => {
+          setOpenID(title);
+        }}
+      >
         <div className="menu-button-cnt">
           <div className="icon">{icon}</div>
 
@@ -42,7 +62,7 @@ const MenuButton = ({ title, icon, content }) => {
         </div>
       </Button>
       <AnimatePresence>
-        {open && (
+        {openID === title && (
           <motion.div
             variants={parentHeightAnim}
             initial="initial"
@@ -54,7 +74,7 @@ const MenuButton = ({ title, icon, content }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 
@@ -81,6 +101,6 @@ const menuButtons = [
 
 const parentHeightAnim = {
   initial: { height: 0 },
-  animate: { height: "auto", transition: { delay: 0.1 } },
-  exit: { height: 0 },
+  animate: { height: 300, transition: { ...easy, delay: 0.1 } },
+  exit: { height: 0, transition: { ...easy, duration: 0.55 } },
 };
