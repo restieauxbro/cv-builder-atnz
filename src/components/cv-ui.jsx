@@ -14,6 +14,8 @@ const CvUi = () => {
   return (
     <>
       <div className="cv-builder-cnt">
+      <div className="cv-builder-content">
+    
         <div className="cv-builder">
           <div className="form-grid">
             <div className="column-1">
@@ -43,6 +45,7 @@ const CvUi = () => {
             </div>
             
           </div>
+        </div>
         </div>
       </div>
       <AnimatePresence>

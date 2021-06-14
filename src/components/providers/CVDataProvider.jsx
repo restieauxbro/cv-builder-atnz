@@ -6,7 +6,7 @@ const UpdateCVData = createContext();
 const CVDataProvider = ({ children }) => {
   const [CVObject, setCVObject] = useState({
     personalDetails: {
-      name: "",
+      name: "Tim Restieaux",
       intro:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, incidunt quod quam, placeat hic itaque voluptas harum consectetur aspernatur expedita debitis. Magnam, fugiat! Sint",
       email: "restieauxbro@hotmail.com",

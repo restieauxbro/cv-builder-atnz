@@ -62,8 +62,11 @@ const Layout = createContext(); // for reading layout state only. Actual layout 
 const LayoutChanger = createContext(); // for page layout
 
 const StyleProvider = ({ children }) => {
-  const [style, updateStyle] = useState(atnzTheme);
-  const [layout, changeLayout] = useState("");
+  const [style, updateStyle] = useState(atnzTheme); // MUI
+  const [layout, changeLayout] = useState({
+    appLayout: "",
+    CVLayout: "",
+  }); // Object for app layout and cv page layout
 
   useEffect(() => {
     document.body.classList.add(style.themeName);
@@ -74,7 +77,7 @@ const StyleProvider = ({ children }) => {
       <UpdateStyle.Provider value={updateStyle}>
         <Layout.Provider value={layout}>
           <LayoutChanger.Provider value={changeLayout}>
-            <div className={layout}>{children}</div>
+            <div className={layout.appLayout}>{children}</div>
           </LayoutChanger.Provider>
         </Layout.Provider>
       </UpdateStyle.Provider>
