@@ -34,11 +34,11 @@ const Sidebar = () => {
                 />
               ))}
             </div>
-            <PDFDownloadLink document={<CVPDF cvData={useCVData()} />}>
+            {/* <PDFDownloadLink document={<CVPDF cvData={useCVData()} />}>
               <Button variant="contained" color="primary">
                 Download
               </Button>
-            </PDFDownloadLink>
+            </PDFDownloadLink> */}
             <div className="placeholder"></div>
           </div>
         </div>
@@ -89,9 +89,7 @@ const MenuButton = ({ title, icon, content, openID, setOpenID }) => {
             exit="exit"
             className="overflow-cnt"
           >
-          <div className="panel-content">
-            {content}
-            </div>
+            <div className="panel-content">{content}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -100,17 +98,32 @@ const MenuButton = ({ title, icon, content, openID, setOpenID }) => {
 };
 
 const StylePanel = () => {
-  return ( <>
- <h3>Choose layout</h3>
-  </> );
-}
-
+  const items = [1, 2, 3, 4, 5, 6];
+  return (
+    <>
+      <h3>Choose layout</h3>
+      <motion.div
+        variants={gridParent}
+        initial="initial"
+        animate="animate"
+        className="grid"
+      >
+        {items.map((item) => (
+          <motion.div
+            variants={gridChild}
+            key={item}
+            className="style-thumb"
+          ></motion.div>
+        ))}
+      </motion.div>
+    </>
+  );
+};
 
 const menuButtons = [
   {
     title: "Style CV",
-    content:
-      <StylePanel/>,
+    content: <StylePanel />,
     icon: <StyleIcon />,
   },
   {
@@ -133,3 +146,12 @@ const parentHeightAnim = {
   exit: { height: 0, transition: { ...easy, duration: 0.55 } },
 };
 
+const gridParent = {
+  initial: {},
+  animate: { transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
+};
+
+const gridChild = {
+  initial: { y: 20, opacity: 0 },
+  animate: { y: 0, opacity: 1, transition: easy },
+};
