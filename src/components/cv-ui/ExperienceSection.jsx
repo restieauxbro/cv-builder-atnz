@@ -42,23 +42,25 @@ const ExperienceSection = ({ setPopUpOpen, setPopUpContent }) => {
           />
         ))}
       </div>
-      <Button
-        variant="contained"
-        color="primary"
-        endIcon={<AddCircle />}
-        onClick={() => {
-          setPopUpOpen(true);
-          setPopUpContent(
-            <JobForm
-              setPopUpOpen={setPopUpOpen}
-              chosenJob={{ title: "" }}
-              isNew={true}
-            />
-          );
-        }}
-      >
-        Add experience
-      </Button>
+      <div className="cv-ui-button">
+        <Button
+          variant="contained"
+          color="primary"
+          endIcon={<AddCircle />}
+          onClick={() => {
+            setPopUpOpen(true);
+            setPopUpContent(
+              <JobForm
+                setPopUpOpen={setPopUpOpen}
+                chosenJob={{ title: "" }}
+                isNew={true}
+              />
+            );
+          }}
+        >
+          Add experience
+        </Button>
+      </div>
     </div>
   );
 };

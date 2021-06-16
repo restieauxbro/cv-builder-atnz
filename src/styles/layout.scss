@@ -5,7 +5,7 @@ body.competenz {
 .cv-builder-columns {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  max-width: 1230px;
+  max-width: 1550px;
   margin: 0 auto;
   h3 {
     font-weight: 400;
@@ -40,9 +40,14 @@ body.competenz {
       display: flex;
     }
     .cv-builder {
-      margin: 4rem 2rem;
-      transform: scale(0.7);
-      min-height: auto;
+      margin: 0 2rem;
+      transform: scale(0.7) translateY(3rem);
+      @media (min-width: 1500px) {
+        transform: scale(0.7) translate(-15%, 0rem);
+      }
+      .cv-ui-button {
+        opacity: 0;
+      }
     }
   }
 }
@@ -51,11 +56,14 @@ body.competenz {
   width: 100%;
   display: flex;
   justify-content: center;
+  .cv-builder-content {
+    padding: 4rem 0;
+  }
   .cv-builder {
     max-width: 1200px;
     min-height: 1100px;
     background-color: var(--white);
-    margin: 50px 30px;
+    margin: 0 30px;
     border-radius: 1rem;
     box-shadow: 2px 5px 15px -3px rgba(0, 0, 0, 0.3);
     padding: 40px;
@@ -77,6 +85,10 @@ body.competenz {
       line-height: 1em;
       cursor: pointer;
     }
+    .cv-ui-button {
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 2.3fr;
@@ -92,7 +104,7 @@ body.competenz {
         left: 0;
         bottom: 1.8rem;
         height: calc(100% - 3.8rem);
-        width: 1px;
+        width: 2px;
         background-color: var(--lightblue);
       }
       .job-cnt {
@@ -203,6 +215,7 @@ body.competenz {
           height: 0;
           padding-bottom: 120%;
           background-color: var(--lightgrey);
+          border-radius: 3px;
         }
       }
     }
@@ -388,6 +401,6 @@ ul {
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   grid-gap: 1rem;
 }

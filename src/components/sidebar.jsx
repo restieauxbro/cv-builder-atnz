@@ -5,7 +5,7 @@ import CreateIcon from "@material-ui/icons/Create";
 import StyleIcon from "@material-ui/icons/Style";
 import CVPDF from "./cv-pdf";
 import Closer from "./closer";
-import { AnimatePresence, motion } from "framer-motion";
+import { animate, AnimatePresence, motion } from "framer-motion";
 import { ChangeLayout, CurrentLayout } from "./providers/StyleProvider";
 import { easy } from "../utils/animations";
 import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -24,13 +24,14 @@ const Sidebar = () => {
           <div className="sidebar-cnt">
             <div className="placeholder"></div>
             <div className="sidebar">
-              {menuButtons.map(({ title, icon, content }) => (
+              {menuButtons.map(({ title, icon, content, maximumHeight }) => (
                 <MenuButton
                   title={title}
                   icon={icon}
                   content={content}
                   openID={openID}
                   setOpenID={setOpenID}
+                  maximumHeight={maximumHeight}
                 />
               ))}
             </div>
@@ -49,10 +50,23 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-const MenuButton = ({ title, icon, content, openID, setOpenID }) => {
+const MenuButton = ({
+  title,
+  maximumHeight,
+  icon,
+  content,
+  openID,
+  setOpenID,
+}) => {
   const layout = CurrentLayout();
   const changeLayout = ChangeLayout();
   const [isOpen, setIsOpen] = useState(false);
+
+  const parentHeightAnim = {
+    initial: { height: 0 },
+    animate: { height: maximumHeight, transition: { ...easy, delay: 0.1 } },
+    exit: { height: 0, transition: { ...easy, duration: 0.55 } },
+  };
 
   return (
     <motion.div key={title} className="menu-button" layout transition={easy}>
@@ -125,26 +139,23 @@ const menuButtons = [
     title: "Style CV",
     content: <StylePanel />,
     icon: <StyleIcon />,
+    maximumHeight: 500,
   },
   {
     title: "Download CV",
     icon: <GetAppIcon />,
     content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi inventore soluta? Animi saepe inventore alias officia amet odit iste molestiae quibusdam minima aliquid mollitia dolor dolorum porro neque laborum nisi exercitationem eius quasi ea ullam, architecto, fugit quae quam a! Nostrum, voluptatibus. Earum debitis optio error animi temporibus, ex officiis qui illo? Quibusdam illo numquam magni dolor molestias laboriosam quos nihil facere id, labore laudantium saepe nisi et eum minima ut. Assumenda aliquam reiciendis excepturi alias nisi, delectus nostrum veritatis necessitatibus quaerat atque! Nemo perferendis nulla molestiae assumenda reprehenderit. Quibusdam dolor nemo ipsam voluptates error?",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi inventore soluta? Animi saepe inventore alias officia amet odit iste",
+    maximumHeight: 100,
   },
   {
     title: "Apply for jobs",
     icon: <CreateIcon />,
     content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi inventore soluta? Animi saepe inventore alias officia amet odit iste molestiae quibusdam minima aliquid mollitia dolor dolorum porro neque laborum nisi exercitationem eius quasi ea ullam, architecto, fugit quae quam a! Nostrum, voluptatibus. Earum debitis optio error animi temporibus, ex officiis qui illo? Quibusdam illo numquam magni dolor molestias laboriosam quos nihil facere id, labore laudantium saepe nisi et eum minima ut. Assumenda aliquam reiciendis excepturi alias nisi, delectus nostrum veritatis necessitatibus quaerat atque! Nemo perferendis nulla molestiae assumenda reprehenderit. Quibusdam dolor nemo ipsam voluptates error?",
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi ",
+    maximumHeight: 100,
   },
 ];
-
-const parentHeightAnim = {
-  initial: { height: 0 },
-  animate: { height: 300, transition: { ...easy, delay: 0.1 } },
-  exit: { height: 0, transition: { ...easy, duration: 0.55 } },
-};
 
 const gridParent = {
   initial: {},

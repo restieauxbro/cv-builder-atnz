@@ -36,9 +36,11 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
           );
         })}
       </ul>
-      <Button variant="contained" color="primary" onClick={() => openForm()}>
-        Add more
-      </Button>
+      <div className="cv-ui-button">
+        <Button variant="contained" color="primary" onClick={() => openForm()}>
+          Add more
+        </Button>
+      </div>
     </>
   );
 };
@@ -90,21 +92,10 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
     <>
       <h3>{title}</h3>
       <div className="items-form">
-        <ul className="editable-list-items">
-          {editableListItems.map((editable) => {
-            const keyValues = Object.values(editable.properties);
-            return (
-              <li key={uuidv4()} className="list-item">
-                {keyValues.map((keyValue) => (
-                  <div key={uuidv4()} className="prop">
-                    {keyValue}
-                  </div>
-                ))}
-                <Closer clickFunction={() => deleteItem(editable.id)} />
-              </li>
-            );
-          })}
-        </ul>
+        <DraggableListItems
+          editableListItems={editableListItems}
+          deleteItem={deleteItem}
+        />
         <div className="add-new-item-cnt">
           <div className="subtitle">Add new</div>
 
@@ -157,5 +148,25 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
         </div>
       </div>
     </>
+  );
+};
+
+const DraggableListItems = ({ editableListItems, deleteItem }) => {
+  return (
+    <ul className="editable-list-items">
+      {editableListItems.map((editable) => {
+        const keyValues = Object.values(editable.properties);
+        return (
+          <li key={uuidv4()} className="list-item">
+            {keyValues.map((keyValue) => (
+              <div key={uuidv4()} className="prop">
+                {keyValue}
+              </div>
+            ))}
+            <Closer clickFunction={() => deleteItem(editable.id)} />
+          </li>
+        );
+      })}
+    </ul>
   );
 };
