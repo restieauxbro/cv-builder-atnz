@@ -3,11 +3,11 @@ import { AnimateSharedLayout } from "framer-motion";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import CvUi from "./components/cv-ui";
-import CVPDF from "./components/cv-pdf";
 import Sidebar from "./components/sidebar";
 import HelpSwitchProvider from "./components/providers/HelpProvider";
 import CVDataProvider from "./components/providers/CVDataProvider";
 import StyleProvider from "./components/providers/StyleProvider";
+import PDFViewerComponent from "./components/pdf-viewer";
 
 const App = () => {
   return (

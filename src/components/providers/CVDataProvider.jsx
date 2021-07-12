@@ -8,9 +8,10 @@ const CVDataProvider = ({ children }) => {
     personalDetails: {
       name: "Tim Restieaux",
       intro:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, incidunt quod quam, placeat hic itaque voluptas harum consectetur aspernatur expedita debitis. Magnam, fugiat! Sint",
+        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, incidunt quod quam, placeat hic itaque voluptas harum consectetur aspernatur expedita debitis. Magnam, fugiat! Sint Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus.",
       email: "restieauxbro@hotmail.com",
       address: "Auckland",
+      phone: "02108419222"
     },
     jobs: [
       {

@@ -40,6 +40,19 @@ const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
       .required("Tell us about what your tasks were."),
   });
 
+  function submitJob(values) {
+    // map through jobs and replace the job with matching id
+    const jobsWithEdited = jobs.map((job) => {
+      if (job.id === chosenJobID) {
+        job = { id: uuidv4(), ...values };
+      }
+      return job;
+    });
+    isNew === true
+      ? changeJobs([...jobs, { id: uuidv4(), ...values }])
+      : changeJobs(jobsWithEdited);
+  }
+
   const formik = useFormik({
     initialValues: {
       company: chosenJob.company,
@@ -49,16 +62,7 @@ const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      // map through jobs and replace the job with matching id
-      const jobsWithEdited = jobs.map((job) => {
-        if (job.id === chosenJobID) {
-          job = { id: uuidv4(), ...values };
-        }
-        return job;
-      });
-      isNew === true
-        ? changeJobs([...jobs, { id: uuidv4(), ...values }])
-        : changeJobs(jobsWithEdited);
+      submitJob(values);
       setPopUpOpen(false);
     },
   });
