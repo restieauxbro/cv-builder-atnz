@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.91751586.chunk.css",
+    "main.js": "/static/js/main.4810239e.chunk.js",
+    "main.js.map": "/static/js/main.4810239e.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.c3cebca2.js",
+    "runtime-main.js.map": "/static/js/runtime-main.c3cebca2.js.map",
+    "static/js/2.08695ccd.chunk.js": "/static/js/2.08695ccd.chunk.js",
+    "static/js/2.08695ccd.chunk.js.map": "/static/js/2.08695ccd.chunk.js.map",
+    "static/js/3.bb1faa42.chunk.js": "/static/js/3.bb1faa42.chunk.js",
+    "static/js/3.bb1faa42.chunk.js.map": "/static/js/3.bb1faa42.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.91751586.chunk.css.map": "/static/css/main.91751586.chunk.css.map",
+    "static/js/2.08695ccd.chunk.js.LICENSE.txt": "/static/js/2.08695ccd.chunk.js.LICENSE.txt",
+    "static/media/Poppins-Bold.8a0f2aae.ttf": "/static/media/Poppins-Bold.8a0f2aae.ttf",
+    "static/media/Poppins-ExtraBold.f0b965ee.ttf": "/static/media/Poppins-ExtraBold.f0b965ee.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c3cebca2.js",
+    "static/js/2.08695ccd.chunk.js",
+    "static/css/main.91751586.chunk.css",
+    "static/js/main.4810239e.chunk.js"
+  ]
+}
