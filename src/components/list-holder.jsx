@@ -6,6 +6,7 @@ import Closer from "./closer";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useCVData, useCVDataUpdate } from "./providers/CVDataProvider";
+import TurnOnHelp from "./TurnOnHelp";
 
 const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
   const listItems = useCVData().education;
@@ -127,24 +128,30 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
                 }
               />
             </div>
-            <div className="buttons-cnt">
+            <div className="buttons-cnt" style={{marginTop: "1rem"}}>
               <Button color="primary" variant="contained" type="submit">
                 Add
               </Button>
             </div>
           </form>
         </div>
-        <div className="buttons-cnt">
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              setListItems(editableListItems);
-              setPopUpOpen(false);
-            }}
-          >
-            Save and exit
-          </Button>
+        <div
+          className="flex space-between align-center"
+          style={{ marginTop: "1rem", minHeight: 50 }}
+        >
+          <TurnOnHelp />
+          <div className="buttons-cnt">
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                setListItems(editableListItems);
+                setPopUpOpen(false);
+              }}
+            >
+              Save and exit
+            </Button>
+          </div>
         </div>
       </div>
     </>

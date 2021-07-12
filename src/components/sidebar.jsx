@@ -134,6 +134,18 @@ const StylePanel = () => {
   );
 };
 
+const DownloadCVContent = () => {
+  return (
+    <>
+      <h3>Nice one!</h3>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione
+        similique, tempore amet delectus aliquam facilis.
+      </p>
+    </>
+  );
+};
+
 const menuButtons = [
   {
     title: "Style CV",
@@ -144,17 +156,16 @@ const menuButtons = [
   {
     title: "Download CV",
     icon: <GetAppIcon />,
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi inventore soluta? Animi saepe inventore alias officia amet odit iste",
-    maximumHeight: 100,
+    content: <DownloadCVContent />,
+    maximumHeight: 500,
   },
-  {
-    title: "Apply for jobs",
-    icon: <CreateIcon />,
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi ",
-    maximumHeight: 100,
-  },
+  // {
+  //   title: "Apply for jobs",
+  //   icon: <CreateIcon />,
+  //   content:
+  //     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi ",
+  //   maximumHeight: 100,
+  // },
 ];
 
 const gridParent = {
