@@ -5,11 +5,10 @@ import CreateIcon from "@material-ui/icons/Create";
 import StyleIcon from "@material-ui/icons/Style";
 import CVPDF from "./cv-pdf";
 import Closer from "./closer";
-import { animate, AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChangeLayout, CurrentLayout } from "./providers/StyleProvider";
 import { easy } from "../utils/animations";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import { useCVData } from "./providers/CVDataProvider";
 
 const Sidebar = () => {
   const [openID, setOpenID] = useState("");
@@ -159,13 +158,13 @@ const menuButtons = [
     content: <DownloadCVContent />,
     maximumHeight: 500,
   },
-  // {
-  //   title: "Apply for jobs",
-  //   icon: <CreateIcon />,
-  //   content:
-  //     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi ",
-  //   maximumHeight: 100,
-  // },
+  {
+    title: "Apply for jobs",
+    icon: <CreateIcon />,
+    content:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi ",
+    maximumHeight: 100,
+  },
 ];
 
 const gridParent = {

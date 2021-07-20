@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { AnimateSharedLayout } from "framer-motion";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
@@ -8,6 +8,8 @@ import HelpSwitchProvider from "./components/providers/HelpProvider";
 import CVDataProvider from "./components/providers/CVDataProvider";
 import StyleProvider from "./components/providers/StyleProvider";
 import PDFViewerComponent from "./components/pdf-viewer";
+import { CircularProgress } from "@material-ui/core";
+import CvAnimSwap from "./components/changingState/cvAnimSwap";
 
 const App = () => {
   return (
@@ -21,7 +23,7 @@ const App = () => {
                 <Sidebar />
 
                 <HelpSwitchProvider>
-                  <CvUi />
+                  <CvAnimSwap />
                 </HelpSwitchProvider>
               </div>
             </AnimateSharedLayout>

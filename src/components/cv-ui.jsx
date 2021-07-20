@@ -14,38 +14,38 @@ const CvUi = () => {
   return (
     <>
       <div className="cv-builder-cnt">
-      <div className="cv-builder-content">
-    
-        <div className="cv-builder">
-          <div className="form-grid">
-            <div className="column-1">
-              <PersonalDetails
-                setPopUpContent={setPopUpContent}
-                setPopUpOpen={setPopUpOpen}
-              />
-              <div className="education section">
-                <ListHolder
-                  title="Education"
+        <div className="cv-builder-content">
+          <div className="cv-builder">
+            <div className="form-grid">
+              <div className="column-1">
+                <PersonalDetails
+                  setPopUpContent={setPopUpContent}
+                  setPopUpOpen={setPopUpOpen}
+                />
+                <div className="education section">
+                  <ListHolder
+                    title="Education"
+                    setPopUpOpen={setPopUpOpen}
+                    setPopUpContent={setPopUpContent}
+                    popUpOpen={popUpOpen}
+                    form={<SchoolsValidationForm />}
+                  />
+                </div>
+                <div className="skills section"></div>
+              </div>
+              <div className="column-2">
+                <NameTitle
                   setPopUpOpen={setPopUpOpen}
                   setPopUpContent={setPopUpContent}
-                  popUpOpen={popUpOpen}
-                  form={<SchoolsValidationForm />}
+                />
+
+                <ExperienceSection
+                  setPopUpOpen={setPopUpOpen}
+                  setPopUpContent={setPopUpContent}
                 />
               </div>
-              <div className="skills section"></div>
             </div>
-            <div className="column-2">
-              <NameTitle
-                setPopUpOpen={setPopUpOpen}
-                setPopUpContent={setPopUpContent}
-              />
-
-              <ExperienceSection setPopUpOpen={setPopUpOpen}
-                setPopUpContent={setPopUpContent} />
-            </div>
-            
           </div>
-        </div>
         </div>
       </div>
       <AnimatePresence>
