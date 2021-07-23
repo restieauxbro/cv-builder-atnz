@@ -13,7 +13,11 @@ const ExperienceSection = ({ setPopUpOpen, setPopUpContent }) => {
   function editJob(jobId) {
     const chosenJob = jobs.find((jobs) => jobs.id === jobId);
     setPopUpContent(
-      <JobForm chosenJob={chosenJob} setPopUpOpen={setPopUpOpen} />
+      <JobForm
+        chosenJob={chosenJob}
+        setPopUpOpen={setPopUpOpen}
+        setPopUpContent={setPopUpContent}
+      />
     );
     setPopUpOpen(true);
   }
@@ -52,6 +56,7 @@ const ExperienceSection = ({ setPopUpOpen, setPopUpContent }) => {
             setPopUpContent(
               <JobForm
                 setPopUpOpen={setPopUpOpen}
+                setPopUpContent={setPopUpContent}
                 chosenJob={{ title: "" }}
                 isNew={true}
               />

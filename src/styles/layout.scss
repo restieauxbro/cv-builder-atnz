@@ -259,16 +259,6 @@ body.competenz {
   }
 }
 
-.rich-input {
-  padding: 0.7rem 0;
-  margin: 2rem 0;
-  outline: none;
-  border-bottom: 1px solid grey;
-  &:focus,
-  &:focus-visible {
-    outline: none;
-  }
-}
 
 .dark-text {
   color: var(--darkblue);

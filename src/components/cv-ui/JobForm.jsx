@@ -10,7 +10,7 @@ import HelpBubble from "../helpBubble";
 import TurnOnHelp from "../TurnOnHelp";
 import { useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
 
-const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
+const JobForm = ({ setPopUpOpen, setPopUpContent, chosenJob, isNew }) => {
   const jobs = useCVData().jobs;
   const CVData = useCVData();
   const CVDataUpdate = useCVDataUpdate();
@@ -21,6 +21,8 @@ const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
     ...chosenJob,
     id: uuidv4(),
   });
+
+  const [addAnotherJob, setAddAnotherJob] = useState(false);
 
   const chosenJobID = chosenJob.id;
 
@@ -53,6 +55,18 @@ const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
       : changeJobs(jobsWithEdited);
   }
 
+  function openNewJobForm() {
+
+    setPopUpContent(
+      <JobForm
+        setPopUpOpen={setPopUpOpen}
+        setPopUpContent={setPopUpContent}
+        chosenJob={{ title: "", company: "" }}
+        isNew={true}
+      />
+    );
+  }
+
   const formik = useFormik({
     initialValues: {
       company: chosenJob.company,
@@ -63,7 +77,10 @@ const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       submitJob(values);
-      setPopUpOpen(false);
+      setPopUpContent("");
+      setTimeout(() => {
+        addAnotherJob && openNewJobForm();
+      }, 0);
     },
   });
 
@@ -128,9 +145,6 @@ const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
             </AnimatePresence>
           </div>
           <div className="help-bubble-focus">
-            <div className="rich-input" contenteditable="true">
-
-            </div>
             <TextField
               style={{ width: "100%", marginTop: "2rem" }}
               multiline
@@ -177,6 +191,7 @@ const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
               color="primary"
               startIcon={<CheckIcon />}
               type="submit"
+              onClick={() => setAddAnotherJob(false)}
             >
               Save
             </Button>
@@ -185,6 +200,7 @@ const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
               color="primary"
               endIcon={<AddCircle />}
               type="submit"
+              onClick={() => setAddAnotherJob(true)}
             >
               Add more
             </Button>
