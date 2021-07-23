@@ -20,9 +20,12 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
   }
 
   const validationSchema = yup.object({
-    name: yup
-      .string("What's your name?")
-      .required("What's your name?"),
+    firstName: yup
+      .string("What's your first name?")
+      .required("What's your first name?"),
+    lastName: yup
+      .string("What's your last name?")
+      .required("What's your last name?"),
     intro: yup
       .string("Who are you?")
       .min(60, "Can you tell us more?")
@@ -38,7 +41,8 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
 
   const formik = useFormik({
     initialValues: {
-      name: personalDetails.name,
+      firstName: personalDetails.firstName,
+      lastName: personalDetails.lastName,
       email: personalDetails.email,
       address: personalDetails.address,
       intro: personalDetails.intro,
@@ -59,13 +63,22 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
       <form onSubmit={formik.handleSubmit}>
         <div className="two-column-grid">
           <TextField
-            id="name"
-            name="name"
-            label="Your name"
-            value={formik.values.name}
+            id="firstName"
+            name="firstName"
+            label="First name"
+            value={formik.values.firstName}
             onChange={formik.handleChange}
-            error={formik.touched.name && Boolean(formik.errors.name)}
-            helperText={formik.touched.name && formik.errors.name}
+            error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+            helperText={formik.touched.firstName && formik.errors.firstName}
+          />
+          <TextField
+            id="lastName"
+            name="lastName"
+            label="Last name"
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
+            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            helperText={formik.touched.lastName && formik.errors.lastName}
           />
           <TextField
             id="email"

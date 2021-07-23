@@ -128,6 +128,9 @@ const JobForm = ({ setPopUpOpen, chosenJob, isNew }) => {
             </AnimatePresence>
           </div>
           <div className="help-bubble-focus">
+            <div className="rich-input" contenteditable="true">
+
+            </div>
             <TextField
               style={{ width: "100%", marginTop: "2rem" }}
               multiline

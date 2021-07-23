@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import CreateIcon from "@material-ui/icons/Create";
 import StyleIcon from "@material-ui/icons/Style";
-import CVPDF from "./cv-pdf";
 import Closer from "./closer";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChangeLayout, CurrentLayout } from "./providers/StyleProvider";
 import { easy } from "../utils/animations";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const Sidebar = () => {
   const [openID, setOpenID] = useState("");

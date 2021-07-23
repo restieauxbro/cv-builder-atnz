@@ -6,16 +6,34 @@ import SchoolsValidationForm from "./forms/schoolsValidationForm";
 import PersonalDetails from "./cv-ui/PersonalDetails";
 import NameTitle from "./cv-ui/NameTitle";
 import ExperienceSection from "./cv-ui/ExperienceSection";
+import { CurrentLayout } from "./providers/StyleProvider";
+import { easy } from "../utils/animations";
 
 const CvUi = () => {
   const [popUpOpen, setPopUpOpen] = useState(false);
   const [popUpContent, setPopUpContent] = useState({});
 
+  const layoutName = CurrentLayout().appLayout;
+
   return (
     <>
       <div className="cv-builder-cnt">
         <div className="cv-builder-content">
-          <div className="cv-builder">
+          <motion.div
+            layoutId="cv-page"
+            className="cv-builder"
+            animate={
+              layoutName === "layout-large-left"
+                ? {
+                    x: 100,
+                    y: -150,
+                    scale: 0.7,
+                    transition: { ...easy, duration: 0.6 },
+                  }
+                : {}
+            }
+            transition={{ ...easy, duration: 1 }}
+          >
             <div className="form-grid">
               <div className="column-1">
                 <PersonalDetails
@@ -45,7 +63,7 @@ const CvUi = () => {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
       <AnimatePresence>

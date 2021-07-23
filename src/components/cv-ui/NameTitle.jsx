@@ -12,7 +12,7 @@ const NameTitle = ({setPopUpContent, setPopUpOpen}) => {
         setPopUpOpen(true);
       }}
     >
-      {personalDetails.name ? personalDetails.name : "Your name"}
+      {personalDetails.firstName ? `${personalDetails.firstName} ${personalDetails.lastName}` : "Your name"}
     </div>
   );
 };

@@ -6,12 +6,13 @@ const UpdateCVData = createContext();
 const CVDataProvider = ({ children }) => {
   const [CVObject, setCVObject] = useState({
     personalDetails: {
-      name: "Tim Restieaux",
+      firstName: "Tim",
+      lastName: "Restieaux",
       intro:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, incidunt quod quam, placeat hic itaque voluptas harum consectetur aspernatur expedita debitis. Magnam, fugiat! Sint Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus.",
       email: "restieauxbro@hotmail.com",
       address: "Auckland",
-      phone: "02108419222"
+      phone: "02108419222",
     },
     jobs: [
       {
@@ -49,12 +50,18 @@ const CVDataProvider = ({ children }) => {
     ],
   });
 
-  const [popUpOpen, setPopUpOpen] = useState(false);
-  const [popUpContent, setPopUpContent] = useState({});
+  const cvData = useContext(CVData);
+
+  function updateCvFromUI(property, value) {
+    setCVObject({ ...cvData, [property]: value });
+  }
+
   return (
     <CVData.Provider value={CVObject}>
       <UpdateCVData.Provider value={setCVObject}>
-        {children}
+      
+          {children}
+     
       </UpdateCVData.Provider>
     </CVData.Provider>
   );
