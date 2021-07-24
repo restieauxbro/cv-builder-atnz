@@ -7,6 +7,7 @@ import Closer from "./closer";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChangeLayout, CurrentLayout } from "./providers/StyleProvider";
 import { easy } from "../utils/animations";
+import LoginOrSave from "./loginFlow/loginOrSave";
 
 const Sidebar = () => {
   const [openID, setOpenID] = useState("");
@@ -19,7 +20,12 @@ const Sidebar = () => {
       >
         <div>
           <div className="sidebar-cnt">
-            <div className="placeholder"></div>
+            <LoginOrSave
+              title="login-or-save"
+              openID={openID}
+              setOpenID={setOpenID}
+            />
+           
             <div className="sidebar">
               {menuButtons.map(({ title, icon, content, maximumHeight }) => (
                 <MenuButton
@@ -37,6 +43,7 @@ const Sidebar = () => {
                 Download
               </Button>
             </PDFDownloadLink> */}
+            <div className="placeholder"></div>
             <div className="placeholder"></div>
           </div>
         </div>
@@ -78,7 +85,6 @@ const MenuButton = ({
         >
           <div className="menu-button-cnt">
             <div className="icon">{icon}</div>
-
             {title}
           </div>
         </Button>
@@ -154,7 +160,7 @@ const menuButtons = [
     title: "Download CV",
     icon: <GetAppIcon />,
     content: <DownloadCVContent />,
-    maximumHeight: 500,
+    maximumHeight: 200,
   },
   {
     title: "Apply for jobs",

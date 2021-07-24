@@ -78,6 +78,7 @@ const JobForm = ({ setPopUpOpen, setPopUpContent, chosenJob, isNew }) => {
     onSubmit: (values) => {
       submitJob(values);
       setPopUpContent("");
+      !addAnotherJob && setPopUpOpen(false)
       setTimeout(() => {
         addAnotherJob && openNewJobForm();
       }, 0);
