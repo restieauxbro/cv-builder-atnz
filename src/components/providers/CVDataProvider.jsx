@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { useSession, supabase } from "./AuthProvider";
 
 const CVData = createContext();
 const UpdateCVData = createContext();
@@ -49,23 +50,54 @@ const CVDataProvider = ({ children }) => {
       },
     ],
   };
+  const [CVObject, setCVObject] = useState(defaultCVData);
 
-  const [CVObject, setCVObject] = useState({});
+  async function addCVDataToDataBase() {
+    try {
+      let { data, error, status } = await supabase
+        .from("profiles")
+        .select(`firstName, lastName`)
+        .single();
 
+      if (data) {
+      }
+      if (error && status !== 406) {
+        const fullnameFromGoogle = supabase.auth.user().user_metadata.full_name;
+        // If there's no db name data, add it from CV
+        updateNameInDB(fullnameFromGoogle);
+      }
+    } catch (error) {
+      // alert(error.message);lo
+    }
+  }
 
-  useEffect(
-    () => {
-      // supabaseSession
-      //   ? getProfile()
-      //   : localStorageCV
-      //   ? setCVObject(localStorageCV)
-      //   :
-      setCVObject(defaultCVData);
-    },
-    [
-      // supabaseSession
-    ]
-  );
+  async function updateNameInDB(fullnameFromGoogle) {
+    const user = supabase.auth.user();
+    const updates = {
+      id: user.id,
+      fullName: fullnameFromGoogle || null,
+      firstName: CVObject.personalDetails.firstName,
+      lastName: CVObject.personalDetails.lastName,
+    };
+    try {
+      let { error } = await supabase.from("profiles").upsert(updates, {
+        returning: "minimal", // Don't return the value after inserting
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  const session = useSession();
+  useEffect(() => {
+    // supabaseSession
+    //   ? getProfile()
+    //   : localStorageCV
+    //   ? setCVObject(localStorageCV)
+    //   :
+    setCVObject(defaultCVData);
+    session && addCVDataToDataBase();
+  }, [session]);
 
   return (
     <CVData.Provider value={CVObject}>
@@ -85,6 +117,3 @@ export function useCVData() {
 export function useCVDataUpdate() {
   return useContext(UpdateCVData);
 } // use this in any child to update the context
-
-
-

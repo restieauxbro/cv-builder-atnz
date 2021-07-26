@@ -11,8 +11,8 @@ const App = () => {
   return (
     <>
       <StyleProvider>
-        <CVDataProvider>
-          <AuthProvider>
+        <AuthProvider>
+          <CVDataProvider>
             <AnimateSharedLayout>
               <div className="cv-builder-columns">
                 <div className="placeholder"></div>
@@ -24,8 +24,8 @@ const App = () => {
                 </HelpSwitchProvider>
               </div>
             </AnimateSharedLayout>
-          </AuthProvider>
-        </CVDataProvider>
+          </CVDataProvider>
+        </AuthProvider>
       </StyleProvider>
     </>
   );

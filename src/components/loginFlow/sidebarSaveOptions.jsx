@@ -2,6 +2,8 @@ import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import MagicLink from "./magicLink";
 import { supabase } from "../providers/AuthProvider";
+import { Facebook } from "@material-ui/icons";
+import { ReactComponent as GoogleSVG } from "../../assets/GoogleLogo.svg";
 
 const SideBarSaveOptions = () => {
   const [magicLinkScreen, setMagicLinkScreen] = useState(false);
@@ -19,9 +21,9 @@ const SideBarSaveOptions = () => {
 export default SideBarSaveOptions;
 
 const Options = ({ setMagicLinkScreen }) => {
-  async function signInWithFacebook() {
+  async function signInWithProvider(provider) {
     const { user, session, error } = await supabase.auth.signIn({
-      provider: "facebook",
+      provider: provider,
     });
   }
   return (
@@ -41,9 +43,21 @@ const Options = ({ setMagicLinkScreen }) => {
           fullWidth
           variant="contained"
           color="primary"
-          onClick={() => signInWithFacebook()}
+          startIcon={<Facebook />}
+          onClick={() => signInWithProvider("facebook")}
         >
           Login with Facebook
+        </Button>
+      </div>
+      <div className="button-cnt">
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          startIcon={<GoogleSVG />}
+          onClick={() => signInWithProvider("google")}
+        >
+          Login with Google
         </Button>
       </div>
     </>
