@@ -5,17 +5,65 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChangeLayout, CurrentLayout } from "../providers/StyleProvider";
 import { easy } from "../../utils/animations";
 import { AccountCircle, Save } from "@material-ui/icons";
+import SideBarSaveOptions from "./sidebarSaveOptions";
+import { useSession, supabase } from "../providers/AuthProvider";
+import { useEffect } from "react";
+import { useCVData } from "../providers/CVDataProvider";
 
 const LoginOrSave = ({ title, openID, setOpenID }) => {
   const layout = CurrentLayout();
   const changeLayout = ChangeLayout();
   const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState("");
 
   const parentHeightAnim = {
     initial: { height: 0 },
     animate: { height: 300, transition: { ...easy, delay: 0.1 } },
     exit: { height: 0, transition: { ...easy, duration: 0.55 } },
   };
+
+  const personalDetails = useCVData().personalDetails
+
+  // Move all these calls and db updates into the CV data provider
+  async function getProfile() {
+    try {
+      let { data, error, status } = await supabase
+        .from("profiles")
+        .select(`firstName, lastName`)
+        .single();
+
+      if (data) {
+        console.log(data);
+        const fullnameFromGoogle = supabase.auth.user().user_metadata.full_name
+        data.firstName ? setName(`${data.firstName}`) : updateNameInDB(fullnameFromGoogle);
+      }
+    } catch (error) {
+      // alert(error.message);lo
+    }
+  }
+
+  async function updateNameInDB(fullnameFromGoogle) {
+    const user = supabase.auth.user();
+    const updates = {
+      id: user.id,
+      fullName: fullnameFromGoogle,
+      firstName: personalDetails.firstName,
+      lastName: personalDetails.lastName,
+    };
+    try {
+      let { error } = await supabase.from("profiles").upsert(updates, {
+        returning: "minimal", // Don't return the value after inserting
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  useEffect(() => {
+    session && getProfile();
+  });
+
+  const session = useSession();
 
   return (
     <motion.div
@@ -39,7 +87,7 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
                 <div className="icon">
                   <AccountCircle />
                 </div>
-                Profile
+                {session && name ? `${name}` : "Profile"}
               </div>
             </Button>
           </div>
@@ -80,7 +128,9 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
             exit="exit"
             className="overflow-cnt"
           >
-            <div className="panel-content">hi</div>
+            <div className="panel-content">
+              {session ? <LogoutButton /> : <SideBarSaveOptions />}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -89,3 +139,14 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
 };
 
 export default LoginOrSave;
+
+const LogoutButton = () => {
+  async function logout() {
+    let { error } = await supabase.auth.signOut();
+  }
+  return (
+    <Button variant="contained" disableElevation onClick={() => logout()}>
+      Log out
+    </Button>
+  );
+};

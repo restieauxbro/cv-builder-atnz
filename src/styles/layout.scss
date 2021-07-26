@@ -221,7 +221,6 @@ body.competenz {
         }
         &.profile {
           background-color: var(--white);
-          padding: 0 0.5rem;
         }
         &.save {
           .icon {
@@ -229,6 +228,9 @@ body.competenz {
           }
         }
       }
+    }
+    .panel-content{
+      padding: 1.2rem;
     }
   }
   .menu-button-cnt {
@@ -335,6 +337,9 @@ body.competenz {
 .buttons-cnt {
   display: flex;
   justify-content: flex-end;
+}
+.button-cnt{
+  margin-top: 1rem;
 }
 
 .items-form {

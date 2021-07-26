@@ -25,10 +25,11 @@ const Sidebar = () => {
               openID={openID}
               setOpenID={setOpenID}
             />
-           
+
             <div className="sidebar">
               {menuButtons.map(({ title, icon, content, maximumHeight }) => (
                 <MenuButton
+                  key={title}
                   title={title}
                   icon={icon}
                   content={content}

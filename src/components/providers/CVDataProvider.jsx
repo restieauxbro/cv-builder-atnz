@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { supabase } from "../loginFlow/supabaseClient";
 
 const CVData = createContext();
 const UpdateCVData = createContext();
@@ -53,31 +52,6 @@ const CVDataProvider = ({ children }) => {
 
   const [CVObject, setCVObject] = useState({});
 
-  // function for Supabase Session info
-  // async function getProfile() {
-  //   try {
-  //     setLoading(true);
-  //     const user = supabase.auth.user();
-
-  //     let { data, error, status } = await supabase
-  //       .from("profiles")
-  //       .select(`username, website, avatar_url`)
-  //       .eq("id", user.id)
-  //       .single();
-
-  //     if (error && status !== 406) {
-  //       throw error;
-  //     }
-
-  //     if (data) {
-  //       setCVObject(data.CV); //find the cv object from supabase
-  //     }
-  //   } catch (error) {
-  //     alert.apply(error.message);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
 
   useEffect(
     () => {
@@ -111,3 +85,6 @@ export function useCVData() {
 export function useCVDataUpdate() {
   return useContext(UpdateCVData);
 } // use this in any child to update the context
+
+
+
