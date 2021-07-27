@@ -19,6 +19,7 @@
     "react": "^18.0.0-alpha-9b76d2d7b-20210719",
     "react-dom": "^18.0.0-alpha-9b76d2d7b-20210719",
     "react-scripts": "4.0.3",
+    "storejs": "^1.1.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.9"

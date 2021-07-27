@@ -7,13 +7,14 @@ import { easy } from "../../utils/animations";
 import { AccountCircle, Save } from "@material-ui/icons";
 import SideBarSaveOptions from "./sidebarSaveOptions";
 import { useSession, supabase } from "../providers/AuthProvider";
-
+import { useEffect } from "react";
+import { useCVData } from "../providers/CVDataProvider";
 
 const LoginOrSave = ({ title, openID, setOpenID }) => {
   const layout = CurrentLayout();
   const changeLayout = ChangeLayout();
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState("Profile");
 
   const parentHeightAnim = {
     initial: { height: 0 },
@@ -22,6 +23,24 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
   };
 
   const session = useSession();
+  const CVFirstName = useCVData().personalDetails.firstName;
+
+  async function getNameFromDB() {
+    try {
+      let { data, error, status } = await supabase
+        .from("profiles")
+        .select(`firstName, lastName`)
+        .single();
+      if (data) {
+        setName(data.firstName);
+      } else setName(CVFirstName);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    session && getNameFromDB();
+  });
 
   return (
     <motion.div
@@ -45,7 +64,7 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
                 <div className="icon">
                   <AccountCircle />
                 </div>
-                {session && name ? `${name}` : "Profile"}
+                {session ? name : "Profile"}
               </div>
             </Button>
           </div>
@@ -53,16 +72,18 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
             <Button
               fullWidth
               onClick={() => {
-                setOpenID(title);
-                setIsOpen(true);
-                changeLayout({ ...layout, appLayout: "layout-large-left" });
+                if (!session) {
+                  setOpenID(title);
+                  setIsOpen(true);
+                  changeLayout({ ...layout, appLayout: "layout-large-left" });
+                }
               }}
             >
               <div className="menu-button-cnt">
                 <div className="icon">
                   <Save />
                 </div>
-                Save
+                {session ? "Saved" : "Save"}
               </div>
             </Button>
           </div>

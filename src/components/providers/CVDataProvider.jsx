@@ -58,16 +58,16 @@ const CVDataProvider = ({ children }) => {
         .from("profiles")
         .select(`firstName, lastName`)
         .single();
-
       if (data) {
+        // does nothing with database data if it's already there
       }
       if (error && status !== 406) {
         const fullnameFromGoogle = supabase.auth.user().user_metadata.full_name;
-        // If there's no db name data, add it from CV
+        // If there's no db name data, add it from CVData
         updateNameInDB(fullnameFromGoogle);
       }
     } catch (error) {
-      // alert(error.message);lo
+      console.log(error.message);
     }
   }
 
@@ -90,12 +90,25 @@ const CVDataProvider = ({ children }) => {
 
   const session = useSession();
   useEffect(() => {
-    // supabaseSession
-    //   ? getProfile()
-    //   : localStorageCV
-    //   ? setCVObject(localStorageCV)
-    //   :
-    setCVObject(defaultCVData);
+    localStorage.setItem('cvDataLocal', 
+      JSON.stringify({
+        ...defaultCVData,
+        personalDetails: {
+          ...defaultCVData.personalDetails,
+          firstName: "Yonkers",
+        },
+      })
+    );
+    session
+      ? setCVObject(defaultCVData)
+      : // if the session exists try to get database cv
+      localStorage.getItem("cvDataLocal") !== null
+      ? // else if localstorage isn't null
+        setCVObject(JSON.parse(localStorage.getItem("cvDataLocal")))
+      : //set cvData to the one in local storage
+        setCVObject(defaultCVData);
+    //else use the default data
+
     session && addCVDataToDataBase();
   }, [session]);
 

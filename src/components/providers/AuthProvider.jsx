@@ -29,26 +29,7 @@ async function upsertUserToProfiles() {
     console.log(error.message);
   }
 }
-async function getProfile() {
-  try {
-    const user = supabase.auth.user();
-    let { data, error, status } = await supabase
-      .from("profiles")
-      .select(`firstName, lastName, email`)
-      .eq("id", user.id)
-      .single();
 
-    if (error && status !== 406) {
-      throw error;
-    }
-
-    if (data) {
-      //console.log(data);
-    }
-  } catch (error) {
-    // alert(error.message);
-  }
-}
 
 const AuthProvider = ({ children }) => {
   const [session, setSession] = useState(null);
@@ -58,9 +39,7 @@ const AuthProvider = ({ children }) => {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
-    upsertUserToProfiles();
-    getProfile();
-    console.log(supabase.auth.user())
+    session && upsertUserToProfiles(); // upserts user to database on every page load
   }, []);
 
   return (

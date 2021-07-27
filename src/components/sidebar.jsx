@@ -151,12 +151,12 @@ const DownloadCVContent = () => {
 };
 
 const menuButtons = [
-  {
-    title: "Style CV",
-    content: <StylePanel />,
-    icon: <StyleIcon />,
-    maximumHeight: 500,
-  },
+  // {
+  //   title: "Style CV",
+  //   content: <StylePanel />,
+  //   icon: <StyleIcon />,
+  //   maximumHeight: 500,
+  // },
   {
     title: "Download CV",
     icon: <GetAppIcon />,
