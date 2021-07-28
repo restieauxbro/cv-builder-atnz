@@ -5,18 +5,23 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import CheckIcon from "@material-ui/icons/Check";
 import HelpBubble from "../helpBubble";
-import { useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
+import {
+  useCVData,
+  useCVDataUpdate,
+  changeAllCVs,
+} from "../providers/CVDataProvider";
 import TurnOnHelp from "../TurnOnHelp";
+import { useSession } from "../providers/AuthProvider";
 
 const PersonalDetailsForm = ({ setPopUpOpen }) => {
   const CVData = useCVData();
-
+  const session = useSession();
   const personalDetails = useCVData().personalDetails;
 
   const CVDataUpdate = useCVDataUpdate();
 
   function setPersonalDetails(sumthn) {
-    CVDataUpdate({ ...CVData, personalDetails: sumthn });
+    changeAllCVs({ ...CVData, personalDetails: sumthn }, session, CVDataUpdate);
   }
 
   const validationSchema = yup.object({
@@ -34,6 +39,9 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
       .string("What's your email?")
       .email("That doesn't look like an email")
       .required("What's your email?"),
+    phone: yup
+      .string("What number should they call to reach you?")
+      .required("What number should they call to reach you?"),
     address: yup
       .string("Where abouts do you live?")
       .required("Where abouts do you live?"),
@@ -44,6 +52,7 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
       firstName: personalDetails.firstName,
       lastName: personalDetails.lastName,
       email: personalDetails.email,
+      phone: personalDetails.phone,
       address: personalDetails.address,
       intro: personalDetails.intro,
     },
@@ -89,6 +98,15 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
             error={formik.touched.email && Boolean(formik.errors.email)}
             helperText={formik.touched.email && formik.errors.email}
           />
+          <TextField
+            id="phone"
+            name="phone"
+            label="Phone"
+            value={formik.values.phone}
+            onChange={formik.handleChange}
+            error={formik.touched.phone && Boolean(formik.errors.phone)}
+            helperText={formik.touched.phone && formik.errors.phone}
+          />
         </div>
         <div>
           <div className="help-bubble-focus">
@@ -110,14 +128,13 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
                 <HelpBubble
                   setShow={setShowHelpBubble}
                   suggestions={[
-                    "January - March 2021",
-                    "Every Sunday at church",
+                    "Wellington central",
+                    "Wellington, but will move regions",
                   ]}
                 >
-                  <h3>When? How long?</h3>
+                  <h3>Where?</h3>
                   <p>
-                    Show the employer that you can stick to something. Say
-                    something like:
+                    Say the region or suburb you're in now but if you'd consider moving, say that!
                   </p>
                 </HelpBubble>
               )}
@@ -141,13 +158,13 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
               {showHelpBubble && (
                 <HelpBubble
                   setShow={setShowHelpBubble}
-                  suggestions={["Welded frames", "Organised time..."]}
+                  suggestions={["I'm a dedicated...", "Organised time..."]}
                 >
-                  <h3>What did you do? 💪</h3>
+                  <h3>Who are you really? 💪</h3>
                   <p>
-                    Tell us what your tasks were, or what you managed to
-                    accomplish, or anything really! The point is just to show
-                    you learned something.
+                    Lots of people get hired for their personality so if you don't 
+                    have much experience, tell the employer what kind of a worker you are.
+        
                   </p>
                 </HelpBubble>
               )}

@@ -14,9 +14,9 @@ const PersonalDetails = ({ setPopUpContent, setPopUpOpen }) => {
         }}
       >
         <div className="image"></div>
-        {personalDetails.email}
-        <div>021 084 19222</div>
-        {personalDetails.address}
+        {personalDetails.email || 'youremail@gmail.com'} <br />
+        {personalDetails.phone || '021 123 4567'} <br />
+        {personalDetails.address || 'Manurewa, Auckland'}
       </div>
       <div
         className="introduction section"

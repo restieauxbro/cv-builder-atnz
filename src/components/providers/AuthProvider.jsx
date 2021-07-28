@@ -8,7 +8,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const Session = createContext();
 
-async function upsertUserToProfiles() {
+export async function upsertUserToProfiles() {
   try {
     const user = supabase.auth.user();
 
@@ -18,18 +18,18 @@ async function upsertUserToProfiles() {
       updated_at: new Date(),
     };
 
-    let { error } = await supabase.from("profiles").upsert(updates, {
-      returning: "minimal", // Don't return the value after inserting
-    });
+    let { error } = await supabase.from("profiles").insert(updates, {
+      upsert: true,
+      returning: "minimal",
+    }).then(console.log('upserted'));
 
     if (error) {
-      throw error;
+      //throw error;
     }
   } catch (error) {
-    console.log(error.message);
+   // console.log(error);
   }
 }
-
 
 const AuthProvider = ({ children }) => {
   const [session, setSession] = useState(null);
@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
-    session && upsertUserToProfiles(); // upserts user to database on every page load
+     
   }, []);
 
   return (

@@ -64,7 +64,7 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
                 <div className="icon">
                   <AccountCircle />
                 </div>
-                {session ? name : "Profile"}
+                {(session && name.length > 1) ? name : "Profile"}
               </div>
             </Button>
           </div>
@@ -121,6 +121,7 @@ export default LoginOrSave;
 
 const LogoutButton = () => {
   async function logout() {
+    
     let { error } = await supabase.auth.signOut();
   }
   return (

@@ -5,8 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import Closer from "./closer";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useCVData, useCVDataUpdate } from "./providers/CVDataProvider";
+import {
+  changeAllCVs,
+  useCVData,
+  useCVDataUpdate,
+} from "./providers/CVDataProvider";
 import TurnOnHelp from "./TurnOnHelp";
+import { useSession } from "./providers/AuthProvider";
 
 const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
   const listItems = useCVData().education;
@@ -51,8 +56,9 @@ export default ListHolder;
 const ListForm = ({ title, listItems, setPopUpOpen }) => {
   const CVData = useCVData();
   const CVDataUpdate = useCVDataUpdate();
+  const session = useSession();
   function setListItems(sumthn) {
-    CVDataUpdate({ ...CVData, education: sumthn });
+    changeAllCVs({ ...CVData, education: sumthn }, session, CVDataUpdate);
   }
 
   const [editableListItems, setEditableListItems] = useState(listItems);
@@ -128,7 +134,7 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
                 }
               />
             </div>
-            <div className="buttons-cnt" style={{marginTop: "1rem"}}>
+            <div className="buttons-cnt" style={{ marginTop: "1rem" }}>
               <Button color="primary" variant="contained" type="submit">
                 Add
               </Button>

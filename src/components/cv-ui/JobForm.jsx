@@ -8,15 +8,18 @@ import * as yup from "yup";
 import CheckIcon from "@material-ui/icons/Check";
 import HelpBubble from "../helpBubble";
 import TurnOnHelp from "../TurnOnHelp";
-import { useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
+import { changeAllCVs, useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
+import { useSession } from "../providers/AuthProvider";
 
 const JobForm = ({ setPopUpOpen, setPopUpContent, chosenJob, isNew }) => {
   const jobs = useCVData().jobs;
   const CVData = useCVData();
   const CVDataUpdate = useCVDataUpdate();
+  const session = useSession()
   function changeJobs(sumthn) {
-    CVDataUpdate({ ...CVData, jobs: sumthn });
+    changeAllCVs({ ...CVData, jobs: sumthn }, session, CVDataUpdate);
   }
+
   const [jobInWaiting, changeJobInWaiting] = useState({
     ...chosenJob,
     id: uuidv4(),
