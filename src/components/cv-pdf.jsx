@@ -8,12 +8,13 @@ import {
   StyleSheet,
   Font,
 } from "@react-pdf/renderer";
+import PoppinsRegular from "../fonts/Poppins.ttf";
 import PoppinsBold from "../fonts/Poppins-Bold.ttf";
 import PoppinsExtrabold from "../fonts/Poppins-ExtraBold.ttf";
 
 Font.register({
   family: "Poppins",
-  src: "http://fonts.gstatic.com/s/poppins/v1/TDTjCH39JjVycIF24TlO-Q.ttf",
+  src: PoppinsRegular,
 });
 
 Font.register({
@@ -73,6 +74,12 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginBottom: 5,
   },
+  darkText: {
+    color: colors.dark,
+  },
+  lightText: {
+    color: colors.light,
+  },
   jobsContainer: {
     position: "relative",
     paddingLeft: 15,
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
     height: "100%",
     borderTop: "15px solid white",
     borderBottom: "3px solid white",
-    width: 1,
+    width: 2,
     backgroundColor: colors.light,
   },
 });
@@ -100,7 +107,7 @@ const CVPDF = ({ cvData }) => {
         <View style={styles.formGrid}>
           <View style={styles.column1}></View>
           <Text style={{ ...styles.column2, ...styles.h1 }}>
-            {personalDetails.name}
+            {`${personalDetails.firstName} ${personalDetails.lastName}`}
           </Text>
         </View>
 
@@ -137,6 +144,7 @@ const ExperienceSection = ({ cvData }) => {
         <View style={styles.timeline} />
         {jobs.map(({ jobtitle, date, description, company, id }) => (
           <Job
+            key={`${jobtitle}-${company}`}
             jobtitle={jobtitle}
             company={company}
             id={id}
@@ -145,6 +153,7 @@ const ExperienceSection = ({ cvData }) => {
           />
         ))}
       </View>
+      <Text style={{ marginTop: 30 }}>References on request</Text>
     </View>
   );
 };
@@ -155,10 +164,10 @@ const Job = ({ jobtitle, company, date, description, id }) => {
     <View id={jobId} key={uuidv4()} style={styles.section}>
       <View className="job-cnt">
         <View className="content">
-          <Text style={styles.h3} className="dark-text">
+          <Text style={styles.darkText} className="dark-text">
             {jobtitle}
           </Text>
-          <Text style={styles.h3} className="light-text">
+          <Text style={styles.lightText} className="light-text">
             {company}
           </Text>
 

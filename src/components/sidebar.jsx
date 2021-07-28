@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import CreateIcon from "@material-ui/icons/Create";
@@ -8,6 +8,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChangeLayout, CurrentLayout } from "./providers/StyleProvider";
 import { easy } from "../utils/animations";
 import LoginOrSave from "./loginFlow/loginOrSave";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import CVPDF from "./cv-pdf";
+import { useCVData } from "./providers/CVDataProvider";
 
 const Sidebar = () => {
   const [openID, setOpenID] = useState("");
@@ -139,13 +142,36 @@ const StylePanel = () => {
 };
 
 const DownloadCVContent = () => {
+  const personalDetails = useCVData().personalDetails;
+  const fullname = `${personalDetails.firstName} ${personalDetails.lastName}`;
+  const cvData = useCVData();
+  const [loadDoc, setLoadDoc] = useState(false);
+  function loadOnOpen() {
+    setTimeout(function () {
+      setLoadDoc(true);
+    }, 4000);
+  }
+
+  useEffect(() => {
+    loadOnOpen();
+  });
   return (
     <>
       <h3>Nice one!</h3>
       <p>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione
-        similique, tempore amet delectus aliquam facilis.
+        Your CV is ready to download <br /><br />
       </p>
+
+      <PDFDownloadLink
+        document={<CVPDF cvData={cvData} />}
+        fileName={`${fullname} CV.pdf`}
+      >
+        {({ blob, url, loading, error }) => (
+          <Button variant="contained" color="primary">
+            {loading ? "Loading document..." : "Download now"}
+          </Button>
+        )}
+      </PDFDownloadLink>
     </>
   );
 };
@@ -161,7 +187,7 @@ const menuButtons = [
     title: "Download CV",
     icon: <GetAppIcon />,
     content: <DownloadCVContent />,
-    maximumHeight: 200,
+    maximumHeight: 250,
   },
   {
     title: "Apply for jobs",

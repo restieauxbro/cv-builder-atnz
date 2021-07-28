@@ -6,6 +6,7 @@ import CVDataProvider from "./components/providers/CVDataProvider";
 import StyleProvider from "./components/providers/StyleProvider";
 import CvAnimSwap from "./components/changingState/cvAnimSwap";
 import AuthProvider from "./components/providers/AuthProvider";
+import PDFViewerComponent from "./components/pdf-viewer";
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
                 <Sidebar />
 
                 <HelpSwitchProvider>
-                  <CvAnimSwap />
+                  <CvAnimSwap/>
                 </HelpSwitchProvider>
               </div>
             </AnimateSharedLayout>
