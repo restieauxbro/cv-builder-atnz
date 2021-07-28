@@ -25,6 +25,10 @@ body.competenz {
   p {
     margin: 0 0 0.5em 0;
   }
+  a{
+    text-decoration: none;
+    color: var(--lightblue)
+  }
   @media (max-width: 800px) {
     grid-template-columns: 1fr;
   }
