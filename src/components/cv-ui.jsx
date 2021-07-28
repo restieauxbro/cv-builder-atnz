@@ -34,7 +34,12 @@ const CvUi = () => {
             }
             transition={{ ...easy, duration: 1 }}
           >
-            <div className="form-grid">
+            <motion.div
+              className="form-grid"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
               <div className="column-1">
                 <PersonalDetails
                   setPopUpContent={setPopUpContent}
@@ -62,7 +67,7 @@ const CvUi = () => {
                   setPopUpContent={setPopUpContent}
                 />
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

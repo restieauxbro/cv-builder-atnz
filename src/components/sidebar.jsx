@@ -23,26 +23,41 @@ const Sidebar = () => {
         layout
       >
         <div>
-          <div className="sidebar-cnt">
+          <motion.div
+            className="sidebar-cnt"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
             <LoginOrSave
               title="login-or-save"
               openID={openID}
               setOpenID={setOpenID}
             />
 
-            <div className="sidebar">
+            <motion.div
+              className="sidebar"
+              variants={gridParent}
+              initial="initial"
+              animate="animate"
+            >
               {menuButtons.map(({ title, icon, content, maximumHeight }) => (
-                <MenuButton
+                <motion.div
+                  variants={gridChild}
+                  initial="initial"
+                  animate="animate"
                   key={title}
-                  title={title}
-                  icon={icon}
-                  content={content}
-                  openID={openID}
-                  setOpenID={setOpenID}
-                  maximumHeight={maximumHeight}
-                />
+                >
+                  <MenuButton
+                    title={title}
+                    icon={icon}
+                    content={content}
+                    openID={openID}
+                    setOpenID={setOpenID}
+                    maximumHeight={maximumHeight}
+                  />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
             {/* <PDFDownloadLink document={<CVPDF cvData={useCVData()} />}>
               <Button variant="contained" color="primary">
                 Download
@@ -50,7 +65,7 @@ const Sidebar = () => {
             </PDFDownloadLink> */}
             <div className="placeholder"></div>
             <div className="placeholder"></div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </>
