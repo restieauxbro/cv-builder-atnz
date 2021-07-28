@@ -2,10 +2,11 @@ import { Button, CircularProgress, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { supabase } from "../providers/AuthProvider";
 import DoneIcon from "@material-ui/icons/Done";
+import { useCVData } from "../providers/CVDataProvider";
 
 const MagicLink = () => {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(useCVData().personalDetails.email);
   const [sent, setSent] = useState(false);
 
   const handleLogin = async (email) => {
@@ -25,9 +26,10 @@ const MagicLink = () => {
       <h3>We'll send you a login link</h3>
       {sent && (
         <p>
-          We've emailed you a link 🙌 Make sure to check your junk if it's not in
-          your inbox.
-          <br /><br />
+          We've emailed you a link 🙌 Make sure to check your junk if it's not
+          in your inbox.
+          <br />
+          <br />
         </p>
       )}
       <div className="login-form-cnt">

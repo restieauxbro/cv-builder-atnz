@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@material-ui/core";
+import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import CreateIcon from "@material-ui/icons/Create";
 import StyleIcon from "@material-ui/icons/Style";
@@ -11,6 +11,7 @@ import LoginOrSave from "./loginFlow/loginOrSave";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import CVPDF from "./cv-pdf";
 import { useCVData } from "./providers/CVDataProvider";
+import { CallMade } from "@material-ui/icons";
 
 const Sidebar = () => {
   const [openID, setOpenID] = useState("");
@@ -159,7 +160,8 @@ const DownloadCVContent = () => {
     <>
       <h3>Nice one!</h3>
       <p>
-        Your CV is ready to download <br /><br />
+        Your CV is ready to download. <br />
+        <br />
       </p>
 
       <PDFDownloadLink
@@ -172,6 +174,29 @@ const DownloadCVContent = () => {
           </Button>
         )}
       </PDFDownloadLink>
+    </>
+  );
+};
+
+const ApplyForJobs = () => {
+  return (
+    <>
+      <h3>ATNZ hires apprentices</h3>
+      <p>
+        We could hire you for an engineering apprenticeship if we have your CV
+        on file, would you like to share it with us? <br />
+      </p>
+      <FormControlLabel
+        control={<Checkbox name="shareCVCheckbox" color="primary" />}
+        label="Share this CV with recruiters"
+      />{" "}
+      <br />
+      <br />
+      <a href="https://atnz.org.nz/become-an-apprentice/jobs/" target="_blank">
+        <Button variant="contained" color="primary" endIcon={<CallMade />}>
+          See all jobs
+        </Button>
+      </a>
     </>
   );
 };
@@ -192,9 +217,8 @@ const menuButtons = [
   {
     title: "Apply for jobs",
     icon: <CreateIcon />,
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae molestias doloremque asperiores debitis nisi ",
-    maximumHeight: 100,
+    content: <ApplyForJobs />,
+    maximumHeight: 350,
   },
 ];
 
