@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import MagicLink from "./magicLink";
 import { supabase } from "../providers/AuthProvider";
-import { Facebook } from "@material-ui/icons";
+import { EmailOutlined, Facebook } from "@material-ui/icons";
 import { ReactComponent as GoogleSVG } from "../../assets/GoogleLogo.svg";
 
 const SideBarSaveOptions = () => {
@@ -31,8 +31,10 @@ const Options = ({ setMagicLinkScreen }) => {
       <h3>Login to save</h3>
       <div className="button-cnt">
         <Button
+          disableElevation
           variant="contained"
           fullWidth
+          startIcon={<EmailOutlined/>}
           onClick={() => setMagicLinkScreen(true)}
         >
           Login with email
@@ -41,6 +43,7 @@ const Options = ({ setMagicLinkScreen }) => {
       <div className="button-cnt">
         <Button
           fullWidth
+          disableElevation
           variant="contained"
           color="primary"
           startIcon={<Facebook />}
@@ -51,6 +54,7 @@ const Options = ({ setMagicLinkScreen }) => {
       </div>
       <div className="button-cnt">
         <Button
+          disableElevation
           fullWidth
           variant="contained"
           color="primary"

@@ -18,16 +18,18 @@ export async function upsertUserToProfiles() {
       updated_at: new Date(),
     };
 
-    let { error } = await supabase.from("profiles").insert(updates, {
-      upsert: true,
-      returning: "minimal",
-    }).then(console.log('upserted'));
+    let { error } = await supabase
+      .from("profiles")
+      .upsert(updates, {
+        returning: "minimal",
+      })
+      .then(console.log("upserted"));
 
     if (error) {
       //throw error;
     }
   } catch (error) {
-   // console.log(error);
+    console.log(error);
   }
 }
 
@@ -39,7 +41,6 @@ const AuthProvider = ({ children }) => {
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
     });
-     
   }, []);
 
   return (

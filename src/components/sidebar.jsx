@@ -12,6 +12,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import CVPDF from "./cv-pdf";
 import { useCVData } from "./providers/CVDataProvider";
 import { CallMade } from "@material-ui/icons";
+import { supabase } from "./providers/AuthProvider";
 
 const Sidebar = () => {
   const [openID, setOpenID] = useState("");
@@ -161,16 +162,7 @@ const DownloadCVContent = () => {
   const personalDetails = useCVData().personalDetails;
   const fullname = `${personalDetails.firstName} ${personalDetails.lastName}`;
   const cvData = useCVData();
-  const [loadDoc, setLoadDoc] = useState(false);
-  function loadOnOpen() {
-    setTimeout(function () {
-      setLoadDoc(true);
-    }, 4000);
-  }
 
-  useEffect(() => {
-    loadOnOpen();
-  });
   return (
     <>
       <h3>Nice one!</h3>
@@ -194,6 +186,44 @@ const DownloadCVContent = () => {
 };
 
 const ApplyForJobs = () => {
+  const [boxChecked, setBoxChecked] = useState(false);
+  const [showCheckbox, setShowCheckbox] = useState(false);
+
+  async function getCVPermission() {
+    try {
+      let { data, error, status } = await supabase
+        .from("profiles")
+        .select("cvSharedWithATNZ")
+        .single();
+      if (data) {
+        !data.cvSharedWithATNZ && setShowCheckbox(true);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  async function updateAccountDetails(e) {
+    try {
+      const user = supabase.auth.user();
+      const updates = {
+        id: user.id,
+        updated_at: new Date(),
+        cvSharedWithATNZ: e.target.checked,
+      };
+      let { error } = await supabase
+        .from("profiles")
+        .upsert(updates, {
+          returning: "minimal",
+        })
+        .then(console.log("changed cv permission in db"));
+    } catch (error) {
+      console.log("updateAccount problem,", error);
+    }
+  }
+
+  useEffect(() => {
+    getCVPermission(); //only shows checkbox if they haven't shared their cv
+  }, []);
   return (
     <>
       <h3>ATNZ hires apprentices</h3>
@@ -201,14 +231,31 @@ const ApplyForJobs = () => {
         We could hire you for an engineering apprenticeship if we have your CV
         on file, would you like to share it with us? <br />
       </p>
-      <FormControlLabel
-        control={<Checkbox name="shareCVCheckbox" color="primary" />}
-        label="Share this CV with recruiters"
-      />{" "}
+      {showCheckbox && (
+        <FormControlLabel
+          className="button-cnt"
+          control={<Checkbox name="shareCVCheckbox" color="primary" />}
+          label="Share CV with recruiters"
+          checked={boxChecked}
+          onChange={(e) => {
+            updateAccountDetails(e);
+            setBoxChecked(e.target.checked);
+          }}
+        />
+      )}
       <br />
       <br />
       <a href="https://atnz.org.nz/become-an-apprentice/jobs/" target="_blank">
-        <Button variant="contained" color="primary" endIcon={<CallMade />}>
+        <Button
+          variant="contained"
+          color="primary"
+          endIcon={<CallMade />}
+          onChange={() => {
+            async function changeBoxAndUpdata() {
+              await setBoxChecked(!boxChecked).then(updateAccountDetails);
+            }
+          }}
+        >
           See all jobs
         </Button>
       </a>

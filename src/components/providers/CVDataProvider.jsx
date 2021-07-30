@@ -84,7 +84,7 @@ const CVDataProvider = ({ children }) => {
     try {
       let { error } = await supabase
         .from("profiles")
-        .insert(updates, { upsert: true, returning: "minimal" })
+        .upsert(updates, { returning: "minimal" })
         .then(console.log("name added to db"));
     } catch (error) {
       console.log('cvDataprovider error');
@@ -171,7 +171,7 @@ async function sendCVToDatabase(cvData) {
       .upsert(updates, {
         returning: "minimal",
       })
-      .then(console.log("uploade to db"));
+      .then(console.log("uploaded to db"));
     if (error) {
       console.log('sendCVToDB problem,', error)
     }

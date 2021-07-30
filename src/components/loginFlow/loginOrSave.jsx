@@ -9,6 +9,7 @@ import SideBarSaveOptions from "./sidebarSaveOptions";
 import { useSession, supabase } from "../providers/AuthProvider";
 import { useEffect } from "react";
 import { useCVData } from "../providers/CVDataProvider";
+import Account from "./Account";
 
 const LoginOrSave = ({ title, openID, setOpenID }) => {
   const layout = CurrentLayout();
@@ -18,7 +19,7 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
 
   const parentHeightAnim = {
     initial: { height: 0 },
-    animate: { height: 300, transition: { ...easy, delay: 0.1 } },
+    animate: { height: 345, transition: { ...easy, delay: 0.1 } },
     exit: { height: 0, transition: { ...easy, duration: 0.55 } },
   };
 
@@ -64,7 +65,7 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
                 <div className="icon">
                   <AccountCircle />
                 </div>
-                {(session && name.length > 1) ? name : "Profile"}
+                {session && name.length > 1 ? name : "Profile"}
               </div>
             </Button>
           </div>
@@ -108,7 +109,7 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
             className="overflow-cnt"
           >
             <div className="panel-content">
-              {session ? <LogoutButton /> : <SideBarSaveOptions />}
+              {session ? <Account /> : <SideBarSaveOptions />}
             </div>
           </motion.div>
         )}
@@ -118,15 +119,3 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
 };
 
 export default LoginOrSave;
-
-const LogoutButton = () => {
-  async function logout() {
-    
-    let { error } = await supabase.auth.signOut();
-  }
-  return (
-    <Button variant="contained" disableElevation onClick={() => logout()}>
-      Log out
-    </Button>
-  );
-};
