@@ -65,7 +65,7 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
                 <div className="icon">
                   <AccountCircle />
                 </div>
-                {session && name.length > 1 ? name : "Profile"}
+                {session && name ? name : "Profile"}
               </div>
             </Button>
           </div>
