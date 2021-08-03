@@ -18,9 +18,7 @@ const RootApp = () => {
 
 const container = document.getElementById("cv-root");
 
-const root = ReactDOM.createRoot(container);
-
-root.render(<RootApp />);
+ReactDOM.render(<RootApp />, container);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
