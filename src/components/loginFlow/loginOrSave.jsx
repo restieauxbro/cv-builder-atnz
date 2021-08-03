@@ -109,7 +109,14 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
             className="overflow-cnt"
           >
             <div className="panel-content">
-              {session ? <Account /> : <SideBarSaveOptions />}
+              {session ? (
+                <Account />
+              ) : (
+                <>
+                  <h3>Login to save</h3>
+                  <SideBarSaveOptions />
+                </>
+              )}
             </div>
           </motion.div>
         )}

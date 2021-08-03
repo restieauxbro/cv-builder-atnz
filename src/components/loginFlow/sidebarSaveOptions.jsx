@@ -28,7 +28,7 @@ const Options = ({ setMagicLinkScreen }) => {
   }
   return (
     <>
-      <h3>Login to save</h3>
+     
       <div className="button-cnt">
         <Button
           disableElevation

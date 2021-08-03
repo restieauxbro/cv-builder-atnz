@@ -1,12 +1,11 @@
-import React, { Suspense } from "react";
-import { AnimateSharedLayout } from "framer-motion";
-import Sidebar from "./components/sidebar";
-import HelpSwitchProvider from "./components/providers/HelpProvider";
+import React from "react";
+
 import CVDataProvider from "./components/providers/CVDataProvider";
 import StyleProvider from "./components/providers/StyleProvider";
-import CvAnimSwap from "./components/changingState/cvAnimSwap";
 import AuthProvider from "./components/providers/AuthProvider";
-import PDFViewerComponent from "./components/pdf-viewer";
+import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
+import CVBuilderPage from "./pages/cv-builder";
+import DeleteUser from "./pages/delete-user";
 
 const App = () => {
   return (
@@ -14,17 +13,16 @@ const App = () => {
       <StyleProvider>
         <AuthProvider>
           <CVDataProvider>
-            <AnimateSharedLayout>
-              <div className="cv-builder-columns">
-                <div className="placeholder"></div>
-                {/* Placeholder pushes the grid into the right format while another grid is in fixed positon above */}
-                <Sidebar />
-
-                <HelpSwitchProvider>
-                  <CvAnimSwap/>
-                </HelpSwitchProvider>
-              </div>
-            </AnimateSharedLayout>
+            <BrowserRouter>
+              <Switch>
+                <Route path="/delete-user">
+                  <DeleteUser />
+                </Route>
+                <Route path="/">
+                  <CVBuilderPage />
+                </Route>
+              </Switch>
+            </BrowserRouter>
           </CVDataProvider>
         </AuthProvider>
       </StyleProvider>

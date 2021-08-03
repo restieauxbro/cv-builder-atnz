@@ -17,65 +17,69 @@ const CvUi = () => {
 
   return (
     <>
-      <div className="cv-builder-cnt">
-        <div className="cv-builder-content">
-          <motion.div
-            layoutId="cv-page"
-            className="cv-builder"
-            animate={
-              layoutName === "layout-large-left"
-                ? {
-                    x: 100,
-                    y: -150,
-                    scale: 0.7,
-                    transition: { ...easy, duration: 0.6 },
-                  }
-                : {}
-            }
-            transition={{ ...easy, duration: 1 }}
-          >
-            <motion.div
-              className="form-grid"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
-            >
-              <div className="column-1">
-                <PersonalDetails
-                  setPopUpContent={setPopUpContent}
-                  setPopUpOpen={setPopUpOpen}
-                />
-                <div className="education section">
-                  <ListHolder
-                    title="Education"
-                    setPopUpOpen={setPopUpOpen}
-                    setPopUpContent={setPopUpContent}
-                    popUpOpen={popUpOpen}
-                    form={<SchoolsValidationForm />}
-                  />
-                </div>
-                <div className="skills section"></div>
-              </div>
-              <div className="column-2">
-                <NameTitle
-                  setPopUpOpen={setPopUpOpen}
-                  setPopUpContent={setPopUpContent}
-                />
-
-                <ExperienceSection
-                  setPopUpOpen={setPopUpOpen}
-                  setPopUpContent={setPopUpContent}
-                />
-              </div>
-            </motion.div>
-          </motion.div>
+      <div className="cv-builder-columns">
+        <div className="placeholder"></div>
+        {/* Placeholder pushes the grid into the right format while another grid is in fixed positon above */}
+        <div className="cv-builder-cnt">
+          <div className="cv-builder-content">
+            <div className="container">
+              <motion.div
+                layoutId="cv-page"
+                className="cv-builder"
+                animate={
+                  layoutName === "layout-large-left"
+                    ? {
+                        x: 110,
+                        y: -150,
+                        scale: 0.7,
+                        transition: { ...easy, duration: 0.6 },
+                      }
+                    : {}
+                }
+                transition={{ ...easy, duration: 1 }}
+              >
+                <motion.div
+                  className="form-grid"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                >
+                  <div className="column-1">
+                    <PersonalDetails
+                      setPopUpContent={setPopUpContent}
+                      setPopUpOpen={setPopUpOpen}
+                    />
+                    <div className="education section">
+                      <ListHolder
+                        title="Education"
+                        setPopUpOpen={setPopUpOpen}
+                        setPopUpContent={setPopUpContent}
+                        popUpOpen={popUpOpen}
+                        form={<SchoolsValidationForm />}
+                      />
+                    </div>
+                  </div>
+                  <div className="column-2">
+                    <NameTitle
+                      setPopUpOpen={setPopUpOpen}
+                      setPopUpContent={setPopUpContent}
+                    />
+                    <ExperienceSection
+                      setPopUpOpen={setPopUpOpen}
+                      setPopUpContent={setPopUpContent}
+                    />
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          </div>
         </div>
+        <AnimatePresence>
+          {popUpOpen && (
+            <PopUp setPopUpOpen={setPopUpOpen} popUpContent={popUpContent} />
+          )}
+        </AnimatePresence>
       </div>
-      <AnimatePresence>
-        {popUpOpen && (
-          <PopUp setPopUpOpen={setPopUpOpen} popUpContent={popUpContent} />
-        )}
-      </AnimatePresence>
     </>
   );
 };

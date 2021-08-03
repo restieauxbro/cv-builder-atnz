@@ -2,11 +2,15 @@ body.competenz {
   font-family: "Helvetica Neue", sans-serif;
 }
 
+body {
+  overflow-x: hidden;
+  hyphens: auto;
+}
+
 @mixin superCenter {
   display: grid;
   place-items: center;
 }
-
 
 .cv-builder-columns {
   display: grid;
@@ -67,13 +71,15 @@ body.competenz {
   display: flex;
   justify-content: center;
   .cv-builder-content {
-    padding: 4rem 0;
+    padding: 4rem 2rem;
+    width: 100%;
   }
   .cv-builder {
+    width: 100%;
+    box-sizing: border-box;
     max-width: 1200px;
     min-height: 1100px;
     background-color: var(--white);
-    margin: 0 30px;
     border-radius: 1rem;
     box-shadow: 2px 5px 15px -3px rgba(0, 0, 0, 0.3);
     padding: 40px;
@@ -101,6 +107,8 @@ body.competenz {
       transition: opacity 0.5s ease;
     }
     .form-grid {
+      width: 100%;
+      min-height: 700px;
       display: grid;
       grid-template-columns: 1fr 2.3fr;
       grid-gap: 2rem;
@@ -421,6 +429,10 @@ ul {
       color: var(--purple);
     }
   }
+}
+.supercenter {
+  min-height: 99vh;
+  @include superCenter();
 }
 
 .two-column-grid {
