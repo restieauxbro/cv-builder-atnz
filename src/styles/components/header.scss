@@ -3,7 +3,7 @@ header {
   .header-cnt {
     position: fixed;
     width: 100vw;
-    background-color: white;
+    background-color: var(--white-2);
     transition: box-shadow 1.5s ease, top 0.8s ease;
     z-index: 10;
     &.shaded {
