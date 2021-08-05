@@ -12,61 +12,59 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import CVPDF from "./cv-pdf";
 import { useCVData } from "./providers/CVDataProvider";
 import { CallMade } from "@material-ui/icons";
-import { supabase } from "./providers/AuthProvider";
+import { supabase, useSession } from "./providers/AuthProvider";
 
 const Sidebar = () => {
   const [openID, setOpenID] = useState("");
   return (
     <>
-      <div
-        className="cv-builder-columns"
-        style={{ position: "fixed", width: "100%", pointerEvents: "none" }}
-        layout
-      >
-        <div>
-          <motion.div
-            className="sidebar-cnt"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <LoginOrSave
-              title="login-or-save"
-              openID={openID}
-              setOpenID={setOpenID}
-            />
-
+      <div style={{ position: "fixed", width: "100%", pointerEvents: "none" }}>
+        <div className="cv-builder-columns" layout>
+          <div>
             <motion.div
-              className="sidebar"
-              variants={gridParent}
-              initial="initial"
-              animate="animate"
+              className="sidebar-cnt"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
-              {menuButtons.map(({ title, icon, content, maximumHeight }) => (
-                <motion.div
-                  variants={gridChild}
-                  initial="initial"
-                  animate="animate"
-                  key={title}
-                >
-                  <MenuButton
-                    title={title}
-                    icon={icon}
-                    content={content}
-                    openID={openID}
-                    setOpenID={setOpenID}
-                    maximumHeight={maximumHeight}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
-            {/* <PDFDownloadLink document={<CVPDF cvData={useCVData()} />}>
+              <LoginOrSave
+                title="login-or-save"
+                openID={openID}
+                setOpenID={setOpenID}
+              />
+
+              <motion.div
+                className="sidebar"
+                variants={gridParent}
+                initial="initial"
+                animate="animate"
+              >
+                {menuButtons.map(({ title, icon, content, maximumHeight }) => (
+                  <motion.div
+                    variants={gridChild}
+                    initial="initial"
+                    animate="animate"
+                    key={title}
+                  >
+                    <MenuButton
+                      title={title}
+                      icon={icon}
+                      content={content}
+                      openID={openID}
+                      setOpenID={setOpenID}
+                      maximumHeight={maximumHeight}
+                    />
+                  </motion.div>
+                ))}
+              </motion.div>
+              {/* <PDFDownloadLink document={<CVPDF cvData={useCVData()} />}>
               <Button variant="contained" color="primary">
                 Download
               </Button>
             </PDFDownloadLink> */}
-            <div className="placeholder"></div>
-            <div className="placeholder"></div>
-          </motion.div>
+              <div className="placeholder"></div>
+              <div className="placeholder"></div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </>
@@ -221,8 +219,9 @@ const ApplyForJobs = () => {
     }
   }
 
+  const session = useSession();
   useEffect(() => {
-    getCVPermission(); //only shows checkbox if they haven't shared their cv
+    session && getCVPermission(); //only shows checkbox if they haven't shared their cv
   }, []);
   return (
     <>

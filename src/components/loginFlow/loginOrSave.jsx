@@ -68,6 +68,14 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
                 {session && name ? name : "Profile"}
               </div>
             </Button>
+            {openID === title && isOpen && (
+              <Closer
+                clickFunction={() => {
+                  setIsOpen(false);
+                  changeLayout({ ...layout, appLayout: "" });
+                }}
+              />
+            )}
           </div>
           <div className="save head">
             <Button
@@ -89,15 +97,6 @@ const LoginOrSave = ({ title, openID, setOpenID }) => {
             </Button>
           </div>
         </div>
-
-        {openID === title && isOpen && (
-          <Closer
-            clickFunction={() => {
-              setIsOpen(false);
-              changeLayout({ ...layout, appLayout: "" });
-            }}
-          />
-        )}
       </div>
       <AnimatePresence>
         {openID === title && isOpen && (
