@@ -8,14 +8,18 @@ import * as yup from "yup";
 import CheckIcon from "@material-ui/icons/Check";
 import HelpBubble from "../helpBubble";
 import TurnOnHelp from "../TurnOnHelp";
-import { changeAllCVs, useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
+import {
+  changeAllCVs,
+  useCVData,
+  useCVDataUpdate,
+} from "../providers/CVDataProvider";
 import { useSession } from "../providers/AuthProvider";
 
 const JobForm = ({ setPopUpOpen, setPopUpContent, chosenJob, isNew }) => {
   const jobs = useCVData().jobs;
   const CVData = useCVData();
   const CVDataUpdate = useCVDataUpdate();
-  const session = useSession()
+  const session = useSession();
   function changeJobs(sumthn) {
     changeAllCVs({ ...CVData, jobs: sumthn }, session, CVDataUpdate);
   }
@@ -59,7 +63,7 @@ const JobForm = ({ setPopUpOpen, setPopUpContent, chosenJob, isNew }) => {
   }
 
   function openNewJobForm() {
-
+    setPopUpContent("");
     setPopUpContent(
       <JobForm
         setPopUpOpen={setPopUpOpen}
@@ -80,13 +84,11 @@ const JobForm = ({ setPopUpOpen, setPopUpContent, chosenJob, isNew }) => {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       submitJob(values);
-      setPopUpContent("");
-      !addAnotherJob && setPopUpOpen(false)
-      setTimeout(() => {
-        addAnotherJob && openNewJobForm();
-      }, 0);
+
+      addAnotherJob ? openNewJobForm() : setPopUpOpen(false);
     },
   });
+
 
   const [showHelpBubble, setShowHelpBubble] = useState(false);
   const [dateHelp, showDateHelp] = useState(false);

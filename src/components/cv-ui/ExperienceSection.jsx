@@ -3,8 +3,10 @@ import JobForm from "../cv-ui/JobForm";
 import { useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
 import { Button } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
-import { AddCircle } from "@material-ui/icons";
+import { AddCircle, ExpandLess, ExpandMore } from "@material-ui/icons";
 import Closer from "../closer";
+import { IconButton } from "@material-ui/core";
+import { AnimateSharedLayout, motion } from "framer-motion";
 
 const ExperienceSection = ({ setPopUpOpen, setPopUpContent }) => {
   const jobs = useCVData().jobs;
@@ -29,44 +31,47 @@ const ExperienceSection = ({ setPopUpOpen, setPopUpContent }) => {
     CVDataUpdate({ ...CVData, jobs: sumthn });
   }
   return (
-    <div className="work-history section">
-      <h3 style={{ marginTop: 0 }}>Experience</h3>
-      <div className="jobs-list">
-        <div className="line" />
-        {jobs.map(({ jobtitle, date, description, company, id }) => (
-          <Job
-            key={uuidv4()}
-            jobtitle={jobtitle}
-            company={company}
-            id={id}
-            date={date}
-            description={description}
-            editJob={editJob}
-            deleteJob={deleteJob}
-          />
-        ))}
+    <AnimateSharedLayout>
+      <div className="work-history section">
+        <h3 style={{ marginTop: 0 }}>Experience</h3>
+        <div className="jobs-list">
+          <div className="line" />
+          {jobs.map(({ jobtitle, date, description, company, id }, index) => (
+            <Job
+              key={uuidv4()}
+              jobtitle={jobtitle}
+              company={company}
+              index={index}
+              id={id}
+              date={date}
+              description={description}
+              editJob={editJob}
+              deleteJob={deleteJob}
+            />
+          ))}
+        </div>
+        <div className="cv-ui-button">
+          <Button
+            variant="contained"
+            color="primary"
+            endIcon={<AddCircle />}
+            onClick={() => {
+              setPopUpOpen(true);
+              setPopUpContent(
+                <JobForm
+                  setPopUpOpen={setPopUpOpen}
+                  setPopUpContent={setPopUpContent}
+                  chosenJob={{ title: "" }}
+                  isNew={true}
+                />
+              );
+            }}
+          >
+            Add experience
+          </Button>
+        </div>
       </div>
-      <div className="cv-ui-button">
-        <Button
-          variant="contained"
-          color="primary"
-          endIcon={<AddCircle />}
-          onClick={() => {
-            setPopUpOpen(true);
-            setPopUpContent(
-              <JobForm
-                setPopUpOpen={setPopUpOpen}
-                setPopUpContent={setPopUpContent}
-                chosenJob={{ title: "" }}
-                isNew={true}
-              />
-            );
-          }}
-        >
-          Add experience
-        </Button>
-      </div>
-    </div>
+    </AnimateSharedLayout>
   );
 };
 
@@ -78,13 +83,46 @@ const Job = ({
   date,
   description,
   id,
+  index,
   editJob,
   deleteJob,
 }) => {
   const jobId = id;
+
+  const changeValuePosition = (arr, init, target) => {
+    [arr[init], arr[target]] = [arr[target], arr[init]];
+    return arr;
+  };
+
+  const CVDataUpdate = useCVDataUpdate();
+  const CVData = useCVData();
+  const allJobs = CVData.jobs;
+
+  const remapJobs = (arr, init, target) => {
+    [arr[init], arr[target]] = [arr[target], arr[init]];
+
+    CVDataUpdate({ ...CVData, jobs: arr });
+
+    console.log(allJobs[allJobs.length - 1].id);
+  };
+
   return (
-    <div id={jobId} key={uuidv4()}>
+    <motion.div layoutId={jobId} id={jobId} key={uuidv4()}>
       <div className="job-cnt">
+        <div className="controls">
+          {index !== 0 && (
+            <IconButton onClick={() => remapJobs(allJobs, index, index - 1)}>
+              <ExpandLess />
+            </IconButton>
+          )}
+          {allJobs[allJobs.length - 1].id !== jobId && (
+            <IconButton onClick={() => remapJobs(allJobs, index, index + 1)}>
+              <ExpandMore />
+            </IconButton>
+          )}
+
+          <Closer clickFunction={() => deleteJob(jobId)} />
+        </div>
         <div className="content" onClick={() => editJob(jobId)}>
           <h4>
             <span className="dark-text"> {jobtitle}</span> <br />
@@ -93,10 +131,7 @@ const Job = ({
           <p>{date}</p>
           <p>{description}</p>
         </div>
-        <div className="controls">
-          <Closer clickFunction={() => deleteJob(jobId)} text="Delete" />
-        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
