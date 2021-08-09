@@ -142,21 +142,25 @@ const ExperienceSection = ({ cvData }) => {
   const jobs = cvData.jobs;
   return (
     <View>
-      <Text style={styles.h2}>Experience</Text>
-      <View style={styles.jobsContainer}>
-        <View style={styles.timeline} />
-        {jobs.map(({ jobtitle, date, description, company, id }) => (
-          <Job
-            key={`${jobtitle}-${company}`}
-            jobtitle={jobtitle}
-            company={company}
-            id={id}
-            date={date}
-            description={description}
-          />
-        ))}
-      </View>
-      <Text style={{ marginTop: 30 }}>References on request</Text>
+      {jobs && (
+        <>
+          <Text style={styles.h2}>Experience</Text>
+          <View style={styles.jobsContainer}>
+            <View style={styles.timeline} />
+            {jobs.map(({ jobtitle, date, description, company, id }) => (
+              <Job
+                key={`${jobtitle}-${company}`}
+                jobtitle={jobtitle}
+                company={company}
+                id={id}
+                date={date}
+                description={description}
+              />
+            ))}
+          </View>
+          <Text style={{ marginTop: 30 }}>References on request</Text>
+        </>
+      )}
     </View>
   );
 };
@@ -186,21 +190,25 @@ const Education = ({ cvData }) => {
   const listItems = cvData.education;
   return (
     <>
-      <Text style={{ ...styles.section, ...styles.h2 }}>Education</Text>
-      <View style={styles.para}>
-        {listItems.map((listItem) => {
-          const keyValues = Object.values(listItem.properties);
-          return (
-            <View key={uuidv4()} className="Viewst-item">
-              {keyValues.map((keyValue) => (
-                <Text key={uuidv4()} style={styles.para}>
-                  {keyValue}
-                </Text>
-              ))}
-            </View>
-          );
-        })}
-      </View>
+      {listItems && (
+        <>
+          <Text style={{ ...styles.section, ...styles.h2 }}>Education</Text>
+          <View style={styles.para}>
+            {listItems.map((listItem) => {
+              const keyValues = Object.values(listItem.properties);
+              return (
+                <View key={uuidv4()} className="Viewst-item">
+                  {keyValues.map((keyValue) => (
+                    <Text key={uuidv4()} style={styles.para}>
+                      {keyValue}
+                    </Text>
+                  ))}
+                </View>
+              );
+            })}
+          </View>
+        </>
+      )}
     </>
   );
 };
