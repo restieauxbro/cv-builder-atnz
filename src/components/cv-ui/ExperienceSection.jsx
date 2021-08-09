@@ -1,6 +1,10 @@
 import React from "react";
 import JobForm from "../cv-ui/JobForm";
-import { changeAllCVs, useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
+import {
+  changeAllCVs,
+  useCVData,
+  useCVDataUpdate,
+} from "../providers/CVDataProvider";
 import { Button } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import { AddCircle, ExpandLess, ExpandMore } from "@material-ui/icons";
@@ -8,7 +12,8 @@ import Closer from "../closer";
 import { IconButton } from "@material-ui/core";
 import { AnimateSharedLayout, motion } from "framer-motion";
 import { useSession } from "../providers/AuthProvider";
-import { easy } from "../../utils/animations";
+import { CurrentLayout } from "../providers/StyleProvider";
+import { useEffect, useState } from "react";
 
 const ExperienceSection = ({ setPopUpOpen, setPopUpContent }) => {
   const jobs = useCVData().jobs;
@@ -99,16 +104,18 @@ const Job = ({
   const CVDataUpdate = useCVDataUpdate();
   const CVData = useCVData();
   const allJobs = CVData.jobs;
-  const session = useSession()
+  const session = useSession();
 
   const remapJobs = (arr, init, target) => {
     [arr[init], arr[target]] = [arr[target], arr[init]];
-
     changeAllCVs({ ...CVData, jobs: arr }, session, CVDataUpdate);
   };
 
+  const layoutName = CurrentLayout().appLayout;
+  const largeLayout = layoutName === "layout-large-left";
+
   return (
-    <motion.div layoutId={jobId} id={jobId} key={uuidv4()}>
+    <motion.div layoutId={!largeLayout ? jobId : ""} id={jobId} key={uuidv4()}>
       <div className="job-cnt">
         <div className="controls">
           {index !== 0 && (
