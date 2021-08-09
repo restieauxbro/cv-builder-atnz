@@ -1,27 +1,25 @@
-import { Button, IconButton } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
-import Closer from "./closer";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
   changeAllCVs,
   useCVData,
   useCVDataUpdate,
-} from "./providers/CVDataProvider";
-import TurnOnHelp from "./TurnOnHelp";
-import { useSession } from "./providers/AuthProvider";
-import { ExpandLess, ExpandMore } from "@material-ui/icons";
-import { motion, AnimateSharedLayout } from "framer-motion";
+} from "../providers/CVDataProvider";
+import TurnOnHelp from "../TurnOnHelp";
+import { useSession } from "../providers/AuthProvider";
+import DraggableListItems from "./draggableList";
 
-const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
-  const listItems = useCVData().education;
+const Skills = ({ title, setPopUpOpen, setPopUpContent }) => {
+  const listItems = useCVData().skills;
 
   function openForm() {
     setPopUpContent(
       <ListForm
-        title={title}
+        title='Skills and attributes'
         listItems={listItems}
         setPopUpOpen={setPopUpOpen}
       />
@@ -33,7 +31,7 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
     <>
       <h3>{title}</h3>
       <ul>
-        {listItems.map((listItem) => {
+        {listItems && listItems.map((listItem) => {
           const keyValues = Object.values(listItem.properties);
           return (
             <li key={uuidv4()} className="list-item">
@@ -53,17 +51,17 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
   );
 };
 
-export default ListHolder;
+export default Skills;
 
 const ListForm = ({ title, listItems, setPopUpOpen }) => {
   const CVData = useCVData();
   const CVDataUpdate = useCVDataUpdate();
   const session = useSession();
   function setListItems(sumthn) {
-    changeAllCVs({ ...CVData, education: sumthn }, session, CVDataUpdate);
+    changeAllCVs({ ...CVData, skills: sumthn }, session, CVDataUpdate);
   }
 
-  const [editableListItems, setEditableListItems] = useState(listItems);
+  const [editableListItems, setEditableListItems] = useState(listItems || []);
 
   function deleteItem(itemId) {
     const itemsWithDeleted = editableListItems.filter(
@@ -72,18 +70,18 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
     setEditableListItems(itemsWithDeleted);
   }
   const validationSchema = yup.object({
-    School: yup
+    Skill: yup
       .string("What school or education centre?")
       .required("What school or education centre?"),
-    Achievement: yup
+    Description: yup
       .string("What was your level of achievement?")
       .required("What was your level of achievement?"),
   });
 
   const formik = useFormik({
     initialValues: {
-      School: "",
-      Achievement: "",
+      Skill: "",
+      Description: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -99,7 +97,6 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
   const remapItems = (arr, init, target) => {
     [arr[init], arr[target]] = [arr[target], arr[init]];
     setListItems(arr);
-    console.log("remapped");
   };
 
   return (
@@ -118,27 +115,27 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
             <div className="two-column-grid">
               <TextField
                 fullWidth
-                id="School"
-                name="School"
-                label="School"
-                value={formik.values.School}
+                id="Skill"
+                name="Skill"
+                label="Skill or attribute"
+                value={formik.values.Skill}
                 onChange={formik.handleChange}
-                error={formik.touched.School && Boolean(formik.errors.School)}
-                helperText={formik.touched.School && formik.errors.School}
+                error={formik.touched.Skill && Boolean(formik.errors.Skill)}
+                helperText={formik.touched.Skill && formik.errors.Skill}
               />
               <TextField
                 fullWidth
-                id="Achievement"
-                name="Achievement"
-                label="Achievement"
-                value={formik.values.Achievement}
+                id="Description"
+                name="Description"
+                label="Description"
+                value={formik.values.Description}
                 onChange={formik.handleChange}
                 error={
-                  formik.touched.Achievement &&
-                  Boolean(formik.errors.Achievement)
+                  formik.touched.Description &&
+                  Boolean(formik.errors.Description)
                 }
                 helperText={
-                  formik.touched.Achievement && formik.errors.Achievement
+                  formik.touched.Description && formik.errors.Description
                 }
               />
             </div>
@@ -172,45 +169,4 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
   );
 };
 
-const DraggableListItems = ({ editableListItems, deleteItem, remapItems }) => {
-  return (
-    <AnimateSharedLayout>
-      <ul className="editable-list-items">
-        {editableListItems.map((editable, index) => {
-          const keyValues = Object.values(editable.properties);
-          return (
-            <motion.li  layoutId={editable} key={uuidv4()} className="list-item">
-              {keyValues.map((keyValue) => (
-                <div key={uuidv4()} className="prop">
-                  {keyValue}
-                </div>
-              ))}
-              <div className="controls">
-                {index !== 0 && (
-                  <IconButton
-                    onClick={() =>
-                      remapItems(editableListItems, index, index - 1)
-                    }
-                  >
-                    <ExpandLess />
-                  </IconButton>
-                )}
-                {editableListItems[editableListItems.length - 1].id !==
-                  editable.id && ( // Only show if it's not the last item in the array
-                  <IconButton
-                    onClick={() =>
-                      remapItems(editableListItems, index, index + 1)
-                    }
-                  >
-                    <ExpandMore />
-                  </IconButton>
-                )}
-                <Closer clickFunction={() => deleteItem(editable.id)} />
-              </div>
-            </motion.li>
-          );
-        })}
-      </ul>
-    </AnimateSharedLayout>
-  );
-};
+

@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     height: "100%",
     borderTop: "15px solid white",
     borderBottom: "3px solid white",
-    width: 2,
+    width: 1,
     backgroundColor: colors.light,
   },
 });
@@ -122,6 +122,9 @@ const CVPDF = ({ cvData }) => {
             <Text style={styles.section}>{personalDetails.intro}</Text>
             <View>
               <Education cvData={cvData} />
+            </View>
+            <View>
+              <Skills cvData={cvData} />
             </View>
           </View>
           <View style={styles.column2}>
@@ -184,6 +187,30 @@ const Education = ({ cvData }) => {
   return (
     <>
       <Text style={{ ...styles.section, ...styles.h2 }}>Education</Text>
+      <View style={styles.para}>
+        {listItems.map((listItem) => {
+          const keyValues = Object.values(listItem.properties);
+          return (
+            <View key={uuidv4()} className="Viewst-item">
+              {keyValues.map((keyValue) => (
+                <Text key={uuidv4()} style={styles.para}>
+                  {keyValue}
+                </Text>
+              ))}
+            </View>
+          );
+        })}
+      </View>
+    </>
+  );
+};
+const Skills = ({ cvData }) => {
+  const listItems = cvData.skills;
+  return (
+    <>
+      <Text style={{ ...styles.section, ...styles.h2 }}>
+        Skills and attributes
+      </Text>
       <View style={styles.para}>
         {listItems.map((listItem) => {
           const keyValues = Object.values(listItem.properties);

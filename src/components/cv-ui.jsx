@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ListHolder from "./list-holder";
+import ListHolder from "./forms/list-holder";
 import Closer from "./closer";
 import SchoolsValidationForm from "./forms/schoolsValidationForm";
 import PersonalDetails from "./cv-ui/PersonalDetails";
@@ -8,6 +8,7 @@ import NameTitle from "./cv-ui/NameTitle";
 import ExperienceSection from "./cv-ui/ExperienceSection";
 import { CurrentLayout } from "./providers/StyleProvider";
 import { easy } from "../utils/animations";
+import Skills from "./forms/skills";
 
 const CvUi = () => {
   const [popUpOpen, setPopUpOpen] = useState(false);
@@ -56,6 +57,14 @@ const CvUi = () => {
                         setPopUpContent={setPopUpContent}
                         popUpOpen={popUpOpen}
                         form={<SchoolsValidationForm />}
+                      />
+                    </div>
+                    <div className="skills section">
+                      <Skills
+                        title="Skills"
+                        setPopUpOpen={setPopUpOpen}
+                        setPopUpContent={setPopUpContent}
+                        popUpOpen={popUpOpen}
                       />
                     </div>
                   </div>

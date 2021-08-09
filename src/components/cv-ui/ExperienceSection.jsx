@@ -13,7 +13,6 @@ import { IconButton } from "@material-ui/core";
 import { AnimateSharedLayout, motion } from "framer-motion";
 import { useSession } from "../providers/AuthProvider";
 import { CurrentLayout } from "../providers/StyleProvider";
-import { useEffect, useState } from "react";
 
 const ExperienceSection = ({ setPopUpOpen, setPopUpContent }) => {
   const jobs = useCVData().jobs;
@@ -96,11 +95,6 @@ const Job = ({
 }) => {
   const jobId = id;
 
-  const changeValuePosition = (arr, init, target) => {
-    [arr[init], arr[target]] = [arr[target], arr[init]];
-    return arr;
-  };
-
   const CVDataUpdate = useCVDataUpdate();
   const CVData = useCVData();
   const allJobs = CVData.jobs;
@@ -115,7 +109,7 @@ const Job = ({
   const largeLayout = layoutName === "layout-large-left";
 
   return (
-    <motion.div layoutId={!largeLayout ? jobId : ""} id={jobId} key={uuidv4()}>
+    <motion.div layoutId={!largeLayout ? jobId : ""} id={jobId} key={jobId}>
       <div className="job-cnt">
         <div className="controls">
           {index !== 0 && (

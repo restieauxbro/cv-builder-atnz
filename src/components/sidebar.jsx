@@ -163,9 +163,9 @@ const DownloadCVContent = () => {
 
   return (
     <>
-      <h3>Nice one!</h3>
+      <h3>Nice one</h3>
       <p>
-        Your CV is ready to download. <br />
+        Your CV is ready to download. You can save it your computer or phone and attach it to a job application. Good luck! <br />
         <br />
       </p>
 
@@ -273,7 +273,7 @@ const menuButtons = [
     title: "Download CV",
     icon: <GetAppIcon />,
     content: <DownloadCVContent />,
-    maximumHeight: 250,
+    maximumHeight: 270,
   },
   {
     title: "Apply for jobs",

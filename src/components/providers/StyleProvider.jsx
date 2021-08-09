@@ -72,6 +72,15 @@ const StyleProvider = ({ children }) => {
     document.body.classList.add(style.themeName);
   }, []);
 
+  useEffect(() => {
+    document.body.style.cssText = "position: fixed; padding-right: 1rem";
+    if (layout.appLayout !== "layout-large-left") {
+      setTimeout(function () {
+        document.body.style.cssText = "";
+      }, 1000);
+    }
+  }, [layout.appLayout]); // make cv un-interractive when the side menu is open
+
   return (
     <ThemeProvider theme={style}>
       <UpdateStyle.Provider value={updateStyle}>

@@ -49,6 +49,7 @@ const CVDataProvider = ({ children }) => {
         },
       },
     ],
+    skills: []
   };
   const [CVObject, setCVObject] = useState(defaultCVData);
 
