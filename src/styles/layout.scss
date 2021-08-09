@@ -133,8 +133,6 @@ body {
           position: absolute;
           top: 0;
           right: 0;
-          // width: 100px;
-          //max-width: 100px;
           display: flex;
           justify-content: end;
           background: var(--white);
@@ -388,20 +386,26 @@ body {
     padding: 0;
     .list-item {
       position: relative;
-      padding: 1rem;
+      padding: 0.3rem 0.3rem 0.3rem 1.3rem;
       background: var(--off-white);
       margin: 1rem 0;
       // box-shadow: var(--item-shadow);
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
       border-radius: var(--radius);
+      .controls {
+        display: flex;
+        .cancel-button {
+          position: relative;
+        }
+      }
       .prop {
         margin-right: 2rem;
       }
       .cancel-button {
         opacity: 0.6;
-        top: 50%;
-        transform: translateY(-50%);
       }
     }
   }

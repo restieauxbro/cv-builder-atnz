@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
 import React, { useState } from "react";
 import { TextField } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
@@ -12,6 +12,8 @@ import {
 } from "./providers/CVDataProvider";
 import TurnOnHelp from "./TurnOnHelp";
 import { useSession } from "./providers/AuthProvider";
+import { ExpandLess, ExpandMore } from "@material-ui/icons";
+import { motion, AnimateSharedLayout } from "framer-motion";
 
 const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
   const listItems = useCVData().education;
@@ -90,10 +92,15 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
         ...editableListItems,
         { id: uuidv4(), properties: values },
       ]);
-      console.log(editableListItems);
       formik.resetForm();
     },
   });
+
+  const remapItems = (arr, init, target) => {
+    [arr[init], arr[target]] = [arr[target], arr[init]];
+    setListItems(arr);
+    console.log("remapped");
+  };
 
   return (
     <>
@@ -102,6 +109,7 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
         <DraggableListItems
           editableListItems={editableListItems}
           deleteItem={deleteItem}
+          remapItems={remapItems}
         />
         <div className="add-new-item-cnt">
           <div className="subtitle">Add new</div>
@@ -164,22 +172,45 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
   );
 };
 
-const DraggableListItems = ({ editableListItems, deleteItem }) => {
+const DraggableListItems = ({ editableListItems, deleteItem, remapItems }) => {
   return (
-    <ul className="editable-list-items">
-      {editableListItems.map((editable) => {
-        const keyValues = Object.values(editable.properties);
-        return (
-          <li key={uuidv4()} className="list-item">
-            {keyValues.map((keyValue) => (
-              <div key={uuidv4()} className="prop">
-                {keyValue}
+    <AnimateSharedLayout>
+      <ul className="editable-list-items">
+        {editableListItems.map((editable, index) => {
+          const keyValues = Object.values(editable.properties);
+          return (
+            <motion.li  layoutId={editable} key={uuidv4()} className="list-item">
+              {keyValues.map((keyValue) => (
+                <div key={uuidv4()} className="prop">
+                  {keyValue}
+                </div>
+              ))}
+              <div className="controls">
+                {index !== 0 && (
+                  <IconButton
+                    onClick={() =>
+                      remapItems(editableListItems, index, index - 1)
+                    }
+                  >
+                    <ExpandLess />
+                  </IconButton>
+                )}
+                {editableListItems[editableListItems.length - 1].id !==
+                  editable.id && ( // Only show if it's not the last item in the array
+                  <IconButton
+                    onClick={() =>
+                      remapItems(editableListItems, index, index + 1)
+                    }
+                  >
+                    <ExpandMore />
+                  </IconButton>
+                )}
+                <Closer clickFunction={() => deleteItem(editable.id)} />
               </div>
-            ))}
-            <Closer clickFunction={() => deleteItem(editable.id)} />
-          </li>
-        );
-      })}
-    </ul>
+            </motion.li>
+          );
+        })}
+      </ul>
+    </AnimateSharedLayout>
   );
 };

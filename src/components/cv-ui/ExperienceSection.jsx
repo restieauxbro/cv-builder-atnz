@@ -1,12 +1,14 @@
 import React from "react";
 import JobForm from "../cv-ui/JobForm";
-import { useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
+import { changeAllCVs, useCVData, useCVDataUpdate } from "../providers/CVDataProvider";
 import { Button } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import { AddCircle, ExpandLess, ExpandMore } from "@material-ui/icons";
 import Closer from "../closer";
 import { IconButton } from "@material-ui/core";
 import { AnimateSharedLayout, motion } from "framer-motion";
+import { useSession } from "../providers/AuthProvider";
+import { easy } from "../../utils/animations";
 
 const ExperienceSection = ({ setPopUpOpen, setPopUpContent }) => {
   const jobs = useCVData().jobs;
@@ -97,13 +99,12 @@ const Job = ({
   const CVDataUpdate = useCVDataUpdate();
   const CVData = useCVData();
   const allJobs = CVData.jobs;
+  const session = useSession()
 
   const remapJobs = (arr, init, target) => {
     [arr[init], arr[target]] = [arr[target], arr[init]];
 
-    CVDataUpdate({ ...CVData, jobs: arr });
-
-    console.log(allJobs[allJobs.length - 1].id);
+    changeAllCVs({ ...CVData, jobs: arr }, session, CVDataUpdate);
   };
 
   return (
