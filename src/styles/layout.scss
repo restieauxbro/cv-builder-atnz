@@ -5,6 +5,8 @@ body.competenz {
 body {
   overflow-x: hidden;
   hyphens: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @mixin superCenter {

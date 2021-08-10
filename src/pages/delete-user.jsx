@@ -8,13 +8,16 @@ const DeleteUser = () => {
   return (
     <>
       <div className="supercenter">
-        <div className="centered-cnt" style={{ maxWidth: 400, padding: "2rem" }}>
+        <div
+          className="centered-cnt"
+          style={{ maxWidth: 400, padding: "2rem" }}
+        >
           <h1>It's a shame you're leaving!</h1>
           <p>
-            We'll delete
-            your account within 5 working days if you confirm that's what you want to do.
+            We'll delete your account within 5 working days if you confirm
+            that's what you want to do.
           </p>
-          {!session ? (
+          {session ? (
             <DeleteYourself />
           ) : (
             <>
@@ -33,8 +36,7 @@ export default DeleteUser;
 const DeleteYourself = () => {
   return (
     <>
-      
-      <div className="button-cnt" style={{marginTop: "3rem"}}>
+      <div className="button-cnt" style={{ marginTop: "3rem" }}>
         <Button variant="contained" color="secondary">
           Delete your account
         </Button>

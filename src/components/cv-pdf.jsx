@@ -220,18 +220,19 @@ const Skills = ({ cvData }) => {
         Skills and attributes
       </Text>
       <View style={styles.para}>
-        {listItems.map((listItem) => {
-          const keyValues = Object.values(listItem.properties);
-          return (
-            <View key={uuidv4()} className="Viewst-item">
-              {keyValues.map((keyValue) => (
-                <Text key={uuidv4()} style={styles.para}>
-                  {keyValue}
-                </Text>
-              ))}
-            </View>
-          );
-        })}
+        {listItems &&
+          listItems.map((listItem) => {
+            const keyValues = Object.values(listItem.properties);
+            return (
+              <View key={uuidv4()} className="Viewst-item">
+                {keyValues.map((keyValue) => (
+                  <Text key={uuidv4()} style={styles.para}>
+                    {keyValue}
+                  </Text>
+                ))}
+              </View>
+            );
+          })}
       </View>
     </>
   );
