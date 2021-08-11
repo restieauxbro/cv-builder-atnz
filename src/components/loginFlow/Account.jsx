@@ -22,12 +22,12 @@ const Account = () => {
     try {
       let { data, error, status } = await supabase
         .from("profiles")
-        .select(`firstName, lastName, cvSharedWithATNZ`)
+        .select(`firstName, lastName, cvShared`)
         .single();
       if (data) {
         setFirstName(data.firstName);
         setLastName(data.lastName);
-        setBoxChecked(data.cvSharedWithATNZ);
+        setBoxChecked(data.cvShared);
       }
     } catch (error) {
       console.log(error.message);
@@ -42,7 +42,7 @@ const Account = () => {
         updated_at: new Date(),
         firstName: firstName,
         lastName: lastName,
-        cvSharedWithATNZ: boxChecked,
+        cvShared: boxChecked,
       };
       let { error } = await supabase
         .from("profiles")

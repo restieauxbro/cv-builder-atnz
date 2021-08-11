@@ -196,10 +196,10 @@ const ApplyForJobs = () => {
     try {
       let { data, error, status } = await supabase
         .from("profiles")
-        .select("cvSharedWithATNZ")
+        .select("cvShared")
         .single();
       if (data) {
-        !data.cvSharedWithATNZ && setShowCheckbox(true);
+        !data.cvShared && setShowCheckbox(true);
       }
     } catch (error) {
       console.log(error.message);
@@ -211,7 +211,7 @@ const ApplyForJobs = () => {
       const updates = {
         id: user.id,
         updated_at: new Date(),
-        cvSharedWithATNZ: e.target.checked,
+        cvShared: e.target.checked,
       };
       let { error } = await supabase
         .from("profiles")
