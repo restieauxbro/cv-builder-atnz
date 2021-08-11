@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { motion, AnimatePresence } from "framer-motion";
-import { ReactComponent as LogoSVG } from "../../assets/atnz-logo.svg";
+import { ReactComponent as ATNZLogoSVG } from "../../assets/atnz-logo.svg";
+import { ReactComponent as CzLogoSVG } from "../../assets/Competenz_monogram.svg";
 
 import "../../styles/components/header.scss";
+import { useBrand } from "../providers/StyleProvider";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,19 +20,11 @@ const Header = () => {
         >
           <div className="header">
             <HeaderLogo />
-            <Nav
-              menuItems={menuItems}
-              menuOpen={menuOpen}
-              setMenuOpen={setMenuOpen}
-            />
+            <Nav menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
           </div>
         </div>
       </motion.header>
-      <Menu
-        menuItems={menuItems}
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-      />
+      <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
     </>
   );
 };
@@ -39,17 +33,26 @@ export default Header;
 // --------- THINGS IN THE COMPONENT ---------
 
 export const HeaderLogo = () => {
+  const brand = useBrand();
   return (
     <motion.div className="logo-cnt" variants={fadeIn}>
-      <a href="https://atnz.org.nz/" className="logo">
-        <LogoSVG />
-      </a>
+      {brand === "Competenz" ? (
+        <a href="https://www.competenz.org.nz/" className="logo">
+          <CzLogoSVG />
+        </a>
+      ) : (
+        <a href="https://atnz.org.nz/" className="logo">
+          <ATNZLogoSVG />
+        </a>
+      )}
     </motion.div>
   );
 };
 
-const Nav = ({ menuOpen, setMenuOpen, menuItems }) => {
+const Nav = ({ menuOpen, setMenuOpen }) => {
   const isDesktop = useMediaQuery({ query: "(min-width: 800px" });
+
+  const menuItems = useMenuItems();
 
   return (
     <nav>
@@ -79,7 +82,8 @@ const Nav = ({ menuOpen, setMenuOpen, menuItems }) => {
   );
 };
 
-const Menu = ({ menuOpen, setMenuOpen, menuItems }) => {
+const Menu = ({ menuOpen, setMenuOpen }) => {
+  const menuItems = useMenuItems();
   return (
     <AnimatePresence>
       {menuOpen && (
@@ -155,20 +159,43 @@ const fadeIn = {
   animate: { opacity: 1 },
 };
 
-const menuItems = [
-  {
-    title: "About ATNZ",
-    link: "https://atnz.org.nz/about-atnz/",
-  },
-  {
-    title: "Our apprenticeships",
-    link: "https://atnz.org.nz/become-an-apprentice/our-apprenticeships/",
-  },
-  {
-    title: "Current vacancies",
-    link: "https://atnz.org.nz/become-an-apprentice/jobs/",
-  },
-];
+const useMenuItems = () => {
+  const brand = useBrand();
+  let menuItems;
+
+  if (brand === "Competenz") {
+    menuItems = [
+      {
+        title: "About Competenz",
+        link: "https://atnz.org.nz/about-atnz/",
+      },
+      {
+        title: "Apprenticeships",
+        link: "https://atnz.org.nz/become-an-apprentice/our-apprenticeships/",
+      },
+      {
+        title: "Job board",
+        link: "https://atnz.org.nz/become-an-apprentice/jobs/",
+      },
+    ];
+  } else {
+    menuItems = [
+      {
+        title: "About ATNZ",
+        link: "https://atnz.org.nz/about-atnz/",
+      },
+      {
+        title: "Our apprenticeships",
+        link: "https://atnz.org.nz/become-an-apprentice/our-apprenticeships/",
+      },
+      {
+        title: "Current vacancies",
+        link: "https://atnz.org.nz/become-an-apprentice/jobs/",
+      },
+    ];
+  }
+  return menuItems;
+};
 
 const useScrollingDown = () => {
   const [scrollDir, setScrollDir] = useState(false); // True is scrolling down, false is scrolling up
@@ -178,7 +205,8 @@ const useScrollingDown = () => {
     let lastScrollY = window.pageYOffset;
     let ticking = false;
 
-    const updateScrollDir = () => { // decides ticking true or false
+    const updateScrollDir = () => {
+      // decides ticking true or false
       const scrollY = window.pageYOffset;
       if (Math.abs(scrollY - lastScrollY) < threshold) {
         ticking = false;

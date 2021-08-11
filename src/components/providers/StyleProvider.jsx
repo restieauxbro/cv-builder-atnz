@@ -46,7 +46,7 @@ const competenzTheme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: "Helvetica",
+    fontFamily: "Poppins",
     color: "rgb(46,46,46)",
     fontWeightRegular: 400,
     fontSize: 14,
@@ -60,6 +60,7 @@ const competenzTheme = createMuiTheme({
 const UpdateStyle = createContext(); //for MUI theme
 const Layout = createContext(); // for reading layout state only. Actual layout effects come from the div with classname {layout}
 const LayoutChanger = createContext(); // for page layout
+const Brand = createContext();
 
 const StyleProvider = ({ children }) => {
   const [style, updateStyle] = useState(atnzTheme); // MUI
@@ -69,6 +70,9 @@ const StyleProvider = ({ children }) => {
   }); // Object for app layout and cv page layout
 
   useEffect(() => {
+    if (window.location.href.indexOf("competenz") > -1) {
+      updateStyle(competenzTheme);
+    }
     document.body.classList.add(style.themeName);
   }, []);
 
@@ -83,13 +87,15 @@ const StyleProvider = ({ children }) => {
 
   return (
     <ThemeProvider theme={style}>
-      <UpdateStyle.Provider value={updateStyle}>
-        <Layout.Provider value={layout}>
-          <LayoutChanger.Provider value={changeLayout}>
-            <div className={layout.appLayout}>{children}</div>
-          </LayoutChanger.Provider>
-        </Layout.Provider>
-      </UpdateStyle.Provider>
+      <Brand.Provider value={style.themeName}>
+        <UpdateStyle.Provider value={updateStyle}>
+          <Layout.Provider value={layout}>
+            <LayoutChanger.Provider value={changeLayout}>
+              <div className={layout.appLayout}>{children}</div>
+            </LayoutChanger.Provider>
+          </Layout.Provider>
+        </UpdateStyle.Provider>
+      </Brand.Provider>
     </ThemeProvider>
   );
 };
@@ -104,4 +110,8 @@ export function CurrentLayout() {
 }
 export function ChangeLayout() {
   return useContext(LayoutChanger);
+}
+
+export function useBrand() {
+  return useContext(Brand);
 }

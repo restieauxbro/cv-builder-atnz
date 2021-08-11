@@ -5,7 +5,11 @@ import CreateIcon from "@material-ui/icons/Create";
 import StyleIcon from "@material-ui/icons/Style";
 import Closer from "./closer";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChangeLayout, CurrentLayout } from "./providers/StyleProvider";
+import {
+  ChangeLayout,
+  CurrentLayout,
+  useBrand,
+} from "./providers/StyleProvider";
 import { easy } from "../utils/animations";
 import LoginOrSave from "./loginFlow/loginOrSave";
 import { PDFDownloadLink } from "@react-pdf/renderer";
@@ -165,7 +169,8 @@ const DownloadCVContent = () => {
     <>
       <h3>Nice one</h3>
       <p>
-        Your CV is ready to download. You can save it your computer or phone and attach it to a job application. Good luck! <br />
+        Your CV is ready to download. You can save it your computer or phone and
+        attach it to a job application. Good luck! <br />
         <br />
       </p>
 
@@ -223,12 +228,22 @@ const ApplyForJobs = () => {
   useEffect(() => {
     session && getCVPermission(); //only shows checkbox if they haven't shared their cv
   }, []);
+
+  const brand = useBrand();
+
   return (
     <>
-      <h3>ATNZ hires apprentices</h3>
+      <h3>
+        {brand === "Competenz"
+          ? "Competenz recruits apprentices"
+          : "ATNZ hires apprentices"}
+      </h3>
       <p>
-        We could hire you for an engineering apprenticeship if we have your CV
-        on file, would you like to share it with us? <br />
+        {brand === "Competenz"
+          ? "We could get you hired into an apprenticeship if we have your CV on file. Apply for apprenticeships through our job board."
+          : `We could hire you for an engineering apprenticeship if we have your CV
+        on file, would you like to share it with us?`}
+        <br />
       </p>
       {showCheckbox && (
         <FormControlLabel

@@ -71,8 +71,7 @@ const styles = StyleSheet.create({
   },
   h3: {
     // For titles within sections
-    fontSize: 11,
-    marginBottom: 5,
+    fontSize: 10,
   },
   darkText: {
     color: colors.dark,
@@ -120,10 +119,10 @@ const CVPDF = ({ cvData }) => {
               Introduction
             </Text>
             <Text style={styles.section}>{personalDetails.intro}</Text>
-            <View>
+            <View style={styles.section}>
               <Education cvData={cvData} />
             </View>
-            <View>
+            <View style={styles.section}>
               <Skills cvData={cvData} />
             </View>
           </View>
@@ -171,12 +170,8 @@ const Job = ({ jobtitle, company, date, description, id }) => {
     <View id={jobId} key={uuidv4()} style={styles.section}>
       <View className="job-cnt">
         <View className="content">
-          <Text style={styles.darkText} className="dark-text">
-            {jobtitle}
-          </Text>
-          <Text style={styles.lightText} className="light-text">
-            {company}
-          </Text>
+          <Text style={{ ...styles.darkText, ...styles.h3 }}>{jobtitle}</Text>
+          <Text style={{ ...styles.lightText, ...styles.h3 }}>{company}</Text>
 
           <Text style={styles.para}>{date}</Text>
         </View>
@@ -216,15 +211,14 @@ const Skills = ({ cvData }) => {
   const listItems = cvData.skills;
   return (
     <>
-      <Text style={{ ...styles.section, ...styles.h2 }}>
-        Skills and attributes
-      </Text>
+      <Text style={{ ...styles.section, ...styles.h2 }}>Attributes</Text>
+
       <View style={styles.para}>
         {listItems &&
           listItems.map((listItem) => {
             const keyValues = Object.values(listItem.properties);
             return (
-              <View key={uuidv4()} className="Viewst-item">
+              <View key={uuidv4()}>
                 {keyValues.map((keyValue) => (
                   <Text key={uuidv4()} style={styles.para}>
                     {keyValue}

@@ -4,7 +4,6 @@ body.competenz {
 
 body {
   overflow-x: hidden;
-  hyphens: auto;
   width: 100%;
   box-sizing: border-box;
 }
@@ -90,6 +89,7 @@ body {
       width: 100%;
     }
     .huge-input {
+      position: relative;
       font-size: clamp(2rem, 5vw, 3rem);
       background: inherit;
       outline: none;
@@ -114,6 +114,8 @@ body {
     .jobs-list {
       position: relative;
       padding: 0 0.5rem;
+      hyphens: auto;
+
 
       .line {
         position: absolute;
@@ -302,6 +304,7 @@ body {
   right: calc(100% + 2.5rem);
   width: 100%;
   max-width: 300px;
+  z-index: 14;
   h3,
   h4,
   p {
