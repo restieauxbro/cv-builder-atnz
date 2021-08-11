@@ -35,7 +35,7 @@ const competenzTheme = createMuiTheme({
     primary: {
       light: "#7ecbe8",
       main: "#21A3D9",
-      dark: "#121773",
+      dark: "#1A89B7",
       contrastText: "#fff",
     },
     secondary: {
@@ -63,7 +63,7 @@ const LayoutChanger = createContext(); // for page layout
 const Brand = createContext();
 
 const StyleProvider = ({ children }) => {
-  const [style, updateStyle] = useState(atnzTheme); // MUI
+  const [style, updateStyle] = useState(competenzTheme); // MUI
   const [layout, changeLayout] = useState({
     appLayout: "",
     CVLayout: "",
