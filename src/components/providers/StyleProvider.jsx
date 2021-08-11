@@ -63,7 +63,7 @@ const LayoutChanger = createContext(); // for page layout
 const Brand = createContext();
 
 const StyleProvider = ({ children }) => {
-  const [style, updateStyle] = useState(competenzTheme); // MUI
+  const [style, updateStyle] = useState(atnzTheme); // MUI
   const [layout, changeLayout] = useState({
     appLayout: "",
     CVLayout: "",

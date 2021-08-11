@@ -259,7 +259,14 @@ const ApplyForJobs = () => {
       )}
       <br />
       <br />
-      <a href="https://atnz.org.nz/become-an-apprentice/jobs/" target="_blank">
+      <a
+        href={
+          brand === "Competenz"
+            ? `https://www.competenz.org.nz/jobseekers/finding-a-job/`
+            : `https://atnz.org.nz/become-an-apprentice/jobs/`
+        }
+        target="_blank"
+      >
         <Button
           variant="contained"
           color="primary"

@@ -167,15 +167,15 @@ const useMenuItems = () => {
     menuItems = [
       {
         title: "About Competenz",
-        link: "https://atnz.org.nz/about-atnz/",
+        link: "https://www.competenz.org.nz/about/",
       },
       {
         title: "Apprenticeships",
-        link: "https://atnz.org.nz/become-an-apprentice/our-apprenticeships/",
+        link: "https://www.competenz.org.nz/jobseekers/",
       },
       {
         title: "Job board",
-        link: "https://atnz.org.nz/become-an-apprentice/jobs/",
+        link: "https://www.competenz.org.nz/jobseekers/finding-a-job//",
       },
     ];
   } else {
