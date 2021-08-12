@@ -81,7 +81,7 @@ const StyleProvider = ({ children }) => {
     if (layout.appLayout !== "layout-large-left") {
       setTimeout(function () {
         document.body.style.cssText = "";
-      }, 800);
+      }, 500);
     }
   }, [layout.appLayout]); // make cv un-interractive when the side menu is open
 

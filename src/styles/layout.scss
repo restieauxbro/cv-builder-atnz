@@ -116,7 +116,6 @@ body {
       padding: 0 0.5rem;
       hyphens: auto;
 
-
       .line {
         position: absolute;
         left: 0;
@@ -433,6 +432,22 @@ body {
 
 ul {
   padding-left: 1rem;
+}
+
+.icon-cnt {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-content: center;
+  svg {
+    width: 100% !important;
+    height: auto;
+  }
+  &.white {
+    svg {
+      fill: #fff;
+    }
+  }
 }
 
 .cancel-button {
