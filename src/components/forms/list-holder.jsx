@@ -22,7 +22,6 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent, popUpOpen }) => {
         title={title}
         listItems={listItems}
         setPopUpOpen={setPopUpOpen}
-        
       />
     );
     setPopUpOpen(true);
@@ -31,7 +30,6 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent, popUpOpen }) => {
   return (
     <>
       <div className="clickable" onClick={() => openForm()}>
-        {popUpOpen && 'True'}
         <h3>{title}</h3>
         <ul>
           {listItems &&
