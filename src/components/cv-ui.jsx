@@ -100,10 +100,10 @@ const PopUp = ({ setPopUpOpen, popUpContent, exitText }) => {
     <>
       <motion.div
         className="pop-up-cnt cv-builder-columns"
-        variants={parentFadeIn}
-        initial="initial"
-        animate="animate"
-        exit="exit"
+         variants={parentFadeIn}
+         initial="initial"
+         animate="animate"
+         exit="exit"
       >
         <div className="pop-up-bg" onClick={() => setPopUpOpen(false)} />
         <div></div>
@@ -121,7 +121,7 @@ const PopUp = ({ setPopUpOpen, popUpContent, exitText }) => {
 const parentFadeIn = {
   initial: { opacity: 0 },
   animate: { opacity: 1, transition: { duration: 0.15, delayChildren: 0.2 } },
-  exit: { opacity: 0 },
+  exit: { opacity: 0, pointerEvents: 'none' },
 };
 
 const slideUp = {

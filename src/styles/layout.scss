@@ -180,7 +180,15 @@ body {
     }
   }
 }
-
+@media (max-width: 700px) {
+  .cv-builder-cnt {
+    .cv-builder {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
 .form-flex {
   display: flex;
   flex-wrap: wrap;

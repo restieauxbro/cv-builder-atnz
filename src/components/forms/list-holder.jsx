@@ -13,7 +13,7 @@ import TurnOnHelp from "../TurnOnHelp";
 import { useSession } from "../providers/AuthProvider";
 import DraggableListItems from "./draggableList";
 
-const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
+const ListHolder = ({ title, setPopUpOpen, setPopUpContent, popUpOpen }) => {
   const listItems = useCVData().education;
 
   function openForm() {
@@ -22,6 +22,7 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
         title={title}
         listItems={listItems}
         setPopUpOpen={setPopUpOpen}
+        
       />
     );
     setPopUpOpen(true);
@@ -29,23 +30,31 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent }) => {
 
   return (
     <>
-      <h3>{title}</h3>
-      <ul>
-        {listItems && listItems.map((listItem) => {
-          const keyValues = Object.values(listItem.properties);
-          return (
-            <li key={uuidv4()} className="list-item">
-              {keyValues.map((keyValue) => (
-                <div key={uuidv4()}>{keyValue}</div>
-              ))}
-            </li>
-          );
-        })}
-      </ul>
-      <div className="cv-ui-button">
-        <Button variant="contained" color="primary" onClick={() => openForm()}>
-          Add more
-        </Button>
+      <div className="clickable" onClick={() => openForm()}>
+        {popUpOpen && 'True'}
+        <h3>{title}</h3>
+        <ul>
+          {listItems &&
+            listItems.map((listItem) => {
+              const keyValues = Object.values(listItem.properties);
+              return (
+                <li key={uuidv4()} className="list-item">
+                  {keyValues.map((keyValue) => (
+                    <div key={uuidv4()}>{keyValue}</div>
+                  ))}
+                </li>
+              );
+            })}
+        </ul>
+        <div className="cv-ui-button">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => openForm()}
+          >
+            Add more
+          </Button>
+        </div>
       </div>
     </>
   );
@@ -168,5 +177,3 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
     </>
   );
 };
-
-

@@ -19,7 +19,7 @@ const Skills = ({ title, setPopUpOpen, setPopUpContent }) => {
   function openForm() {
     setPopUpContent(
       <ListForm
-        title='Skills and attributes'
+        title="Skills and attributes"
         listItems={listItems}
         setPopUpOpen={setPopUpOpen}
       />
@@ -29,23 +29,30 @@ const Skills = ({ title, setPopUpOpen, setPopUpContent }) => {
 
   return (
     <>
-      <h3>{title}</h3>
-      <ul>
-        {listItems && listItems.map((listItem) => {
-          const keyValues = Object.values(listItem.properties);
-          return (
-            <li key={uuidv4()} className="list-item">
-              {keyValues.map((keyValue) => (
-                <div key={uuidv4()}>{keyValue}</div>
-              ))}
-            </li>
-          );
-        })}
-      </ul>
-      <div className="cv-ui-button">
-        <Button variant="contained" color="primary" onClick={() => openForm()}>
-          Add more
-        </Button>
+      <div className="clickable" onClick={() => openForm()}>
+        <h3>{title}</h3>
+        <ul>
+          {listItems &&
+            listItems.map((listItem) => {
+              const keyValues = Object.values(listItem.properties);
+              return (
+                <li key={uuidv4()} className="list-item">
+                  {keyValues.map((keyValue) => (
+                    <div key={uuidv4()}>{keyValue}</div>
+                  ))}
+                </li>
+              );
+            })}
+        </ul>
+        <div className="cv-ui-button">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => openForm()}
+          >
+            Add more
+          </Button>
+        </div>
       </div>
     </>
   );
@@ -168,5 +175,3 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
     </>
   );
 };
-
-

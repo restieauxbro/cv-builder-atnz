@@ -16,10 +16,9 @@ header {
       .logo-cnt {
         margin: 0 2rem;
         height: 40px;
-        padding: .7rem 0;
+        padding: 0.7rem 0;
         .logo {
-          
-          svg{
+          svg {
             height: 100% !important;
             width: auto;
           }
@@ -29,7 +28,7 @@ header {
         position: relative;
         z-index: 1000;
         margin: 0 2em;
-        a{
+        a {
           text-decoration: none;
           color: inherit;
         }
@@ -68,7 +67,7 @@ header {
 
 .menu-cnt {
   position: fixed;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   right: 0;
   top: 0;
@@ -78,7 +77,19 @@ header {
   z-index: 11;
   background-color: white;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-
+  display: grid;
+  place-items: end;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .menu {
+    .menu-contents {
+      text-align: right;
+    }
+  }
+  .cancel-button {
+    top: 20px;
+    right: 20px;
+  }
 }
-
-

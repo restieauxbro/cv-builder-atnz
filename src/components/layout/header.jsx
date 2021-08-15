@@ -6,6 +6,7 @@ import { ReactComponent as CzLogoSVG } from "../../assets/Competenz_monogram.svg
 
 import "../../styles/components/header.scss";
 import { useBrand } from "../providers/StyleProvider";
+import Closer from "../closer";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -93,15 +94,24 @@ const Menu = ({ menuOpen, setMenuOpen }) => {
           animate={{ x: 0, transition: { ease: "circOut" } }}
           exit={{ x: "100%" }}
         >
-          <div className="exit-button" onClick={() => setMenuOpen(!menuOpen)}>
-            +
-          </div>
+          <Closer clickFunction={() => setMenuOpen(!menuOpen)} />
+
           <div className="menu">
-            <div className="menu-contents">
-              {menuItems.map(({ title }) => (
-                <h3>{title}</h3>
+            <motion.div
+              className="menu-contents"
+              variants={stagger}
+              initial="initial"
+              animate="animate"
+            >
+              {menuItems.map(({ title, link }) => (
+                <motion.div variants={fadeIn} key={title}>
+                  {" "}
+                  <a href={link}>
+                    <h3>{title}</h3>
+                  </a>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </motion.div>
       )}
