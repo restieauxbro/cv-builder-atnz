@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "@material-ui/core";
 import { motion, AnimatePresence } from "framer-motion";
 import { ReactComponent as ATNZLogoSVG } from "../../assets/atnz-logo.svg";
 import { ReactComponent as CzLogoSVG } from "../../assets/Competenz_monogram.svg";
@@ -21,6 +21,7 @@ const Header = () => {
         >
           <div className="header">
             <HeaderLogo />
+
             <Nav menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
           </div>
         </div>
@@ -51,7 +52,7 @@ export const HeaderLogo = () => {
 };
 
 const Nav = ({ menuOpen, setMenuOpen }) => {
-  const isDesktop = useMediaQuery({ query: "(min-width: 800px" });
+  const isDesktop = useMediaQuery(`(min-width: 800px)`);
 
   const menuItems = useMenuItems();
 

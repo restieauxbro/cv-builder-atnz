@@ -131,10 +131,10 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
                 helperText={formik.touched.Skill && formik.errors.Skill}
               />
               <TextField
-                fullWidth
+              fullWidth
                 id="Description"
                 name="Description"
-                label="Description"
+                label="Description (optional)"
                 value={formik.values.Description}
                 onChange={formik.handleChange}
                 error={

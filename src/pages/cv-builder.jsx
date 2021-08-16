@@ -6,12 +6,13 @@ import CvAnimSwap from "../components/changingState/cvAnimSwap";
 import CVPDF from "../components/cv-pdf";
 import { useCVData } from "../components/providers/CVDataProvider";
 import { PDFViewer } from "@react-pdf/renderer";
+import Controls from "../components/layout/controls";
 
 const CVBuilderPage = () => {
   const cvData = useCVData();
   return (
     <AnimateSharedLayout>
-      <Sidebar />
+      <Controls/>
 
       <HelpSwitchProvider>
         {/* <PDFViewer style={{width: "100%", height: `100vh`}}>
