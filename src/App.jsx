@@ -28,6 +28,7 @@ const App = () => {
           </CVDataProvider>
         </AuthProvider>
       </StyleProvider>
+      
     </>
   );
 };
