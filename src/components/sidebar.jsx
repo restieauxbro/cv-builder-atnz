@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, FormControlLabel } from "@material-ui/core";
+import React, { useState } from "react";
+import { Button } from "@material-ui/core";
 import Closer from "./closer";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChangeLayout, CurrentLayout } from "./providers/StyleProvider";
@@ -66,13 +66,14 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-const MenuButton = ({
+export const MenuButton = ({
   title,
   maximumHeight,
   icon,
   content,
   openID,
   setOpenID,
+  mobile,
 }) => {
   const layout = CurrentLayout();
   const changeLayout = ChangeLayout();
@@ -92,19 +93,20 @@ const MenuButton = ({
           onClick={() => {
             setOpenID(title);
             setIsOpen(true);
-            changeLayout({ ...layout, appLayout: "layout-large-left" });
+            !mobile &&
+              changeLayout({ ...layout, appLayout: "layout-large-left" });
           }}
         >
           <div className="menu-button-cnt">
             <div className="icon">{icon}</div>
-            {title}
+            {!mobile && title}
           </div>
         </Button>
         {openID === title && isOpen && (
           <Closer
             clickFunction={() => {
               setIsOpen(false);
-              changeLayout({ ...layout, appLayout: "" });
+              !mobile && changeLayout({ ...layout, appLayout: "" });
             }}
           />
         )}

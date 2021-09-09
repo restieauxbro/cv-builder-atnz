@@ -113,6 +113,24 @@
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0;
+    .overflow-cnt {
+      position: absolute;
+      bottom: 50px;
+      width: 100%;
+      left: 0;
+      .panel-content {
+        padding: 2rem;
+        background-color: var(--off-white);
+        height: 100%;
+      }
+    }
+    .cancel-button {
+      top: calc(-50vh + 4px);
+      z-index: 5;
+    }
+  }
+  .icon {
+    display: grid;
   }
 }

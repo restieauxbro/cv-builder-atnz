@@ -33,7 +33,7 @@ const NameTitle = ({ setPopUpContent, setPopUpOpen }) => {
       <AnimatePresence>
         {showHelpBubble && (
           <HelpBubble setShow={setShowHelpBubble}>
-            <h3>Let's get started 💪</h3>
+            <h3>Let's get started 👀</h3>
             <p>
               Click any element on the CV to edit its content. Let's start with
               your personal information.
