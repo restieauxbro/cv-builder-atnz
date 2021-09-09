@@ -7,7 +7,7 @@ export const parentFadeIn = {
   initial: { opacity: 0 },
   animate: {
     opacity: 1,
-    transition: { duration: 0.15, delayChildren: 0.5, staggerChildren: 0.2 },
+    transition: { duration: 0.15, delayChildren: 0.15, staggerChildren: 0.2 },
   },
   exit: { opacity: 0, pointerEvents: "none" },
 };

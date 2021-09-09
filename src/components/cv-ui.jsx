@@ -39,6 +39,15 @@ const CvUi = () => {
                 }
                 transition={{ ...easy, duration: 1 }}
               >
+                <div className="form-grid">
+                  <div className="column-1"></div>
+                  <div className="column-2">
+                    <NameTitle
+                      setPopUpOpen={setPopUpOpen}
+                      setPopUpContent={setPopUpContent}
+                    />
+                  </div>
+                </div>
                 <motion.div
                   className="form-grid"
                   initial={{ opacity: 0, y: 10 }}
@@ -46,10 +55,12 @@ const CvUi = () => {
                   transition={{ delay: 0.4, duration: 0.5 }}
                 >
                   <div className="column-1">
-                    <PersonalDetails
-                      setPopUpContent={setPopUpContent}
-                      setPopUpOpen={setPopUpOpen}
-                    />
+                    <div className="section">
+                      <PersonalDetails
+                        setPopUpContent={setPopUpContent}
+                        setPopUpOpen={setPopUpOpen}
+                      />
+                    </div>
                     <div className="education section">
                       <ListHolder
                         title="Education"
@@ -69,10 +80,6 @@ const CvUi = () => {
                     </div>
                   </div>
                   <div className="column-2">
-                    <NameTitle
-                      setPopUpOpen={setPopUpOpen}
-                      setPopUpContent={setPopUpContent}
-                    />
                     <ExperienceSection
                       setPopUpOpen={setPopUpOpen}
                       setPopUpContent={setPopUpContent}

@@ -82,7 +82,7 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
       .required("What school or education centre?"),
     Description: yup
       .string("What was your level of achievement?")
-      .required("What was your level of achievement?"),
+      //.required("What was your level of achievement?"),
   });
 
   const formik = useFormik({

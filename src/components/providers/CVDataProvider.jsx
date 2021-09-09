@@ -10,7 +10,7 @@ const CVDataProvider = ({ children }) => {
       firstName: "",
       lastName: "",
       intro:
-        "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id, incidunt quod quam, placeat hic itaque voluptas harum consectetur aspernatur expedita debitis. Magnam, fugiat! Sint Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore possimus.",
+        "This is where you tell the employer about yourself. What do you enjoy? What are you looking for? Can you explain your experience in a sentence or two?",
       email: "",
       address: "",
       phone: "",

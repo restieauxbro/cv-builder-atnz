@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { menuButtons } from "./controls";
 import { motion } from "framer-motion";
 import { parentFadeIn } from "../../utils/animations";
-import { IconButton } from "@material-ui/core";
 import { MenuButton } from "../sidebar";
 import SideBarSaveOptions from "../loginFlow/sidebarSaveOptions";
-import { Save } from "@material-ui/icons";
+import { AccountCircle, Save } from "@material-ui/icons";
+import { useSession } from "../providers/AuthProvider";
+import Account from "../loginFlow/Account";
 
 const MobileControls = () => {
   const [openID, setOpenID] = useState("");
@@ -19,15 +20,7 @@ const MobileControls = () => {
       >
         <div className="mobile-controls-content">
           <motion.div variants={parentFadeIn}>
-            <MenuButton
-              title={"Login"}
-              content={<SideBarSaveOptions/>}
-              icon={<Save />}
-              openID={openID}
-              setOpenID={setOpenID}
-              maximumHeight={`50vh`}
-              mobile={true}
-            />
+            <LoginOrSaveMobile openID={openID} setOpenID={setOpenID} />
           </motion.div>
 
           {menuButtons.map(({ title, icon, content }) => (
@@ -50,3 +43,37 @@ const MobileControls = () => {
 };
 
 export default MobileControls;
+
+const LoginOrSaveMobile = ({ openID, setOpenID }) => {
+  const session = useSession();
+  return (
+    <>
+      {session ? (
+        <MenuButton
+          title={"Profile"}
+          content={<Account />}
+          icon={<AccountCircle />}
+          openID={openID}
+          setOpenID={setOpenID}
+          maximumHeight={`50vh`}
+          mobile={true}
+        />
+      ) : (
+        <MenuButton
+          title={"Login"}
+          content={
+            <>
+              <h3>Login to save</h3>
+              <SideBarSaveOptions />
+            </>
+          }
+          icon={<Save />}
+          openID={openID}
+          setOpenID={setOpenID}
+          maximumHeight={`50vh`}
+          mobile={true}
+        />
+      )}
+    </>
+  );
+};
