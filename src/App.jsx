@@ -8,6 +8,10 @@ import CVBuilderPage from "./pages/cv-builder";
 import DeleteUser from "./pages/delete-user";
 import Header from "./components/layout/header";
 
+import ReactGA from "react-ga";
+ReactGA.initialize("UA-44053651-1");
+ReactGA.pageview(window.location.pathname + "cv-builder");
+
 const App = () => {
   return (
     <>
@@ -28,7 +32,6 @@ const App = () => {
           </CVDataProvider>
         </AuthProvider>
       </StyleProvider>
-      
     </>
   );
 };
