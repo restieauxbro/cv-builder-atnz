@@ -125,7 +125,7 @@ const DownloadCVContent = () => {
     <>
       <h3>Nice one</h3>
       <p>
-        Your CV is ready to download. You can save it your computer or phone and
+        Your CV is ready to download. You can save it to your computer or phone and
         attach it to a job application. Good luck! <br />
         <br />
       </p>
