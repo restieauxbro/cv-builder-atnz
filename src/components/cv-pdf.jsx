@@ -12,6 +12,8 @@ import PoppinsRegular from "../fonts/Poppins.ttf";
 import PoppinsBold from "../fonts/Poppins-Bold.ttf";
 import PoppinsExtrabold from "../fonts/Poppins-ExtraBold.ttf";
 
+Font.registerHyphenationCallback(word => [word]);
+
 Font.register({
   family: "Poppins",
   src: PoppinsRegular,
