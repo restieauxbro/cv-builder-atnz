@@ -31,19 +31,24 @@ const ListHolder = ({ title, setPopUpOpen, setPopUpContent, popUpOpen }) => {
     <>
       <div className="clickable" onClick={() => openForm()}>
         <h3>{title}</h3>
-        <ul>
+        <div>
           {listItems &&
             listItems.map((listItem) => {
               const keyValues = Object.values(listItem.properties);
               return (
-                <li key={uuidv4()} className="list-item">
-                  {keyValues.map((keyValue) => (
-                    <div key={uuidv4()}>{keyValue}</div>
+                <div key={uuidv4()} className="list-item">
+                  {keyValues.map((keyValue, i) => (
+                    <div
+                      key={uuidv4()}
+                      className={i === 0 ? "bold dark-text" : "text-sm"}
+                    >
+                      {keyValue}
+                    </div>
                   ))}
-                </li>
+                </div>
               );
             })}
-        </ul>
+        </div>
         <div className="cv-ui-button">
           <Button
             variant="contained"

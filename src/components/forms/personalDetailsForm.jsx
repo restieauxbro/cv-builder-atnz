@@ -24,6 +24,9 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
     changeAllCVs({ ...CVData, personalDetails: sumthn }, session, CVDataUpdate);
   }
 
+  const minIntro = 60;
+  const maxIntro = 450;
+
   const validationSchema = yup.object({
     firstName: yup
       .string("What's your first name?")
@@ -33,7 +36,8 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
       .required("What's your last name?"),
     intro: yup
       .string("Who are you?")
-      .min(60, "Can you tell us more?")
+      .min(minIntro, "Can you tell us more?")
+      .max(maxIntro, "Just a bit too long, can you shorten it?")
       .required("Who are you?"),
     email: yup
       .string("What's your email?")
@@ -65,6 +69,7 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
 
   const [showHelpBubble, setShowHelpBubble] = useState(false);
   const [addresshelp, showaddresshelp] = useState(false);
+  const introLength = formik?.values?.intro?.length;
 
   return (
     <>
@@ -134,13 +139,15 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
                 >
                   <h3>Where?</h3>
                   <p>
-                    Say the region or suburb you're in now but if you'd consider moving, say that!
+                    Say the region or suburb you're in now but if you'd consider
+                    moving, say that!
                   </p>
                 </HelpBubble>
               )}
             </AnimatePresence>
           </div>
           <div className="help-bubble-focus">
+            {introLength > maxIntro && "true"}
             <TextField
               style={{ width: "100%", marginTop: "2rem" }}
               multiline
@@ -150,7 +157,15 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
               value={formik.values.intro}
               onChange={formik.handleChange}
               error={formik.touched.intro && Boolean(formik.errors.intro)}
-              helperText={formik.touched.intro && formik.errors.intro}
+              helperText={
+                formik.touched.intro &&
+                formik.errors.intro &&
+                formik.errors.intro +
+                  " " +
+                  (introLength > maxIntro
+                    ? `${introLength}/${maxIntro}`
+                    : `${minIntro - introLength} characters left`)
+              }
               onFocus={() => setShowHelpBubble(true)}
               onBlur={() => setShowHelpBubble(false)}
             />
@@ -162,9 +177,9 @@ const PersonalDetailsForm = ({ setPopUpOpen }) => {
                 >
                   <h3>Who are you really? 💪</h3>
                   <p>
-                    Lots of people get hired for their personality so if you don't 
-                    have much experience, tell the employer what kind of a worker you are.
-        
+                    Lots of people get hired for their personality so if you
+                    don't have much experience, tell the employer what kind of a
+                    worker you are.
                   </p>
                 </HelpBubble>
               )}

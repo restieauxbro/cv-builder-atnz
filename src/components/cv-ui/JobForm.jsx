@@ -45,7 +45,7 @@ const JobForm = ({ setPopUpOpen, setPopUpContent, chosenJob, isNew }) => {
       .required("How long was this experience"),
     description: yup
       .string("Tell us about what your tasks were.")
-      .min(60, "Can you tell us more?")
+      .min(60, `Can you tell us more?`)
       .required("Tell us about what your tasks were."),
   });
 
@@ -88,7 +88,6 @@ const JobForm = ({ setPopUpOpen, setPopUpContent, chosenJob, isNew }) => {
       addAnotherJob ? openNewJobForm() : setPopUpOpen(false);
     },
   });
-
 
   const [showHelpBubble, setShowHelpBubble] = useState(false);
   const [dateHelp, showDateHelp] = useState(false);
@@ -163,7 +162,11 @@ const JobForm = ({ setPopUpOpen, setPopUpContent, chosenJob, isNew }) => {
                 formik.touched.description && Boolean(formik.errors.description)
               }
               helperText={
-                formik.touched.description && formik.errors.description
+                formik.touched.description &&
+                formik.errors.description &&
+                formik.errors.description +
+                  " " +
+                  `${60 - formik.values?.description?.length} characters left`
               }
               onFocus={() => setShowHelpBubble(true)}
               onBlur={() => setShowHelpBubble(false)}

@@ -154,6 +154,7 @@ export function useCVDataUpdate() {
 
 export function changeAllCVs(obj, session, CVDataUpdate) {
   CVDataUpdate(obj);
+  console.log("obj", obj);
   session
     ? sendCVToDatabase(obj)
     : localStorage.setItem("cvDataLocal", JSON.stringify(obj));

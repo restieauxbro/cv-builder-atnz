@@ -1,6 +1,10 @@
 @import "./styles/layout.scss";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;700&display=swap");
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   --white: #fff;
   --white-2: #f7f7f7;
@@ -40,4 +44,20 @@ input {
 
 .overflow-cnt {
   overflow: hidden;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+.text-sm {
+  font-size: 0.8rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
 }

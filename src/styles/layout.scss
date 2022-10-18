@@ -20,7 +20,7 @@ body {
   margin: 0 auto;
   padding-top: 1.7rem;
   h3 {
-    font-weight: 400;
+    font-weight: 500;
     font-size: 1.5rem;
     color: var(--darkblue);
   }
@@ -288,6 +288,9 @@ body {
 .button-cnt,
 .input-cnt {
   margin-top: 1rem;
+}
+.list-item {
+  margin: 1rem 0;
 }
 
 .items-form {

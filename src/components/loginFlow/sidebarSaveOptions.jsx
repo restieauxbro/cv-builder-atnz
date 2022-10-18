@@ -40,7 +40,7 @@ const Options = ({ setMagicLinkScreen }) => {
           Login with email
         </Button>
       </div>
-      <div className="button-cnt">
+      {/* <div className="button-cnt">
         <FacebookButton
           fullWidth
           disableElevation
@@ -63,7 +63,7 @@ const Options = ({ setMagicLinkScreen }) => {
         >
           Login with Google
         </GoogleButton>
-      </div>
+      </div> */}
     </>
   );
 };

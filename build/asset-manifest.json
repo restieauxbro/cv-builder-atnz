@@ -1,26 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.befddd0f.chunk.css",
-    "main.js": "/static/js/main.08addbee.chunk.js",
-    "main.js.map": "/static/js/main.08addbee.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.8b5301a0.js",
-    "runtime-main.js.map": "/static/js/runtime-main.8b5301a0.js.map",
-    "static/js/2.002c0f95.chunk.js": "/static/js/2.002c0f95.chunk.js",
-    "static/js/2.002c0f95.chunk.js.map": "/static/js/2.002c0f95.chunk.js.map",
-    "static/js/3.9164f529.chunk.js": "/static/js/3.9164f529.chunk.js",
-    "static/js/3.9164f529.chunk.js.map": "/static/js/3.9164f529.chunk.js.map",
+    "main.css": "/static/css/main.57bd57b1.chunk.css",
+    "main.js": "/static/js/main.dcad2301.chunk.js",
+    "main.js.map": "/static/js/main.dcad2301.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.91f1e2bb.js",
+    "runtime-main.js.map": "/static/js/runtime-main.91f1e2bb.js.map",
+    "static/js/2.70efa7f0.chunk.js": "/static/js/2.70efa7f0.chunk.js",
+    "static/js/2.70efa7f0.chunk.js.map": "/static/js/2.70efa7f0.chunk.js.map",
+    "static/js/3.01eca83f.chunk.js": "/static/js/3.01eca83f.chunk.js",
+    "static/js/3.01eca83f.chunk.js.map": "/static/js/3.01eca83f.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.befddd0f.chunk.css.map": "/static/css/main.befddd0f.chunk.css.map",
-    "static/js/2.002c0f95.chunk.js.LICENSE.txt": "/static/js/2.002c0f95.chunk.js.LICENSE.txt",
-    "static/media/GoogleLogo.66ae25be.svg": "/static/media/GoogleLogo.66ae25be.svg",
+    "static/css/main.57bd57b1.chunk.css.map": "/static/css/main.57bd57b1.chunk.css.map",
+    "static/js/2.70efa7f0.chunk.js.LICENSE.txt": "/static/js/2.70efa7f0.chunk.js.LICENSE.txt",
+    "static/media/Competenz_monogram.0995a68a.svg": "/static/media/Competenz_monogram.0995a68a.svg",
     "static/media/Poppins-Bold.8a0f2aae.ttf": "/static/media/Poppins-Bold.8a0f2aae.ttf",
     "static/media/Poppins-ExtraBold.f0b965ee.ttf": "/static/media/Poppins-ExtraBold.f0b965ee.ttf",
-    "static/media/Poppins.ff8a5162.ttf": "/static/media/Poppins.ff8a5162.ttf"
+    "static/media/Poppins.ff8a5162.ttf": "/static/media/Poppins.ff8a5162.ttf",
+    "static/media/atnz-logo.65ee4866.svg": "/static/media/atnz-logo.65ee4866.svg",
+    "static/media/icons8-google.94af33e6.svg": "/static/media/icons8-google.94af33e6.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.8b5301a0.js",
-    "static/js/2.002c0f95.chunk.js",
-    "static/css/main.befddd0f.chunk.css",
-    "static/js/main.08addbee.chunk.js"
+    "static/js/runtime-main.91f1e2bb.js",
+    "static/js/2.70efa7f0.chunk.js",
+    "static/css/main.57bd57b1.chunk.css",
+    "static/js/main.dcad2301.chunk.js"
   ]
 }

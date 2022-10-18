@@ -70,20 +70,20 @@ const CvUi = () => {
                         form={<SchoolsValidationForm />}
                       />
                     </div>
-                    <div className="skills section">
-                      <Skills
-                        title="Skills"
-                        setPopUpOpen={setPopUpOpen}
-                        setPopUpContent={setPopUpContent}
-                        popUpOpen={popUpOpen}
-                      />
-                    </div>
                   </div>
                   <div className="column-2">
                     <ExperienceSection
                       setPopUpOpen={setPopUpOpen}
                       setPopUpContent={setPopUpContent}
                     />
+                    <div className="skills section">
+                      <Skills
+                        title="Attributes and skills"
+                        setPopUpOpen={setPopUpOpen}
+                        setPopUpContent={setPopUpContent}
+                        popUpOpen={popUpOpen}
+                      />
+                    </div>
                   </div>
                 </motion.div>
               </motion.div>

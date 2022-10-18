@@ -31,19 +31,24 @@ const Skills = ({ title, setPopUpOpen, setPopUpContent }) => {
     <>
       <div className="clickable" onClick={() => openForm()}>
         <h3>{title}</h3>
-        <ul>
+        <div>
           {listItems &&
             listItems.map((listItem) => {
               const keyValues = Object.values(listItem.properties);
               return (
-                <li key={uuidv4()} className="list-item">
-                  {keyValues.map((keyValue) => (
-                    <div key={uuidv4()}>{keyValue}</div>
+                <div key={uuidv4()} className="list-item m-4">
+                  {keyValues.map((keyValue, i) => (
+                    <div
+                      key={uuidv4()}
+                      className={i === 0 ? "bold dark-text" : "text-sm"}
+                    >
+                      {keyValue}
+                    </div>
                   ))}
-                </li>
+                </div>
               );
             })}
-        </ul>
+        </div>
         <div className="cv-ui-button">
           <Button
             variant="contained"
@@ -80,9 +85,8 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
     Skill: yup
       .string("What school or education centre?")
       .required("What school or education centre?"),
-    Description: yup
-      .string("What was your level of achievement?")
-      //.required("What was your level of achievement?"),
+    Description: yup.string("What was your level of achievement?"),
+    //.required("What was your level of achievement?"),
   });
 
   const formik = useFormik({
@@ -131,7 +135,7 @@ const ListForm = ({ title, listItems, setPopUpOpen }) => {
                 helperText={formik.touched.Skill && formik.errors.Skill}
               />
               <TextField
-              fullWidth
+                fullWidth
                 id="Description"
                 name="Description"
                 label="Description (optional)"

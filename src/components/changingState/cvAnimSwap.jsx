@@ -10,7 +10,7 @@ const CvAnimSwap = () => {
   function swapWithTimeout() {
     setTimeout(function () {
       setLoaded(true);
-    }, 1000);
+    }, 500);
   }
 
   useEffect(() => {

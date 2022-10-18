@@ -127,11 +127,11 @@ const Job = ({
         </div>
         <div className="content" onClick={() => editJob(jobId)}>
           <h4>
-            <span className="dark-text"> {jobtitle}</span> <br />
+            <span className="dark-text bold">{jobtitle}</span> <br />
             <span className="light-text">{company}</span>
           </h4>
-          <p>{date}</p>
-          <p>{description}</p>
+          <p className="dark-text text-sm">{date}</p>
+          <p className="text-sm">{description}</p>
         </div>
       </div>
     </motion.div>
