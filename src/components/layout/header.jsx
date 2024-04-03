@@ -178,7 +178,7 @@ const useMenuItems = () => {
     menuItems = [
       {
         title: "About Competenz",
-        link: "https://www.competenz.org.nz/about/",
+        link: "https://www.competenz.org.nz/about/about-us",
       },
       {
         title: "Apprenticeships",
