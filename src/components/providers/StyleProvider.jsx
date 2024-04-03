@@ -76,14 +76,26 @@ const StyleProvider = ({ children }) => {
     document.body.classList.add(style.themeName);
   }, []);
 
-  useEffect(() => {
+ useEffect(() => {
+  // Check if the operating system is macOS
+  const isMacOS = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+
+  // Only adjust padding if not on macOS
+  if (!isMacOS) {
     document.body.style.cssText = "position: fixed; padding-right: 1rem";
     if (layout.appLayout !== "layout-large-left") {
       setTimeout(function () {
         document.body.style.cssText = "";
       }, 500);
     }
-  }, [layout.appLayout]); // make cv un-interractive when the side menu is open
+  } else {
+    // If on macOS and the specific layout is active, clear any inline styles that might have been set
+    if (layout.appLayout !== "layout-large-left") {
+      document.body.style.cssText = "";
+    }
+  }
+}, [layout.appLayout]); // Dependency array ensures this effect runs only when layout.appLayout changes
+
 
   return (
     <ThemeProvider theme={style}>
